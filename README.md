@@ -5,6 +5,6 @@ Contributors:
  - Safiya Fatima Syed
  - Sindhu Yella
  - Yachika Naveen Kumar
- - Mehak M
+ - Mehak
 
 Project -> Loan Management System - Admin & Customer Dashboard
