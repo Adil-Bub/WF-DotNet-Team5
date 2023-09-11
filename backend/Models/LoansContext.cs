@@ -42,11 +42,11 @@ public partial class LoansContext : DbContext
                 .HasColumnType("date")
                 .HasColumnName("card_issue_date");
             entity.Property(e => e.EmployeeId)
-                .HasMaxLength(100)
+                .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasColumnName("employee_id");
             entity.Property(e => e.LoanId)
-                .HasMaxLength(100)
+                .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasColumnName("loan_id");
 
@@ -66,11 +66,11 @@ public partial class LoansContext : DbContext
             entity.ToTable("employee_issue_details");
 
             entity.Property(e => e.IssueId)
-                .HasMaxLength(100)
+                .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasColumnName("issue_id");
             entity.Property(e => e.EmployeeId)
-                .HasMaxLength(100)
+                .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasColumnName("employee_id");
             entity.Property(e => e.IssueDate)
@@ -78,7 +78,7 @@ public partial class LoansContext : DbContext
                 .HasColumnType("date")
                 .HasColumnName("issue_date");
             entity.Property(e => e.ItemId)
-                .HasMaxLength(100)
+                .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasColumnName("item_id");
             entity.Property(e => e.ReturnDate)
@@ -102,17 +102,13 @@ public partial class LoansContext : DbContext
             entity.ToTable("employee_master");
 
             entity.Property(e => e.EmployeeId)
-                .HasMaxLength(100)
+                .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasColumnName("employee_id");
-            entity.Property(e => e.PasswordHash)
-                .HasMaxLength(100)
+            entity.Property(e => e.Password)
+                .HasMaxLength(25)
                 .IsUnicode(false)
-                .HasColumnName("Password_hash");
-            entity.Property(e => e.Salt)
-                .HasMaxLength(32)
-                .IsUnicode(false)
-                .HasColumnName("Salt");
+                .HasColumnName("password");
             entity.Property(e => e.DateOfBirth)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("date")
@@ -122,7 +118,7 @@ public partial class LoansContext : DbContext
                 .HasColumnType("date")
                 .HasColumnName("date_of_joining");
             entity.Property(e => e.Department)
-                .HasMaxLength(50)
+                .HasMaxLength(25)
                 .IsUnicode(false)
                 .HasColumnName("department");
             entity.Property(e => e.Designation)
@@ -130,7 +126,7 @@ public partial class LoansContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("designation");
             entity.Property(e => e.EmployeeName)
-                .HasMaxLength(50)
+                .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("employee_name");
             entity.Property(e => e.Gender)
@@ -147,7 +143,7 @@ public partial class LoansContext : DbContext
             entity.ToTable("item_master");
 
             entity.Property(e => e.ItemId)
-                .HasMaxLength(100)
+                .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasColumnName("item_id");
             entity.Property(e => e.IssueStatus)
@@ -156,15 +152,15 @@ public partial class LoansContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("issue_status");
             entity.Property(e => e.ItemCategory)
-                .HasMaxLength(50)
+                .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("item_category");
             entity.Property(e => e.ItemDescription)
-                .HasMaxLength(200)
+                .HasMaxLength(25)
                 .IsUnicode(false)
                 .HasColumnName("item_description");
             entity.Property(e => e.ItemMake)
-                .HasMaxLength(50)
+                .HasMaxLength(25)
                 .IsUnicode(false)
                 .HasColumnName("item_make");
             entity.Property(e => e.ItemValuation).HasColumnName("item_valuation");
@@ -177,7 +173,7 @@ public partial class LoansContext : DbContext
             entity.ToTable("loan_card_master");
 
             entity.Property(e => e.LoanId)
-                .HasMaxLength(100)
+                .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasColumnName("loan_id");
             entity.Property(e => e.DurationInYears).HasColumnName("duration_in_years");
