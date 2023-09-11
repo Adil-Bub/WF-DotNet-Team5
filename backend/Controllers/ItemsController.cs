@@ -19,7 +19,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult> GetItems()
         {
-            return Ok(await _db.ItemMasters);
+            return Ok(_db.ItemMasters);
         }
 
         [HttpGet]
