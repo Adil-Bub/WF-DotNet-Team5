@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using backend.Models.Request;
 using backend.services;
 using backend.Services;
 using Microsoft.AspNetCore.Http;
@@ -49,7 +50,7 @@ namespace backend.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(EmployeeLoginModel e)
+        public IActionResult Login(EmployeeLoginViewModel e)
         {
 
             var employee = _db.EmployeeMasters.FirstOrDefault(emp => emp.EmployeeId == e.EmployeeId);

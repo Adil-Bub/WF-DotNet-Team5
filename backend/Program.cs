@@ -9,10 +9,6 @@ using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = new ConfigurationBuilder()
-    .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("appsettings.json")
-    .Build();
 
 // Add services to the container.
 
@@ -52,7 +48,7 @@ builder.Services.AddDbContext<LoansContext>(options =>
 
 builder.Services.AddScoped<EmployeeDataProvider>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddSingleton<IConfiguration>(configuration);
+
 
 builder.Services.AddDataProtection();
 
@@ -63,8 +59,8 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials();
+               .AllowAnyHeader();
+               
     });
 });
 
