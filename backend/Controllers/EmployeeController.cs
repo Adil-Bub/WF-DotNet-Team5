@@ -1,6 +1,13 @@
 ﻿using backend.Models;
+using backend.services;
+using backend.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace backend.Controllers
 {
@@ -8,11 +15,15 @@ namespace backend.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
         private readonly LoansContext _db;
+       /// private readonly JwtTokenService _jwtTokenService;
 
-        public EmployeeController(LoansContext db)
+        public EmployeeController(IConfiguration configuration, LoansContext db /*,JwtTokenService jwtTokenService*/)
         {
+            _configuration= configuration;
             _db = db;
+            //_jwtTokenService = jwtTokenService;
         }
 
 
@@ -37,14 +48,28 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddEmployee(EmployeeMaster employee)
+        [HttpPost("login")]
+        public IActionResult Login(EmployeeLoginModel e)
         {
-            _db.EmployeeMasters.Add(employee);
-            await _db.SaveChangesAsync();
-            return Ok("Successfully added employee!");
-        }
 
+            var employee = _db.EmployeeMasters.FirstOrDefault(emp => emp.EmployeeId == e.EmployeeId);
+
+            //temp fix
+            if (employee==null) return Unauthorized("Invalid");
+            var (hashedPassword, salt) = PasswordHelper.HashPassword(employee.PasswordHash);
+
+            if (employee == null || !PasswordHelper.VerifyPassword(e.Password, hashedPassword, salt))
+            {
+                return Unauthorized("Invalid credentials");
+            }
+
+            // Generate JWT token
+            //var token = _jwtTokenService.GenerateToken(employee);
+            JwtTokenService jwtTokenService = new JwtTokenService(this._configuration);
+            var token = jwtTokenService.GenerateToken(employee);
+            return Ok(new { Token = token });
+        }
+     
         [HttpPut]
         public async Task<ActionResult> UpdateEmployee(EmployeeMaster employee)
         {
