@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
+using backend.Services.Interfaces;
+using backend.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,7 +47,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<LoansContext>(options =>
       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<EmployeeDataProvider>();
+builder.Services.AddScoped<IEmployeeRepo<EmployeeMaster>, EmployeeRepo>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 

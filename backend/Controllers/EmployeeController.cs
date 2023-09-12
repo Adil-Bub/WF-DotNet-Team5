@@ -20,7 +20,7 @@ namespace backend.Controllers
         private readonly LoansContext _db;
        /// private readonly JwtTokenService _jwtTokenService;
 
-        public EmployeeController(IConfiguration configuration, LoansContext db /*,JwtTokenService jwtTokenService*/)
+        public EmployeeController(IConfiguration configuration, LoansContext db)
         {
             _configuration= configuration;
             _db = db;
@@ -50,7 +50,7 @@ namespace backend.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(EmployeeLoginViewModel e)
+        public IActionResult Login(LoginRequest e)
         {
 
             var employee = _db.EmployeeMasters.FirstOrDefault(emp => emp.EmployeeId == e.EmployeeId);

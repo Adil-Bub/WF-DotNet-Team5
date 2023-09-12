@@ -2,6 +2,8 @@
 using backend.Models;
 using backend.Models.Request;
 using backend.Models.Response;
+using backend.Services;
+using backend.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,63 +18,26 @@ namespace backend.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
-        private readonly EmployeeDataProvider _employeeDataProvider;
-        private readonly IConfiguration _configuration;
+        private readonly IAuthService _authService;
 
-        public AuthorizationController(EmployeeDataProvider employeeDataProvider, IConfiguration config)
+        public AuthorizationController(IAuthService authService)
         {
-            _employeeDataProvider = employeeDataProvider;
-            _configuration = config;
+            _authService = authService;
         }
-        [AllowAnonymous]
+
         [HttpPost]
-        public IActionResult Login(EmployeeLoginViewModel login)
+        public IActionResult Login(LoginRequest login)
         {
             IActionResult response = Unauthorized();
-            EmployeeMaster? user = AuthenticateUser(login);
+            EmployeeMaster? user = _authService.AuthenticateUser(login);
 
             if (user != null)
             {
-                var tokenString = GenerateJSONWebToken(user);
-                response = Ok(new LoginResponse{ token = tokenString, EmployeeId = login.EmployeeId, Designation = user.Designation });
+                var loginResponse = _authService.GenerateJSONWebToken(user);
+                response = Ok(loginResponse);
             }
 
             return response;
-        }
-
-        private string GenerateJSONWebToken(EmployeeMaster userInfo)
-        {
-
-            if (userInfo is null)
-            {
-                throw new ArgumentNullException(nameof(userInfo));
-            }
-            List<Claim> claims = new List<Claim>();
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            claims.Add(new Claim("Username", userInfo.EmployeeName));
-            if (userInfo.Designation == "admin")
-            {
-                claims.Add(new Claim("role", "admin"));
-            }
-            else
-            {
-                claims.Add(new Claim("role", "employee"));
-
-            }
-            var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
-              _configuration["Jwt:Issuer"],
-              claims,
-              expires: DateTime.Now.AddMinutes(2),
-              signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private EmployeeMaster? AuthenticateUser(EmployeeLoginViewModel login)
-        {
-            EmployeeMaster? employee = _employeeDataProvider.GetEmployeeDetail(login);
-            return employee;
         }
 
 

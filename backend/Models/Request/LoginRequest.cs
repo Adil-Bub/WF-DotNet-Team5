@@ -1,8 +1,8 @@
 ﻿namespace backend.Models.Request
 {
-    public class EmployeeLoginViewModel
+    public class LoginRequest
     {
-        public String EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
         public string Password { get; set; }
     }
