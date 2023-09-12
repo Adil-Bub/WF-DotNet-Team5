@@ -1,4 +1,4 @@
-﻿using backend.Data;
+﻿using backend.Repository.Interfaces;
 using backend.Models;
 using backend.Models.Request;
 using backend.Models.Response;
@@ -11,15 +11,15 @@ using System.Text;
 
 namespace backend.Services
 {
-    public class AuthService: IAuthService
+    public class AuthService : IAuthService
     {
-        private readonly EmployeeRepo _employeeRepo;
+        private readonly IEmployeeRepo _employeeRepo;
         private readonly IConfiguration _configuration;
-        public AuthService(EmployeeRepo employeeRepo, IConfiguration configuration)
+        public AuthService(IEmployeeRepo employeeRepo, IConfiguration configuration)
         {
             _employeeRepo = employeeRepo;
             _configuration = configuration;
-        }      
+        }
 
         LoginResponse IAuthService.GenerateJSONWebToken(EmployeeMaster userInfo)
         {
@@ -28,9 +28,11 @@ namespace backend.Services
             {
                 throw new ArgumentNullException(nameof(userInfo));
             }
-            List<Claim> claims = new List<Claim>();
+
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            List<Claim> claims = new List<Claim>();
             claims.Add(new Claim("Username", userInfo.EmployeeName));
             if (userInfo.Designation == "admin")
             {
@@ -41,25 +43,31 @@ namespace backend.Services
                 claims.Add(new Claim("role", "employee"));
 
             }
+
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
               _configuration["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(2),
+              expires: DateTime.Now.AddMinutes(20),
               signingCredentials: credentials);
+            
             var key = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new LoginResponse(key, userInfo.EmployeeId, userInfo.Designation); 
+            return new LoginResponse(key, userInfo.EmployeeId, userInfo.Designation);
         }
 
-      
-       
+
+
 
         EmployeeMaster? IAuthService.AuthenticateUser(LoginRequest login)
         {
-            EmployeeMaster? employee = _employeeRepo.GetEmployeeDetail(login);
+            EmployeeMaster? employee = _employeeRepo.GetEmployeeById(login.EmployeeId);
+            if (employee == null || !PasswordHelper.VerifyPassword(login.Password, employee.PasswordHash, employee.Salt))
+            {
+                return null;
+            }
             return employee;
         }
 
-       
+
     }
 }

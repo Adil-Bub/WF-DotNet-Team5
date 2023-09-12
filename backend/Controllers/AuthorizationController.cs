@@ -1,16 +1,7 @@
-﻿using backend.Data;
-using backend.Models;
+﻿using backend.Models;
 using backend.Models.Request;
-using backend.Models.Response;
-using backend.Services;
 using backend.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace backend.Controllers
 {
@@ -25,7 +16,7 @@ namespace backend.Controllers
             _authService = authService;
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public IActionResult Login(LoginRequest login)
         {
             IActionResult response = Unauthorized();
