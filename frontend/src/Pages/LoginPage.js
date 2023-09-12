@@ -1,0 +1,61 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const LoginPage = () => {
+
+    const [email, setEmail] = useState('');
+    const [custpassword, setpwd] = useState('');
+    const [Error, setError] = useState('');
+
+    const handleEmail = (event) => {
+        setEmail(event.target.value);
+    }
+
+    const handlepwd = (event) => {
+        setpwd(event.target.value);
+    }
+
+    const handleSubmit = async (event) => {
+        const res = {
+            email: email,
+            custpassword: custpassword
+        }
+        event.preventDefault();
+        try {
+
+            axios
+                .post('https://localhost:7121/api/Login', res)
+                //.get('./data.json')
+                .then((response) => {
+                    console.log(response.data);
+                    const { custpassword, email } = response.data
+                    if (res.email == email && res.custpassword == custpassword) {
+                        alert('Successful Login');
+                    }
+                    else {
+                        alert('Invalid Details');
+                    }
+                });
+        }
+        catch (error) {
+            setError(error.Message);
+        }
+    }
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    Email: <input type="text" value={email} onChange={handleEmail} />
+                </div>
+                <div>
+                    Password: <input type="password" value={custpassword} onChange={handlepwd} />
+                </div>
+                <div>
+                    <button type="submit"> Login </button>
+                </div>
+            </form>
+        </div>
+    );
+}
+
+export default LoginPage;
