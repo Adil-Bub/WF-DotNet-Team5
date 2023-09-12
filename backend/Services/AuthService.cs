@@ -55,19 +55,39 @@ namespace backend.Services
             return new LoginResponse(key, userInfo.EmployeeId, userInfo.Designation);
         }
 
-
-
-
-        EmployeeMaster? IAuthService.AuthenticateUser(LoginRequest login)
+        EmployeeMaster? IAuthService.AuthenticateUser(LoginRequest loginRequest)
         {
-            EmployeeMaster? employee = _employeeRepo.GetEmployeeById(login.EmployeeId);
-            if (employee == null || !PasswordHelper.VerifyPassword(login.Password, employee.PasswordHash, employee.Salt))
+            EmployeeMaster? employee = _employeeRepo.GetEmployeeById(loginRequest.EmployeeId);
+            if (employee == null || !PasswordHelper.VerifyPassword(loginRequest.Password, employee.PasswordHash, employee.Salt))
             {
                 return null;
             }
             return employee;
         }
 
+        EmployeeMaster? IAuthService.RegisterUser(RegisterRequest registerRequest)
+        {
+            if(_employeeRepo.GetEmployeeById(registerRequest.EmployeeId) != null) //userId already exists
+            {
+                return null;
+            }
+            var (hashedPassword, salt) = PasswordHelper.HashPassword(registerRequest.Password);
 
+            var employee = new EmployeeMaster(hashedPassword, salt, registerRequest);
+            try
+            {
+                bool status = _employeeRepo.AddEmployee(employee);
+                if(status)
+                {
+                    return _employeeRepo.GetEmployeeById(employee.EmployeeId) ;
+                }
+            }
+            catch(Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return null;
+        }
     }
 }

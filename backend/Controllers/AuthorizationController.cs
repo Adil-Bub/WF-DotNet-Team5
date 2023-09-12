@@ -2,6 +2,7 @@
 using backend.Models.Request;
 using backend.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace backend.Controllers
 {
@@ -26,6 +27,21 @@ namespace backend.Controllers
             {
                 var loginResponse = _authService.GenerateJSONWebToken(user);
                 response = Ok(loginResponse);
+            }
+
+            return response;
+        }
+
+        [HttpPost("register")]
+        public IActionResult Register(RegisterRequest registerRequest)
+        {
+            IActionResult response = Unauthorized();
+            EmployeeMaster? user = _authService.RegisterUser(registerRequest);
+
+            if (user != null)
+            {
+                var registerResponse = _authService.GenerateJSONWebToken(user);
+                response = Ok(registerResponse);
             }
 
             return response;

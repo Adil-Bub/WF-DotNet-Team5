@@ -8,5 +8,6 @@ namespace backend.Services.Interfaces
     {
         public EmployeeMaster? AuthenticateUser(LoginRequest login);
         public LoginResponse GenerateJSONWebToken(EmployeeMaster userInfo);
+        public EmployeeMaster RegisterUser(RegisterRequest registerRequest);
     }
 }
