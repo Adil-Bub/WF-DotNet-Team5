@@ -7,7 +7,7 @@ public partial class EmployeeMaster
 {
     public string EmployeeId { get; set; } = null!;
 
-    public string Password { get; set; } = null!;
+    public string PasswordHash { get; set; } = null!;
 
     public string Salt { get; set; } = null!;
 
