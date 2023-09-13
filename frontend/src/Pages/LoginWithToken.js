@@ -4,11 +4,11 @@ import { AppContext } from "../Context/App.context";
 import {useNavigate} from 'react-router-dom';
 //npm install react-router-dom 
 const LoginWithToken = () => {
-    const [loginobj,setLogin] = useState({username: '', password: ''});
+    const [loginobj,setLogin] = useState({EmployeeId: '', Password: ''});
     const [username,setUsername] =useState('');
     const [password,setPassword] = useState('');
     const [error,setError] = useState(false);
-    const{user,setUser} = useState(AppContext);
+    const{user,setUser} = useContext(AppContext);
     const navigate = useNavigate();
     const handleUsername = (event) => {
         setUsername(event.target.value);
@@ -18,17 +18,18 @@ const LoginWithToken = () => {
     }
     
     const handleSubmit = async (event) => {
-        loginobj.username= username;
-        loginobj.password=password;
+        loginobj.EmployeeId= username;
+        loginobj.Password=password;
+        console.log("login", loginobj);
         event.preventDefault();
         try {
 
             const response = await axios
-                .post('https://localhost:7121/api/Authorization', loginobj)
+                .post('https://localhost:7189/api/Authorization/login', loginobj)
                 //.get('./data.json')
                 setUser(response.data);
                 console.log(response.data);
-                if(response.data.user_Id==='admin')
+                if(response.data.designation==='admin')
                 {
                     navigate('/profile');
                 }
