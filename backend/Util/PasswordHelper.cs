@@ -1,6 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Security.Cryptography;
 
 namespace backend.Services
 {
@@ -8,7 +6,7 @@ namespace backend.Services
     {
 
         private const int Iterations = 10000;
-        private const int SaltSize = 32; // 256 bits
+        private const int SaltSize = 16; // 256 bits
 
         public static (string Hash, string Salt) HashPassword(string password)
         {
