@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import { AppProvider } from './Context/App.context';
-import Login from './Pages/LoginPage';
 import ProfilePage from './Pages/ProfilePage';
-import LoginwithToken from './Pages/LoginWithToken.js';
+import LoginwithToken from './Pages/LoginWithToken';
+import RegistrationPage from './Pages/RegistrationPage';
 import {createBrowserRouter} from 'react-router-dom';
 import {RouterProvider} from 'react-router-dom';
 import ProtectedRoute from './Component/ProtectedRoute.js';
@@ -16,6 +16,10 @@ const router = createBrowserRouter([
   {
     path:"/login",
     element:<LoginwithToken/>,
+  },
+  {
+    path:"/register",
+    element:<RegistrationPage/>,
   },
   {
     path:"/profile",
