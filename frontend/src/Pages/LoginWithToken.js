@@ -47,7 +47,7 @@ const LoginWithToken = () => {
                     <form class="card-body" onSubmit={handleSubmit}>
                         <h3 class="text-center">Login</h3>
                         <div class="mb-3">
-                            <label for="employeeId" class="form-label">Employee id</label>
+                            <label htmlFor="employeeId" class="form-label">Employee id</label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -58,7 +58,7 @@ const LoginWithToken = () => {
                             />
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
+                            <label htmlFor="password" class="form-label">Password</label>
                             <input
                                 type="password"
                                 class="form-control"
