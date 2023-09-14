@@ -20,22 +20,22 @@ const UserDashboard = () => {
         navigate('/dashboard/user/items=purchased');
     }
     return (
-        <div class="text-center">
+        <div className="text-center">
             <h1>
                 Loan Management Application  
             </h1>
             <h4>
                 Welcome {user.employeeId} to your Dashboard. 
             </h4>
-            <div class="container w-50 p-5 mb-4 text-center fs-5">
-                <div class="d-inline-flex gap-3">
-                    <button type="button" class="btn btn-outline-dark" onClick={navigateToViewLoans}>View Loans</button>
+            <div className="container w-50 p-5 mb-4 text-center fs-5">
+                <div className="d-inline-flex gap-3">
+                    <button type="button" className="btn btn-outline-dark" onClick={navigateToViewLoans}>View Loans</button>
                 
                
-                    <button type="button" class="btn btn-outline-dark" onClick={navigateToApplyLoan}>Apply Loans</button>
+                    <button type="button" className="btn btn-outline-dark" onClick={navigateToApplyLoan}>Apply Loans</button>
                 
                 
-                    <button type="button" class="btn btn-outline-dark" onClick={navigateToItemsPurchased}>Items Purchased</button>
+                    <button type="button" className="btn btn-outline-dark" onClick={navigateToItemsPurchased}>Items Purchased</button>
                 </div> 
             </div>
         </div>

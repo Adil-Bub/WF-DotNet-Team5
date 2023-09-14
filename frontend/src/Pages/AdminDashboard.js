@@ -20,7 +20,7 @@ const AdminDashboard = () => {
         navigate('/dashboard/admin/all-items');
     }
     return (
-        <div class="text-center">
+        <div className="text-center">
             <h1>
             Loan Management Application  
             </h1>
@@ -28,15 +28,15 @@ const AdminDashboard = () => {
                 Admin Dashboard for {user.employeeId}
             </h4>
 
-            <div class="container w-50 p-5 mb-4 text-center fs-5">
-                <div class="d-inline-flex gap-3">
-                    <button type="button" class="btn btn-outline-dark" onClick={navigateToCustomerData}>Customer Data Management</button>
+            <div className="container w-50 p-5 mb-4 text-center fs-5">
+                <div className="d-inline-flex gap-3">
+                    <button type="button" className="btn btn-outline-dark" onClick={navigateToCustomerData}>Customer Data Management</button>
                 
                
-                    <button type="button" class="btn btn-outline-dark" onClick={navigateToLoanCardManagement}>Loan Card Management</button>
+                    <button type="button" className="btn btn-outline-dark" onClick={navigateToLoanCardManagement}>Loan Card Management</button>
                 
                 
-                    <button type="button" class="btn btn-outline-dark" onClick={navigateToItemsMasterData}>Items Master Data</button>
+                    <button type="button" className="btn btn-outline-dark" onClick={navigateToItemsMasterData}>Items Master Data</button>
                 </div> 
             </div>
         </div>

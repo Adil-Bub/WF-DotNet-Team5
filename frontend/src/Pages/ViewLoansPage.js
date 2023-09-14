@@ -10,7 +10,7 @@ const ViewLoansPage = () => {
 
    
     return (
-        <div class="text-center">
+        <div className="text-center">
             <h1>
                 Loan Management Application  
             </h1>

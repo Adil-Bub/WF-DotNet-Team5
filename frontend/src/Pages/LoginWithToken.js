@@ -28,9 +28,10 @@ const LoginWithToken = () => {
             //.get('./data.json')
             setUser(response.data);
             console.log(response.data);
-            if (response.data.designation === 'admin') {
+            if (response.data.designation === 'admin') 
+            {
                 navigate('/dashboard/admin');
-                }
+            }
                 else
                 {
                     navigate('/dashboard/user');
@@ -43,37 +44,37 @@ const LoginWithToken = () => {
     }
     return (
         <div>
-            <nav class="navbar navbar-light bg-light">
-                <h4 class="p-2">Loan management system</h4>
+            <nav className="navbar navbar-light bg-light">
+                <h4 className="p-2">Loan management system</h4>
             </nav>
-            <div class="container d-flex justify-content-center align-items-center vh-100">
-                <div class="card shadow p-4">
-                    <form class="card-body" onSubmit={handleSubmit}>
-                        <h3 class="text-center">Login</h3>
-                        <div class="mb-3">
-                            <label htmlFor="employeeId" class="form-label">Employee id</label>
+            <div className="container d-flex justify-content-center align-items-center vh-100">
+                <div className="card shadow p-4">
+                    <form className="card-body" onSubmit={handleSubmit}>
+                        <h3 className="text-center">Login</h3>
+                        <div className="mb-3">
+                            <label htmlFor="employeeId" className="form-label">Employee id</label>
                             <input
                                 type="text"
-                                class="form-control"
+                                className="form-control"
                                 id="employeeId"
                                 placeholder="Enter employee id"
                                 value={username}
                                 onChange={handleUsername}
                             />
                         </div>
-                        <div class="mb-3">
-                            <label htmlFor="password" class="form-label">Password</label>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password</label>
                             <input
                                 type="password"
-                                class="form-control"
+                                className="form-control"
                                 id="password"
                                 placeholder="Enter password"
                                 value={password}
                                 onChange={handlepwd}
                             />
                         </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-light">Submit</button>
+                        <div className="d-grid gap-2">
+                            <button type="submit" className="btn btn-primary btn-light">Submit</button>
                         </div>
                     </form>
                 </div>
