@@ -4,11 +4,11 @@ import { AppContext } from "../Context/App.context";
 import {useNavigate} from 'react-router-dom';
 //npm install react-router-dom 
 const LoginWithToken = () => {
-    const [loginobj,setLogin] = useState({username: '', password: ''});
+    const [loginobj,setLogin] = useState({EmployeeId: '', Password: ''});
     const [username,setUsername] =useState('');
     const [password,setPassword] = useState('');
     const [error,setError] = useState(false);
-    const{user,setUser} = useState(AppContext);
+    const{user,setUser} = useContext(AppContext);
     const navigate = useNavigate();
     const handleUsername = (event) => {
         setUsername(event.target.value);
@@ -16,42 +16,69 @@ const LoginWithToken = () => {
     const handlepwd = (event) => {
         setPassword(event.target.value);
     }
-    
+
     const handleSubmit = async (event) => {
-        loginobj.username= username;
-        loginobj.password=password;
+        loginobj.EmployeeId = username;
+        loginobj.Password = password;
         event.preventDefault();
         try {
 
             const response = await axios
-                .post('https://localhost:7121/api/Authorization', loginobj)
-                //.get('./data.json')
-                setUser(response.data);
-                console.log(response.data);
-                if(response.data.user_Id==='admin')
+                .post('https://localhost:7189/api/Authorization/login', loginobj)
+            //.get('./data.json')
+            setUser(response.data);
+            console.log(response.data);
+            if (response.data.designation === 'admin') 
+            {
+                navigate('/dashboard/admin');
+            }
+                else
                 {
-                    navigate('/profile');
+                    navigate('/dashboard/user');
                 }
-               
+
         }
         catch (error) {
-            setError(error.Message);
+            setError(true);
         }
     }
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    Username: <input type="text" value={username} onChange={handleUsername} />
+            <nav className="navbar navbar-light bg-light">
+                <h4 className="p-2">Loan management system</h4>
+            </nav>
+            <div className="container d-flex justify-content-center align-items-center vh-100">
+                <div className="card shadow p-4">
+                    <form className="card-body" onSubmit={handleSubmit}>
+                        <h3 className="text-center">Login</h3>
+                        <div className="mb-3">
+                            <label htmlFor="employeeId" className="form-label">Employee id</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="employeeId"
+                                placeholder="Enter employee id"
+                                value={username}
+                                onChange={handleUsername}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                placeholder="Enter password"
+                                value={password}
+                                onChange={handlepwd}
+                            />
+                        </div>
+                        <div className="d-grid gap-2">
+                            <button type="submit" className="btn btn-primary btn-light">Submit</button>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    Password: <input type="password" value={password} onChange={handlepwd} />
-                </div>
-                <div>
-                    <button type="submit"> Login </button>
-                </div>
-                {Error &&<div>Invalid Details</div>}
-            </form>
+            </div>
         </div>
     );
 }
