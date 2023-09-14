@@ -28,6 +28,17 @@
   color: #61dafb;
 }
 
+.grid {
+  display: grid;
+  justify-content: center;
+  padding: 10px;
+  background-color: rgb(217, 207, 255);
+}
+
+.item {
+  padding: 10px;
+  background-color: #eee;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
