@@ -31,12 +31,16 @@ const LoginWithToken = () => {
                 console.log(response.data);
                 if(response.data.designation==='admin')
                 {
-                    navigate('/profile');
+                    navigate('/dashboard/admin');
+                }
+                else
+                {
+                    navigate('/dashboard/user');
                 }
                
         }
         catch (error) {
-            setError(error.Message);
+            setError(true);
         }
     }
     return (

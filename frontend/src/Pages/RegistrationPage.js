@@ -47,26 +47,24 @@ const RegistrationPage = () => {
     }
     
     const handleSubmit = async (event) => {
-        signUpObj.EID = empID;
-        signUpObj.Pass = empPass;
-        signUpObj.Name = empName;
-        signUpObj.Desg = empDesg;
-        signUpObj.Dept = empDept;
-        signUpObj.Gen = empGen;
-        signUpObj.DoB = empDoB;
-        signUpObj.DoJ = empDoJ;
+        signUpObj.EmployeeId = empID;
+        signUpObj.Password = empPass;
+        signUpObj.EmployeeName = empName;
+        signUpObj.Designation = "empDesg";
+        signUpObj.Department = empDept;
+        signUpObj.Gender = empGen;
+        signUpObj.DateOfBirth = empDoB;
+        signUpObj.DateOfJoining = empDoJ;
         event.preventDefault();
         try {
 
             const response = await axios
-                .post('https://localhost:7189/api/Authorization', signUpObj)
+                .post('https://localhost:7189/api/Authorization/register', signUpObj)
                 //.get('./data.json')
                 setSignUpObj(response.data);
                 console.log(response.data);
-                if(response.data.user_Id==='admin')
-                {
-                    navigate('/profile');
-                }
+                navigate('/dashboard/user');
+                
                
         }
         catch (error) {
@@ -74,53 +72,53 @@ const RegistrationPage = () => {
         }
     }
     return (
-        <div class="text-center">
+        <div className="text-center">
             <h1>       
                 Hi User👋
             </h1>
-            <h6 class="mb-4">
+            <h6 className="mb-4">
                 Please Enter Your Details   
             </h6>
             <form  onSubmit={handleSubmit}>
                 
-                <div class="container w-50 p-5 mb-4 text-center fs-5">
-                    <div class="row">
-                        <div class="mb-3 col">
-                        Employee ID<input type="text" class="form-control" value={empID} onChange={handleEmpID} />
+                <div className="container w-50 p-5 mb-4 text-center fs-5">
+                    <div className="row">
+                        <div className="mb-3 col">
+                        Employee ID<input type="text" className="form-control" value={empID} onChange={handleEmpID} />
                         </div>
-                        <div class="mb-3 col">
-                        Create Password<input type="password" class="form-control" value={empPass} onChange={handleEmpPass} />
+                        <div className="mb-3 col">
+                        Create Password<input type="password" className="form-control" value={empPass} onChange={handleEmpPass} />
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="mb-3">
-                            Create Username<input type="text" class="form-control"  value={empName} onChange={handleEmpName} />
+                    <div className="row mt-3">
+                        <div className="mb-3">
+                            Create Username<input type="text" className="form-control"  value={empName} onChange={handleEmpName} />
                         </div>
                     </div>
                     
-                    <div class="row mt-3">
-                        <div class="mb-3 col">
-                            Designation<input type="text"  class="form-control" value={empDesg} onChange={handleEmpDesg} />
+                    <div className="row mt-3">
+                        <div className="mb-3 col">
+                            Designation<input type="text"  className="form-control" value={empDesg} onChange={handleEmpDesg} />
                         </div>
-                        <div class="mb-3 col">
-                            Department<input type="text"  class="form-control" value={empDept} onChange={handleEmpDept} />
+                        <div className="mb-3 col">
+                            Department<input type="text"  className="form-control" value={empDept} onChange={handleEmpDept} />
                         </div>                    
-                        <div class="mb-3 col">
-                            Gender<input type="text"  class="form-control" value={empGen} onChange={handleEmpGen} />
+                        <div className="mb-3 col">
+                            Gender<input type="text"  className="form-control" value={empGen} onChange={handleEmpGen} />
                         </div>
                     </div>
 
-                    <div class="row mt-3">
-                        <div class="mb- col">
-                            Date of Birth<input type="text"  class="form-control" value={empDoB} onChange={handleEmpDoB} />
+                    <div className="row mt-3">
+                        <div className="mb- col">
+                            Date of Birth<input type="text"  className="form-control" value={empDoB} onChange={handleEmpDoB} />
                         </div>
-                        <div class="mb-3 col">
-                            Date of Joining<input type="text"  class="form-control" value={empDoJ} onChange={handleEmpDoJ} />
+                        <div className="mb-3 col">
+                            Date of Joining<input type="text"  className="form-control" value={empDoJ} onChange={handleEmpDoJ} />
                         </div>
                     </div>
 
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-primary btn-lg"> Sign-Up </button>
+                    <div className="mt-3">
+                        <button type="submit" className="btn btn-primary btn-lg"> Sign-Up </button>
                     </div>
                 </div>
             </form>
