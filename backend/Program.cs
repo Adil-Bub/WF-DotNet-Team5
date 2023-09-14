@@ -49,6 +49,7 @@ builder.Services.AddDbContext<LoansContext>(options =>
 
 builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 
 builder.Services.AddDataProtection();
@@ -67,6 +68,15 @@ builder.Services.AddCors(options =>
 
 var configuration = builder.Configuration;
 
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("AdminRights", policy =>
+//    {
+//        policy.RequireAuthenticatedUser();
+//        policy.RequireRole("admin");
+//    });
+//});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -80,8 +90,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-var app = builder.Build();
 
+var app = builder.Build();
+app.UseAuthentication();
+
+app.UseAuthorization();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -93,9 +106,7 @@ app.UseCors();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 
-app.UseAuthentication();
 
 app.UseRouting();
 
