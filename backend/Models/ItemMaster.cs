@@ -17,5 +17,5 @@ public partial class ItemMaster
 
     public int ItemValuation { get; set; }
 
-    public virtual ICollection<EmployeeIssueDetail> EmployeeIssueDetails { get; set; } = new List<EmployeeIssueDetail>();
+    public virtual ICollection<EmployeeRequestDetail> EmployeeRequestDetails { get; set; } = new List<EmployeeRequestDetail>();
 }

@@ -15,11 +15,11 @@ public partial class LoansContext : DbContext
     {
     }
 
-    public virtual DbSet<EmployeeCardDetail> EmployeeCardDetails { get; set; }
-
-    public virtual DbSet<EmployeeIssueDetail> EmployeeIssueDetails { get; set; }
+    public virtual DbSet<EmployeeLoanCardDetail> EmployeeLoanCardDetails { get; set; }
 
     public virtual DbSet<EmployeeMaster> EmployeeMasters { get; set; }
+
+    public virtual DbSet<EmployeeRequestDetail> EmployeeRequestDetails { get; set; }
 
     public virtual DbSet<ItemMaster> ItemMasters { get; set; }
 
@@ -31,12 +31,16 @@ public partial class LoansContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<EmployeeCardDetail>(entity =>
+        modelBuilder.Entity<EmployeeLoanCardDetail>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Employee_card_details");
+            entity.HasKey(e => e.CardId).HasName("PK__Employee__45A7902BF84B4B5E");
 
+            entity.ToTable("Employee_loan_card_details");
+
+            entity.Property(e => e.CardId)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Card_id");
             entity.Property(e => e.CardIssueDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("date")
@@ -50,54 +54,18 @@ public partial class LoansContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Loan_id");
 
-            entity.HasOne(d => d.Employee).WithMany()
+            entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeLoanCardDetails)
                 .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__Employee___Emplo__36B12243");
+                .HasConstraintName("FK__Employee___Emplo__38996AB5");
 
-            entity.HasOne(d => d.Loan).WithMany()
+            entity.HasOne(d => d.Loan).WithMany(p => p.EmployeeLoanCardDetails)
                 .HasForeignKey(d => d.LoanId)
-                .HasConstraintName("FK__Employee___Loan___37A5467C");
-        });
-
-        modelBuilder.Entity<EmployeeIssueDetail>(entity =>
-        {
-            entity.HasKey(e => e.IssueId).HasName("PK__Employee__B29E2F90336C55D8");
-
-            entity.ToTable("Employee_issue_details");
-
-            entity.Property(e => e.IssueId)
-                .HasMaxLength(6)
-                .IsUnicode(false)
-                .HasColumnName("Issue_id");
-            entity.Property(e => e.EmployeeId)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("Employee_id");
-            entity.Property(e => e.IssueDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("date")
-                .HasColumnName("Issue_date");
-            entity.Property(e => e.ItemId)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("Item_id");
-            entity.Property(e => e.ReturnDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("date")
-                .HasColumnName("Return_date");
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeIssueDetails)
-                .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__Employee___Emplo__2F10007B");
-
-            entity.HasOne(d => d.Item).WithMany(p => p.EmployeeIssueDetails)
-                .HasForeignKey(d => d.ItemId)
-                .HasConstraintName("FK__Employee___Item___300424B4");
+                .HasConstraintName("FK__Employee___Loan___398D8EEE");
         });
 
         modelBuilder.Entity<EmployeeMaster>(entity =>
         {
-            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__781228D97CA45E25");
+            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__781228D983EB6E81");
 
             entity.ToTable("Employee_master");
 
@@ -106,7 +74,6 @@ public partial class LoansContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Employee_id");
             entity.Property(e => e.DateOfBirth)
-                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("date")
                 .HasColumnName("Date_of_birth");
             entity.Property(e => e.DateOfJoining)
@@ -136,9 +103,49 @@ public partial class LoansContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<EmployeeRequestDetail>(entity =>
+        {
+            entity.HasKey(e => e.RequestId).HasName("PK__Employee__E9C0AF0B31B1283C");
+
+            entity.ToTable("Employee_request_details");
+
+            entity.Property(e => e.RequestId)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Request_id");
+            entity.Property(e => e.EmployeeId)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Employee_id");
+            entity.Property(e => e.ItemId)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Item_id");
+            entity.Property(e => e.RequestDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("date")
+                .HasColumnName("Request_date");
+            entity.Property(e => e.RequestStatus)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasDefaultValueSql("('Pending Approval')")
+                .HasColumnName("Request_status");
+            entity.Property(e => e.ReturnDate)
+                .HasColumnType("date")
+                .HasColumnName("Return_date");
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeRequestDetails)
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("FK__Employee___Emplo__32E0915F");
+
+            entity.HasOne(d => d.Item).WithMany(p => p.EmployeeRequestDetails)
+                .HasForeignKey(d => d.ItemId)
+                .HasConstraintName("FK__Employee___Item___33D4B598");
+        });
+
         modelBuilder.Entity<ItemMaster>(entity =>
         {
-            entity.HasKey(e => e.ItemId).HasName("PK__Item_mas__3FB403AC0D5BA273");
+            entity.HasKey(e => e.ItemId).HasName("PK__Item_mas__3FB403ACA918D505");
 
             entity.ToTable("Item_master");
 
@@ -168,7 +175,7 @@ public partial class LoansContext : DbContext
 
         modelBuilder.Entity<LoanCardMaster>(entity =>
         {
-            entity.HasKey(e => e.LoanId).HasName("PK__Loan_car__937D5B6B29A008C0");
+            entity.HasKey(e => e.LoanId).HasName("PK__Loan_car__937D5B6B963D0A8B");
 
             entity.ToTable("Loan_card_master");
 
@@ -178,7 +185,7 @@ public partial class LoansContext : DbContext
                 .HasColumnName("Loan_id");
             entity.Property(e => e.DurationInYears).HasColumnName("Duration_in_years");
             entity.Property(e => e.LoanType)
-                .HasMaxLength(15)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("Loan_type");
         });

@@ -1,3 +1,4 @@
+drop database loans
 create database loans;
 use loans;
 
@@ -26,16 +27,15 @@ Date_of_joining DATE default getdate()
 );
 
 --stores the loan card categories
---have added Item_category as foreign key
 create table Loan_card_master(
-Loan_id varchar(6) primary key,
-Loan_type varchar(15) references Item_master(Item_category),
+Loan_id varchar(100) primary key,
+Loan_type varchar(50),
 Duration_in_years int not null check (Duration_in_years between 0 and 99)
 );
 
 --stores ALL the requests of all employees
 create table Employee_request_details(
-Request_id varchar(6) primary key,
+Request_id varchar(100) primary key,
 Employee_id varchar(100) references Employee_master(Employee_id),
 Item_id varchar(100) references Item_master(Item_id),
 Request_date DATE default getdate(),

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace backend.Models;
 
-public partial class EmployeeCardDetail
+public partial class EmployeeLoanCardDetail
 {
+    public string CardId { get; set; } = null!;
+
     public string? EmployeeId { get; set; }
 
     public string? LoanId { get; set; }
