@@ -1,7 +1,7 @@
 import React , {useContext,useState} from "react";
 import axios from 'axios';
 import { AppContext } from "../Context/App.context";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link } from 'react-router-dom';
 //npm install react-router-dom 
 const LoginWithToken = () => {
     const [loginobj,setLogin] = useState({EmployeeId: '', Password: ''});
@@ -76,6 +76,15 @@ const LoginWithToken = () => {
                         <div className="d-grid gap-2">
                             <button type="submit" className="btn btn-primary btn-light">Submit</button>
                         </div>
+                        {error && (
+              <div className="alert alert-danger mt-3" role="alert">
+                Login failed. Please check your credentials.
+              </div>
+            )}
+            <p className="mt-3">
+              Don't have an account?{" "}
+              <Link to="/register">Sign Up</Link>
+            </p>
                     </form>
                 </div>
             </div>
