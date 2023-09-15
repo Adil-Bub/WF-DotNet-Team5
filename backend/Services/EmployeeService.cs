@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using backend.Models.Request;
 using backend.Models.Response;
 using backend.Repository.Interfaces;
 using backend.Services.Interfaces;
@@ -22,6 +23,11 @@ namespace backend.Services
         {
             var employee = _employeeRepo.GetEmployeeById(id);
             return (employee!=null) ? new EmployeeResponse(employee) : null ;
+        }
+
+        public bool UpdateEmployee(UpdateEmployeeRequest employee)
+        {
+            return _employeeRepo.UpdateEmployee(employee);
         }
     }
 }

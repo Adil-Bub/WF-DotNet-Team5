@@ -22,6 +22,7 @@
         {
             EmployeeId = employee.EmployeeId;
             EmployeeName = employee.EmployeeName;
+            Designation = employee.Designation;
             Department = employee.Department;
             Gender = employee.Gender;
             DateOfBirth = employee.DateOfBirth;

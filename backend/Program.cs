@@ -85,6 +85,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+            ValidateAudience = false,
             ValidIssuer = configuration["Jwt:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
         };
@@ -92,9 +93,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 var app = builder.Build();
-app.UseAuthentication();
 
-app.UseAuthorization();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -103,12 +102,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
+app.UseRouting();
+app.UseAuthentication();
 
+app.UseAuthorization();
 app.UseHttpsRedirection();
 
 
 
-app.UseRouting();
+
 
 app.MapControllers();
 

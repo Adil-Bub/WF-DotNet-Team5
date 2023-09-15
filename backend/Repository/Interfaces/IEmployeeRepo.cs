@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using backend.Models.Response;
+using backend.Models.Request;
 
 namespace backend.Repository.Interfaces
 {
@@ -8,5 +9,6 @@ namespace backend.Repository.Interfaces
         public EmployeeMaster? GetEmployeeById(string id);
         public bool AddEmployee(EmployeeMaster employee);
         public List<EmployeeResponse> GetAllEmployees();
+        public bool UpdateEmployee(UpdateEmployeeRequest employee);
     }
 }

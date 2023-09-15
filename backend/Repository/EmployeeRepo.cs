@@ -1,7 +1,9 @@
 ﻿using backend.Models;
 using backend.Models.Response;
+using backend.Models.Request;
 using backend.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using backend.Services;
 
 namespace backend.Repository
 {
@@ -52,6 +54,38 @@ namespace backend.Repository
         {
             var employee = _db.EmployeeMasters.FirstOrDefault(employee => employee.EmployeeId == employeeId);
             return employee;
+        }
+
+        public bool UpdateEmployee(UpdateEmployeeRequest employee)
+        {
+            var existingEmployee = _db.EmployeeMasters.FirstOrDefault(empl => empl.EmployeeId == employee.EmployeeId);
+            Console.WriteLine("employee is " + employee);
+            if (existingEmployee != null) 
+            {
+                existingEmployee.EmployeeName = employee.EmployeeName ?? existingEmployee.EmployeeName;
+                existingEmployee.Designation = employee.Designation ?? existingEmployee.Designation;
+                existingEmployee.Department = employee.Department ?? existingEmployee.Department;
+                existingEmployee.Gender = employee.Gender ?? existingEmployee.Gender;
+                existingEmployee.DateOfBirth = employee.DateOfBirth ?? existingEmployee.DateOfBirth;
+
+                if(employee.Password!=null)
+                {
+                    (existingEmployee.PasswordHash, existingEmployee.Salt) = PasswordHelper.HashPassword(employee.Password);
+                }
+
+                try
+                {
+                    _db.Entry(existingEmployee).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _db.SaveChangesAsync();
+                    return true;
+                }
+                catch(Exception e)
+                {
+                    return false;
+                }
+            }
+
+            return false;
         }
 
     }
