@@ -9,5 +9,6 @@ namespace backend.Services.Interfaces
         public List<EmployeeResponse>? GetAllEmployees();
         public EmployeeResponse? GetEmployeeById(string id);
         public bool UpdateEmployee(UpdateEmployeeRequest employee);
+        public EmployeeResponse? DeleteEmployee(string employeeId);
     }
 }

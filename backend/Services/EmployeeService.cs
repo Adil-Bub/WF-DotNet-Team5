@@ -29,5 +29,10 @@ namespace backend.Services
         {
             return _employeeRepo.UpdateEmployee(employee);
         }
+
+        public EmployeeResponse? DeleteEmployee(string employeeId)
+        {
+            return _employeeRepo.DeleteEmployee(employeeId);
+        }
     }
 }

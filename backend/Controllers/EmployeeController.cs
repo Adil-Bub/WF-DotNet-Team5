@@ -63,32 +63,23 @@ namespace backend.Controllers
             return NoContent();
         }
 
-        //[HttpDelete]
-        //public async Task<ActionResult> DeleteEmployee(string employeeId)
-        //{
-        //    if (employeeId==null)
-        //    {
-        //        return BadRequest("Please enter an employee id");
-        //    }
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "admin,employee")]
+        public async Task<ActionResult> DeleteEmployee(string id)
+        {
+            if (id==null)
+            {
+                return BadRequest("Please enter an employee id");
+            }
 
-        //    bool deleted = _employeeService.DeeleteEmployee(employeeId);
-        //    if(!deleted)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok()
-        //    EmployeeMaster? employee = await _db.EmployeeMasters.FindAsync(eId);
-        //    if (employee == null)
-        //    {
-        //        return BadRequest("Employee does not exist!");
-        //    }
-        //    else
-        //    {
-        //        _db.EmployeeMasters.Remove(employee);
-        //        await _db.SaveChangesAsync();
-        //        return Ok("Employee details removed!");
-        //    }
-        //}
+            var deletedEmployee = _employeeService.DeleteEmployee(id);
+            if (deletedEmployee == null)
+            {
+                return NotFound();
+            }
+            return Ok(deletedEmployee);
+           
+        }
 
     }
 }

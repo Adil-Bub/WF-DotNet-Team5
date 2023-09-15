@@ -4,6 +4,7 @@ using backend.Models.Request;
 using backend.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using backend.Services;
+using System.Security.Cryptography;
 
 namespace backend.Repository
 {
@@ -88,5 +89,29 @@ namespace backend.Repository
             return false;
         }
 
+        public EmployeeResponse? DeleteEmployee(string employeeId)
+        {
+            EmployeeMaster? employee =  _db.EmployeeMasters.Find(employeeId);
+            if (employee == null)
+            {
+                return null;
+            }
+            else
+            {
+                _db.EmployeeMasters.Remove(employee);
+                _db.SaveChanges();
+                var deletedEmployee = new EmployeeResponse
+                {
+                    EmployeeId = employee.EmployeeId,
+                    EmployeeName = employee.EmployeeName,
+                    Designation = employee.Designation,
+                    Department = employee.Department,
+                    Gender = employee.Gender,
+                    DateOfBirth = employee.DateOfBirth,
+                    DateOfJoining = employee.DateOfJoining
+                };
+                return deletedEmployee;
+            }
+        }
     }
 }
