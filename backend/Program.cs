@@ -49,6 +49,7 @@ builder.Services.AddDbContext<LoansContext>(options =>
 
 builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 
 builder.Services.AddDataProtection();
@@ -67,6 +68,15 @@ builder.Services.AddCors(options =>
 
 var configuration = builder.Configuration;
 
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("AdminRights", policy =>
+//    {
+//        policy.RequireAuthenticatedUser();
+//        policy.RequireRole("admin");
+//    });
+//});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -75,10 +85,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+            ValidateAudience = false,
             ValidIssuer = configuration["Jwt:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
         };
     });
+
 
 var app = builder.Build();
 
@@ -90,14 +102,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
+app.UseRouting();
 app.UseAuthentication();
 
-app.UseRouting();
+app.UseAuthorization();
+app.UseHttpsRedirection();
+
+
+
+
 
 app.MapControllers();
 

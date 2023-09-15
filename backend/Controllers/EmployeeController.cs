@@ -1,4 +1,8 @@
 ﻿using backend.Models;
+using backend.Models.Request;
+using backend.Models.Response;
+using backend.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -7,59 +11,74 @@ namespace backend.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
-        private readonly LoansContext _db;
+        private readonly IEmployeeService _employeeService;
 
-        public EmployeeController(IConfiguration configuration, LoansContext db)
+        public EmployeeController(IEmployeeService employeeService)
         {
-            _configuration= configuration;
-            _db = db;
+            _employeeService = employeeService;
         }
 
 
-        [HttpGet]
+        [HttpGet("all")]
+        [Authorize(Roles ="admin")]
         public async Task<ActionResult> GetEmployees()
         {
-            return Ok(_db.EmployeeMasters);
+            var response = _employeeService.GetAllEmployees();
+            return Ok(response);
         }
 
-        [HttpGet]
-        [Route("findById")]
-        public async Task<ActionResult> GetEmployeeById(string id)
+        [HttpGet("{id}")]
+        [Authorize(Roles = "admin,employee")]
+        public async Task<ActionResult<EmployeeResponse>> GetEmployeeById(string id)
         {
-            EmployeeMaster? employee = await _db.EmployeeMasters.FindAsync(id);
-            if (employee == null)
+            var employee = _employeeService.GetEmployeeById(id);
+            if(employee==null)
             {
-                return BadRequest("Employee not found!");
+                return NotFound();
             }
-            else
-            {
-                return Ok(employee);
-            }
+            return employee;
+            
         }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateEmployee(EmployeeMaster employee)
+        [HttpPut("{id}")]
+        [Authorize(Roles = "admin,employee")]
+        public async Task<ActionResult> UpdateEmployee(string id, [FromBody] UpdateEmployeeRequest employee)
         {
-            _db.EmployeeMasters.Update(employee);
-            await _db.SaveChangesAsync();
-            return Ok("Updated employee details successfully!");
+            if(employee == null)
+            {
+                return BadRequest("Invalid employee data");
+            }
+            
+            if(id!=employee.EmployeeId)
+            {
+                return BadRequest("ID mismatch");
+            }
+
+            bool updated = _employeeService.UpdateEmployee(employee);
+
+            if(!updated)
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteEmployee(string eId)
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "admin,employee")]
+        public async Task<ActionResult> DeleteEmployee(string id)
         {
-            EmployeeMaster? employee = await _db.EmployeeMasters.FindAsync(eId);
-            if (employee == null)
+            if (id==null)
             {
-                return BadRequest("Employee does not exist!");
+                return BadRequest("Please enter an employee id");
             }
-            else
+
+            var deletedEmployee = _employeeService.DeleteEmployee(id);
+            if (deletedEmployee == null)
             {
-                _db.EmployeeMasters.Remove(employee);
-                await _db.SaveChangesAsync();
-                return Ok("Employee details removed!");
+                return NotFound();
             }
+            return Ok(deletedEmployee);
+           
         }
 
     }
