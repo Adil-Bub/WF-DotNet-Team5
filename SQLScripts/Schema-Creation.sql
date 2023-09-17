@@ -29,7 +29,7 @@ Date_of_joining DATE default getdate()
 --stores the loan card categories
 create table Loan_card_master(
 Loan_id varchar(100) primary key,
-Loan_type varchar(50),
+Loan_type varchar(50) unique,
 Duration_in_years int not null check (Duration_in_years between 0 and 99)
 );
 

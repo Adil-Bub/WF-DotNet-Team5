@@ -30,9 +30,9 @@ public partial class EmployeeMaster
 
     public EmployeeMaster() { }
 
-    public EmployeeMaster(string hashedPassword, string salt, RegisterRequest registerRequest)
+    public EmployeeMaster(string employeeId, string hashedPassword, string salt, RegisterRequest registerRequest)
     {
-        EmployeeId = registerRequest.EmployeeId;
+        EmployeeId = employeeId;
         PasswordHash = hashedPassword;
         Salt = salt;
         EmployeeName = registerRequest.EmployeeName;
@@ -40,6 +40,6 @@ public partial class EmployeeMaster
         Department = registerRequest.Department;
         Gender = registerRequest.Gender;
         DateOfBirth = registerRequest.DateOfBirth;
-        DateOfJoining = registerRequest.DateOfJoining;
+        DateOfJoining = DateTime.Now.Date;
     } 
 }

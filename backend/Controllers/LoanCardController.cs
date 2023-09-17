@@ -1,6 +1,10 @@
 ﻿using backend.Models;
+using backend.Models.Request;
+using backend.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 
 namespace backend.Controllers
 {
@@ -8,65 +12,90 @@ namespace backend.Controllers
     [ApiController]
     public class LoanCardController : ControllerBase
     {
-        private readonly LoansContext _db;
+        private readonly ILoanCardService _loanCardService;
 
-        public LoanCardController(LoansContext db)
+        public LoanCardController(ILoanCardService loanCardService)
         {
-            _db = db;
+            _loanCardService = loanCardService;
         }
 
 
-        [HttpGet]
-        public async Task<ActionResult> GetLoanCards()
+        [HttpGet("all")]
+        [Authorize(Roles = "admin,employee")]
+        public async Task<ActionResult> GetAllLoanCards()
         {
-            return Ok(_db.LoanCardMasters);
+            var loanCards =  _loanCardService.GetAllLoanCards();
+
+            if(loanCards == null || loanCards.Count==0)
+            {
+                return NoContent();
+            }
+            return Ok(loanCards);
         }
 
-        [HttpGet]
-        [Route("findById")]
+        [HttpGet("{id}")]
+        [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> GetLoanCardById(string id)
         {
-            LoanCardMaster? loanCard = await _db.LoanCardMasters.FindAsync(id);
-            if (loanCard == null)
+            var loanCardResponse = _loanCardService.GetLoanCardById(id);
+
+            if(loanCardResponse == null)
             {
-                return BadRequest("Loan card not found!");
+                return NotFound();
             }
-            else
-            {
-                return Ok(loanCard);
-            }
+
+            return Ok(loanCardResponse);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddLoanCard(LoanCardMaster loanCard)
+        [HttpPost("add")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> AddLoanCard([FromBody] LoanCardRequest loanCard)
         {
-            _db.LoanCardMasters.Add(loanCard);
-            await _db.SaveChangesAsync();
-            return Ok("Successfully added Loan card!");
+
+            var loanId = _loanCardService.AddLoanCard(loanCard);
+
+            if (loanId == null)
+            {
+                return BadRequest("Invalid Loan Card Data");
+            }
+            var response = new { loanId = $"{loanId}"};
+            return Ok(response);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateEmployee(LoanCardMaster loanCard)
+        [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> UpdateLoanCard(string id, [FromBody] LoanCardMaster loanCard)
         {
-            _db.LoanCardMasters.Update(loanCard);
-            await _db.SaveChangesAsync();
+            if(loanCard == null)
+            {
+                return BadRequest("Invalid Loan Card data");
+            }
+
+            if(loanCard.LoanId != id)
+            {
+                return BadRequest("ID mismatch");
+            }
+            var isUpdated = _loanCardService.UpdateLoanCard(loanCard);
+
+            if(!isUpdated)
+            {
+                return NotFound("Loan Card not found");
+            }
+            
             return Ok("Updated loan card details successfully!");
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteEmployee(string eId)
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> DeleteLoanCard(string id)
         {
-            LoanCardMaster? loanCard = await _db.LoanCardMasters.FindAsync(eId);
-            if (loanCard == null)
+            var isDeleted = _loanCardService.DeleteLoanCard(id);
+
+            if(!isDeleted)
             {
-                return BadRequest("Loan card does not exist!");
+                return BadRequest("Delete failed");
             }
-            else
-            {
-                _db.LoanCardMasters.Remove(loanCard);
-                await _db.SaveChangesAsync();
-                return Ok("Loan card details removed!");
-            }
+            return Ok("Deleted loan card successfully");
         }
     }
 }

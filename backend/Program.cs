@@ -48,8 +48,11 @@ builder.Services.AddDbContext<LoansContext>(options =>
       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
+builder.Services.AddScoped<ILoanCardRepo, LoanCardRepo>();
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<ILoanCardService, LoanCardService>();
 
 
 builder.Services.AddDataProtection();
@@ -67,15 +70,6 @@ builder.Services.AddCors(options =>
 });
 
 var configuration = builder.Configuration;
-
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy("AdminRights", policy =>
-//    {
-//        policy.RequireAuthenticatedUser();
-//        policy.RequireRole("admin");
-//    });
-//});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
