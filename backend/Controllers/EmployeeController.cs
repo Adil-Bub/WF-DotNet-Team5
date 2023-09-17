@@ -64,7 +64,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "admin,employee")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteEmployee(string id)
         {
             if (id==null)

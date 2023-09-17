@@ -4,9 +4,7 @@ namespace backend.Models.Request
 {
     public class RegisterRequest
     {
-        [Required]
-        public string EmployeeId { get; set; }
-        
+                
         [Required]
         public string Password { get; set; }
        
@@ -24,8 +22,5 @@ namespace backend.Models.Request
 
         [Required]
         public DateTime? DateOfBirth { get; set; }
-
-        [Required]
-        public DateTime? DateOfJoining { get; set; }
     }
 }
