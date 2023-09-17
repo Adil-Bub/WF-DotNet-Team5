@@ -1,14 +1,14 @@
-import React , {useContext,useState} from "react";
+import React, { useContext, useState } from "react";
 import axios from 'axios';
 import { AppContext } from "../Context/App.context";
-import {useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 //npm install react-router-dom 
 const LoginWithToken = () => {
-    const [loginobj,setLogin] = useState({EmployeeId: '', Password: ''});
-    const [username,setUsername] =useState('');
-    const [password,setPassword] = useState('');
-    const [error,setError] = useState(false);
-    const{user,setUser} = useContext(AppContext);
+    const [loginobj, setLogin] = useState({ EmployeeId: '', Password: '' });
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(false);
+    const { user, setUser } = useContext(AppContext);
     const navigate = useNavigate();
     const handleUsername = (event) => {
         setUsername(event.target.value);
@@ -28,14 +28,12 @@ const LoginWithToken = () => {
             //.get('./data.json')
             setUser(response.data);
             console.log(response.data);
-            if (response.data.designation === 'admin') 
-            {
+            if (response.data.designation === 'admin') {
                 navigate('/dashboard/admin');
             }
-                else
-                {
-                    navigate('/dashboard/user');
-                }
+            else {
+                navigate('/dashboard/user');
+            }
 
         }
         catch (error) {
@@ -44,8 +42,8 @@ const LoginWithToken = () => {
     }
     return (
         <div>
-            <nav className="navbar navbar-light bg-light">
-                <h4 className="p-2">Loan management system</h4>
+            <nav className="navbar" style={{'background':'#cce6ff'}}>
+                <h4 className="pl-2">Loan management system</h4>
             </nav>
             <div className="container d-flex justify-content-center align-items-center vh-100">
                 <div className="card shadow p-4">
@@ -74,17 +72,17 @@ const LoginWithToken = () => {
                             />
                         </div>
                         <div className="d-grid gap-2">
-                            <button type="submit" className="btn btn-primary btn-light">Submit</button>
+                            <button type="submit" className="btn btn-primary">Submit</button>
                         </div>
                         {error && (
-              <div className="alert alert-danger mt-3" role="alert">
-                Login failed. Please check your credentials.
-              </div>
-            )}
-            <p className="mt-3">
-              Don't have an account?{" "}
-              <Link to="/register">Sign Up</Link>
-            </p>
+                            <div className="alert alert-danger mt-3" role="alert">
+                                Login failed. Please check your credentials.
+                            </div>
+                        )}
+                        <p className="mt-3">
+                            Don't have an account?{" "}
+                            <Link to="/register">Sign Up</Link>
+                        </p>
                     </form>
                 </div>
             </div>

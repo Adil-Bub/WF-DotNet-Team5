@@ -50,7 +50,7 @@ const RegistrationPage = () => {
         signUpObj.EmployeeId = empID;
         signUpObj.Password = empPass;
         signUpObj.EmployeeName = empName;
-        signUpObj.Designation = "empDesg";
+        signUpObj.Designation = empDesg;
         signUpObj.Department = empDept;
         signUpObj.Gender = empGen;
         signUpObj.DateOfBirth = empDoB;
