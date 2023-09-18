@@ -1,25 +1,53 @@
-import React, { useContext, useState } from "react";
-import axios from 'axios';
-import { AppContext } from "../Context/App.context";
-import { useNavigate } from 'react-router-dom';
-
+import React, {useState, useEffect} from "react"
+import axios from "axios";
+import { NavBar } from "../Component/Navbar";
+import '../App.css';
+import { Alert } from "bootstrap";
 const ApplyLoansPage = () => {
+    const url ='https://localhost:7189/api/Items';
+  
+  const [data, setData] = useState([]);
 
-    const { user, setUser } = useContext(AppContext);
-    const navigate = useNavigate();
+  const fetchInfo = () => {
+    return axios.get(url).then((res) => setData(res.data));
+  };
 
-   
-    return (
-        <div className="text-center">
-            <h1>
-                Loan Management Application  
-            </h1>
-            <h4>
-                Apply Loans Page
-            </h4>
-            
-        </div>
-    );
+  useEffect(() => {
+    fetchInfo();
+  }, []);
+  function handleClick() {
+    // Alert("Item Loan request sent");
+    console.log('in cardClick');
+} 
+  return (
+    <>
+    <NavBar/>
+    <div >
+      <h1 >Apply for Loan</h1>
+     
+        {data.map((dataObj) => {
+          return (
+          
+            <div className="grid"           >
+              
+                
+                 <p className='item'  onClick={handleClick} > 
+                  Item Id: {dataObj.itemId} <br />
+                  Item Category: {dataObj.itemCategory}  <br />
+                  Item Description: {dataObj.itemDescription}  <br />
+                  Item Make: {dataObj.itemMake}  <br />
+                  Issue Status: {dataObj.issueStatus}  <br />
+                 </p>
+                
+            </div>
+         
+          );
+        })}
+     
+    </div>
+    </>
+  );
 }
+
 
 export default ApplyLoansPage;

@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect} from "react";
 import axios from 'axios';
 import { AppContext } from "../Context/App.context";
 import { useNavigate, Link } from 'react-router-dom';
+import { NavBar } from "../Component/Navbar";
+
 
 const imgObj = {
     "Furniture" : "https://i.imgur.com/EryUuGM.jpg",
@@ -28,6 +30,8 @@ const ViewLoansPage = () => {
     }, [])
     
     return (
+        <>
+        <NavBar/>
         <div className="text-center">
             <h1>
                 Loan Management Application  
@@ -45,6 +49,7 @@ const ViewLoansPage = () => {
                 ))}
             </div>           
         </div>
+        </>
     );
 }
 

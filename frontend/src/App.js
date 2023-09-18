@@ -16,7 +16,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './Component/ProtectedRoute.js';
 import AdminRoute from './Component/AdminRoute';
-
 const router = createBrowserRouter([
   // {
   //   path:"/",
@@ -89,10 +88,13 @@ const router = createBrowserRouter([
 ]);
 function App() {
   return (
+    <>
+   
     < AppProvider>
       <RouterProvider router={router} />
     </AppProvider>
 
+    </>
   );
 }
 
