@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import axios from "axios";
 import { NavBar } from "../Component/Navbar";
 import '../App.css';
+import { AppContext } from "../Context/App.context";
 import { Alert } from "bootstrap";
 const ApplyLoansPage = () => {
     const url ='https://localhost:7189/api/Items';
