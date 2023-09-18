@@ -16,15 +16,14 @@ import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './Component/ProtectedRoute.js';
 import AdminRoute from './Component/AdminRoute';
-
 const router = createBrowserRouter([
+  // {
+  //   path:"/",
+  //   element:<HomePage/>,
+  // },
   {
-    path: "/",
-    element: <HomePage />,
-  },
-  {
-    path: "/login",
-    element: <LoginwithToken />,
+    path:"/",
+    element:<LoginwithToken/>,
   },
   {
     path: "/register",
@@ -80,7 +79,7 @@ const router = createBrowserRouter([
     </ProtectedRoute>
   },
   {
-    path: "/dashboard/user/items=purchase",
+    path: "/dashboard/user/items=purchased",
     element: <ProtectedRoute>
       <ViewItemsPurchasedPage />
     </ProtectedRoute>
@@ -89,10 +88,13 @@ const router = createBrowserRouter([
 ]);
 function App() {
   return (
+    <>
+   
     < AppProvider>
       <RouterProvider router={router} />
     </AppProvider>
 
+    </>
   );
 }
 
