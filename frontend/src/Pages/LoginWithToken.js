@@ -50,12 +50,12 @@ const LoginWithToken = () => {
                     <form className="card-body" onSubmit={handleSubmit}>
                         <h3 className="text-center">Login</h3>
                         <div className="mb-3">
-                            <label htmlFor="employeeId" className="form-label">Employee id</label>
+                            <label htmlFor="employeeId" className="form-label">Employee ID</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="employeeId"
-                                placeholder="Enter employee id"
+                                placeholder="Enter Employee ID"
                                 value={username}
                                 onChange={handleUsername}
                             />
@@ -66,7 +66,7 @@ const LoginWithToken = () => {
                                 type="password"
                                 className="form-control"
                                 id="password"
-                                placeholder="Enter password"
+                                placeholder="Enter Password"
                                 value={password}
                                 onChange={handlepwd}
                             />
@@ -75,14 +75,13 @@ const LoginWithToken = () => {
                             <button type="submit" className="btn btn-primary">Submit</button>
                         </div>
                         {error && (
-                            <div className="alert alert-danger mt-3" role="alert">
-                                Login failed. Please check your credentials.
-                            </div>
-                        )}
-                        <p className="mt-3">
-                            Don't have an account?{" "}
-                            <Link to="/register">Sign Up</Link>
-                        </p>
+              <div className="alert alert-danger mt-3" role="alert">
+                Login failed. Please check your Credentials.
+              </div>
+            )}
+            <p className="mt-3">
+              Don't have an account? <Link to="/register">Sign Up</Link>
+            </p>
                     </form>
                 </div>
             </div>

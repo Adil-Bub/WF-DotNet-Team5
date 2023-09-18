@@ -25,7 +25,7 @@ const UserDashboard = () => {
                 Loan Management Application  
             </h1>
             <h4>
-                Welcome {user.employeeId} to your Dashboard. 
+                User Dashboard for {user.employeeId} 
             </h4>
             <div className="container w-50 p-5 mb-4 text-center fs-5">
                 <div className="d-inline-flex gap-3">

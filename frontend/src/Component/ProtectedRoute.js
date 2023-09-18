@@ -9,7 +9,7 @@ const ProtectedRoute = ({  children })=> {
     const {user} = useContext(AppContext);
     if(user===null)
     {
-        return <Navigate to="/login" replace />
+        return <Navigate to="/" replace />
     }
  
   return children
