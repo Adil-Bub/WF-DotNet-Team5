@@ -8,8 +8,8 @@ const AdminDashboard = () => {
     const { user, setUser } = useContext(AppContext);
     const navigate = useNavigate();
 
-    const navigateToCustomerData = () => {
-        navigate('/dashboard/admin/customer-data');
+    const navigateToEmployeeData = () => {
+        navigate('/dashboard/admin/employee-data');
     }
 
     const navigateToLoanCardManagement = () => {
@@ -30,7 +30,7 @@ const AdminDashboard = () => {
 
             <div className="container w-50 p-5 mb-4 text-center fs-5">
                 <div className="d-inline-flex gap-3">
-                    <button type="button" className="btn btn-outline-dark" onClick={navigateToCustomerData}>Customer Data Management</button>
+                    <button type="button" className="btn btn-outline-dark" onClick={navigateToEmployeeData}>Employee Data Management</button>
                 
                
                     <button type="button" className="btn btn-outline-dark" onClick={navigateToLoanCardManagement}>Loan Card Management</button>

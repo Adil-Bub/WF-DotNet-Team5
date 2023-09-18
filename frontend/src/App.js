@@ -7,28 +7,28 @@ import UserDashboard from "./Pages/UserDashboard";
 import AdminDashboard from './Pages/AdminDashboard';
 import HomePage from './Pages/HomePage';
 import ItemsMasterDataPage from './Pages/ItemsMasterDataPage';
-import CustomerDataPage from './Pages/CustomerDataPage';
+import EmployeeDataPage from './Pages/EmployeeDataPage';
 import LoanCardPage from './Pages/LoanCardPage';
 import ViewLoansPage from './Pages/ViewLoansPage';
 import ApplyLoansPage from './Pages/ApplyLoansPage';
 import ViewItemsPurchasedPage from './Pages/ViewItemsPurchasedPage';
-import {createBrowserRouter} from 'react-router-dom';
-import {RouterProvider} from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './Component/ProtectedRoute.js';
 import AdminRoute from './Component/AdminRoute';
 
 const router = createBrowserRouter([
   {
-    path:"/",
-    element:<HomePage/>,
+    path: "/",
+    element: <HomePage />,
   },
   {
-    path:"/login",
-    element:<LoginwithToken/>,
+    path: "/login",
+    element: <LoginwithToken />,
   },
   {
-    path:"/register",
-    element:<RegistrationPage/>,
+    path: "/register",
+    element: <RegistrationPage />,
   },
   // {
   //   path:"/profile",
@@ -38,50 +38,51 @@ const router = createBrowserRouter([
   // }
   {
     path: "/dashboard/user",
-    element:<ProtectedRoute>
-    <UserDashboard/>
+    element: <ProtectedRoute>
+      <UserDashboard />
     </ProtectedRoute>
   },
   {
     path: "/dashboard/admin",
-    element:<AdminRoute>
-      <AdminDashboard/>
+    element: <AdminRoute>
+      <AdminDashboard />
     </AdminRoute>
   },
   {
-    path: "/dashboard/admin/customer-data",
-    element: <AdminRoute>
-      <CustomerDataPage/>
-    </AdminRoute>
+    path: "/dashboard/admin/employee-data",
+    element:
+      <AdminRoute>
+        <EmployeeDataPage />
+      </AdminRoute>
   },
   {
     path: "/dashboard/admin/loan-card",
     element: <AdminRoute>
-      <LoanCardPage/>
+      <LoanCardPage />
     </AdminRoute>
   },
   {
     path: "/dashboard/admin/all-items",
     element: <AdminRoute>
-      <ItemsMasterDataPage/>
+      <ItemsMasterDataPage />
     </AdminRoute>
   },
   {
     path: "/dashboard/user/loans",
     element: <ProtectedRoute>
-      <ViewLoansPage/>
+      <ViewLoansPage />
     </ProtectedRoute>
   },
   {
     path: "/dashboard/user/loans/apply",
     element: <ProtectedRoute>
-      <ApplyLoansPage/>
+      <ApplyLoansPage />
     </ProtectedRoute>
   },
   {
     path: "/dashboard/user/items=purchase",
     element: <ProtectedRoute>
-      <ViewItemsPurchasedPage/>
+      <ViewItemsPurchasedPage />
     </ProtectedRoute>
   }
 
@@ -89,7 +90,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     < AppProvider>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </AppProvider>
 
   );
