@@ -2,14 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { AppContext } from "../Context/App.context";
 import { useNavigate } from 'react-router-dom';
-import { FaEdit, FaTrash } from 'react-icons/fa'
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import EditEmployeeModal from "../Component/EditEmployeeModal";
 
 const EmployeeDataPage = () => {
 
     const { user, setUser } = useContext(AppContext);
     const [employees, setEmployees] = useState([]);
-    const [editableEmployee, setEditableEmployee] = useState();
+    const [showModal, setShowModal] = useState(false);
+    const [selectedEmployee, setSelectedEmployee] = useState({});
     const navigate = useNavigate();
+
+    const handleCloseModal = () => {
+        setSelectedEmployee(null);
+        setShowModal(false);
+    };
 
     useEffect(() => {
         axios
@@ -23,6 +30,7 @@ const EmployeeDataPage = () => {
                 alert('Error fetching data ', error);
             });
     }, []);
+
     return (
         <div>
             <nav className="navbar" style={{ 'background': '#cce6ff' }}>
@@ -57,7 +65,8 @@ const EmployeeDataPage = () => {
                                         <td>{item.dateOfJoining}</td>
                                         <td>
                                             <FaEdit className="edit-icon" color="blue" onClick={() => {
-                                                setEditableEmployee(...item)
+                                                setSelectedEmployee(item);
+                                                setShowModal(true);
                                             }}></FaEdit>
                                         </td>
                                         <td>
@@ -67,6 +76,12 @@ const EmployeeDataPage = () => {
                                 ))}
                             </tbody>
                         </table>
+                        <EditEmployeeModal
+                            showModal={showModal}
+                            handleCloseModal={handleCloseModal}
+                            selectedEmployee={selectedEmployee}
+                        >
+                        </EditEmployeeModal>
                     </div>
                 </div>
             </div>
