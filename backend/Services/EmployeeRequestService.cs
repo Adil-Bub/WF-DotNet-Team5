@@ -119,5 +119,15 @@ namespace backend.Services
             }).ToList();
             return employeeLoanRequests;
         }
+
+        public List<LoanDetailsResponse> GetAllLoanDetailsByEmployeeId(string employeeId)
+        {
+            return _employeeRequestDetailRepo.GetAllLoanDetailsByEmployeeId(employeeId);   
+        }
+
+        public List<LoanDetailsResponse> GetAllLoanDetailsByRequestId(string requestId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

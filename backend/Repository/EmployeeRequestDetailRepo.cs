@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using backend.Models.Request;
+using backend.Models.Response;
 using backend.Repository.Interfaces;
 using backend.Services;
 using backend.Util;
@@ -147,6 +148,48 @@ namespace backend.Repository
             return _db.EmployeeRequestDetails
                .Where(employeeRequest => employeeRequest.ItemId == itemId)
                .ToList();
+        }
+
+        public List<LoanDetailsResponse> GetAllLoanDetailsByEmployeeId(string employeeId)
+        {
+            var loanDetails = _db.EmployeeRequestDetails
+                .Where(employeeRequest => employeeRequest.EmployeeId == employeeId)
+                .Join(
+                    _db.ItemMasters,
+                    employeeRequest => employeeRequest.ItemId,
+                    item => item.ItemId,
+                    (employeeRequest, item) => new { EmployeeRequestDetail = employeeRequest, ItemMaster = item }
+                )
+                .Join(
+                    _db.LoanCardMasters,
+                    joined => joined.ItemMaster.ItemCategory,
+                    loan => loan.LoanType,
+                    (joined, loan) => new { joined.EmployeeRequestDetail, joined.ItemMaster, LoanCardMaster = loan }
+                )
+                .Select(
+                    joined => new LoanDetailsResponse
+                    {
+                        ItemId = joined.ItemMaster.ItemId,
+                        ItemDescription = joined.ItemMaster.ItemDescription,
+                        IssueStatus = joined.ItemMaster.IssueStatus,
+                        ItemMake = joined.ItemMaster.ItemMake,
+                        ItemCategory = joined.ItemMaster.ItemCategory,
+                        ItemValuation = joined.ItemMaster.ItemValuation,
+
+                        RequestId = joined.EmployeeRequestDetail.RequestId,
+                        EmployeeId = joined.EmployeeRequestDetail.EmployeeId,
+                        RequestDate = joined.EmployeeRequestDetail.RequestDate,
+                        RequestStatus = joined.EmployeeRequestDetail.RequestStatus,
+                        ReturnDate = joined.EmployeeRequestDetail.ReturnDate,
+
+                        LoanId = joined.LoanCardMaster.LoanId,
+                        DurationInYears = joined.LoanCardMaster.DurationInYears
+
+                    }
+                )
+                .ToList();
+
+            return loanDetails;
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using backend.Services;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -18,6 +19,7 @@ namespace backend.Controllers
             _employeeRequestService = employeeRequestService;
         }
         [HttpGet("all")]
+        [Authorize(Roles ="admin")]
         public async Task<ActionResult> GetAllEmployeeRequests()
         {
             var employeeRequests = _employeeRequestService.GetAllEmployeeRequests();
@@ -30,6 +32,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("/request-id/{request-id}")]
+        [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> GetEmployeeRequestDetailByRequestId([FromRoute(Name = "request-id")] string requestId)
         {
             if (requestId == null)
@@ -46,6 +49,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("/employee-id/{employee-id}")]
+        [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> GetEmployeeRequestDetailByEmployeeId([FromRoute(Name = "employee-id")] string employeeId)
         {
             if (employeeId == null)
@@ -62,6 +66,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("/status/{status}")]
+        [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> GetEmployeeRequestDetailByStatus([FromRoute(Name = "status")] string status)
         {
             if (status == null)
@@ -78,6 +83,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("/item-id/{item-id}")]
+        [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> GetEmployeeRequestDetailByItemId([FromRoute(Name = "item-id")] string itemId)
         {
             if (itemId == null)
@@ -93,7 +99,24 @@ namespace backend.Controllers
             return Ok(employeeRequest);
         }
 
+        [HttpGet("/my-loans/{employee-id}")]
+        [Authorize(Roles = "admin,employee")]
+        public async Task<ActionResult> GetAllLoanDetailsByEmployeeId([FromRoute(Name = "employee-id")] string employeeId)
+        {
+            if (employeeId == null)
+            {
+                return BadRequest("Enter employee id");
+            }
+
+            var loanDetails = _employeeRequestService.GetAllLoanDetailsByEmployeeId(employeeId);
+            if(loanDetails==null)
+            {
+                return NoContent();
+            }
+            return Ok(loanDetails);
+        }
         [HttpPost("add")]
+        [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> AddEmployeeRequest(EmployeeLoanRequest employeeLoanRequest)
         {
             if (employeeLoanRequest == null)
@@ -110,6 +133,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{request-id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> UpdateEmployeeRequest([FromRoute(Name = "request-id")] string requestId, [FromBody] UpdateEmployeeLoanRequest employeeRequestDetail)
         {
             if (employeeRequestDetail == null)
@@ -132,6 +156,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{request-id}")]
+        [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> DeleteEmployeeRequestByRequestId([FromRoute(Name = "request-id")] string requestId)
         {
             if (requestId==null)
