@@ -27,6 +27,7 @@ const LoginWithToken = () => {
                 .post('https://localhost:7189/api/Authorization/login', loginobj)
             //.get('./data.json')
             setUser(response.data);
+            localStorage.setItem('user', JSON.stringify(response.data));
             console.log(response.data);
             if (response.data.designation === 'admin') {
                 navigate('/dashboard/admin');

@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { AppContext } from '../Context/App.context';
 
 //Todo validation errors
 const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee }) => {
-    const { user, setUser } = useContext(AppContext);
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
     const [employee, setEmployee] = useState(selectedEmployee);
     const [errors, setErrors] = useState({});
 
@@ -18,13 +19,13 @@ const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee }) =>
         setEmployee({ ...employee, [name]: value });
     };
 
-    function handleSubmit() {
+    function handleSubmit(event) {
+        event.preventDefault();
         axios
-            .put('https://localhost:7189/api/Employee/${employee.employeeId}', employee, {
+            .put(`https://localhost:7189/api/Employee/${employee.employeeId}`, employee, {
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
-                console.log(response.data);
                 alert('Successfully edited employee details!');
             }).catch((error) => {
                 alert('Error editing employee details! ', error);
@@ -34,7 +35,7 @@ const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee }) =>
     return (
         <Modal show={showModal} onHide={handleCloseModal}>
             <Modal.Header closeButton>
-                <Modal.Title>Edit details of Employee {employee.employeeName}</Modal.Title>
+                <Modal.Title>Edit details of Employee</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
@@ -72,23 +73,28 @@ const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee }) =>
                             name="gender"
                             value={employee.gender}
                             onChange={handleChange}
-                        />
-                        <option>M</option>
-                        <option>F</option>
+                        >
+                            <option value={"M"}>Male</option>
+                            <option value={"F"}>Female</option>
+                        </Form.Control>
                     </Form.Group>
+
                     <Form.Group controlId='formDateOfBirth'>
+                        <Form.Label>Date Of Birth</Form.Label>
                         <Form.Control
                             type="date"
                             name="dateOfBirth"
-                            value={employee.dateOfBirth}
+                            value={(employee.dateOfBirth).substring(0, 10)}
                             onChange={handleChange}
                         />
                     </Form.Group>
+
                     <Form.Group controlId='formDateOfJoining'>
+                        <Form.Label>Date of Joining</Form.Label>
                         <Form.Control
                             type="date"
                             name="dateOfJoining"
-                            value={employee.dateOfJoining}
+                            value={(employee.dateOfJoining).substring(0, 10)}
                             onChange={handleChange}
                         />
                     </Form.Group>
@@ -97,11 +103,6 @@ const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee }) =>
                     </Button>
                 </Form>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleCloseModal}>
-                    Close
-                </Button>
-            </Modal.Footer>
         </Modal>
     )
 };

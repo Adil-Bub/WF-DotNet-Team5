@@ -7,9 +7,9 @@ import { Navigate } from 'react-router-dom';
 const ProtectedRoute = ({  children })=> {
 
     const {user} = useContext(AppContext);
-    if(user.designation!=="admin")
+    if(user == null || user.designation!=="admin")
     {
-        return <Navigate to="/" replace />
+        //return <Navigate to="/" replace />
     }
  
   return children

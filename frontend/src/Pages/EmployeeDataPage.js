@@ -7,7 +7,8 @@ import EditEmployeeModal from "../Component/EditEmployeeModal";
 
 const EmployeeDataPage = () => {
 
-    const { user, setUser } = useContext(AppContext);
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
     const [employees, setEmployees] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState({});
@@ -25,7 +26,7 @@ const EmployeeDataPage = () => {
             })
             .then((response) => {
                 setEmployees(response.data);
-                console.log(response.data);
+                //console.log(response.data);
             }).catch((error) => {
                 alert('Error fetching data ', error);
             });
@@ -76,12 +77,13 @@ const EmployeeDataPage = () => {
                                 ))}
                             </tbody>
                         </table>
-                        <EditEmployeeModal
+                        {showModal && <EditEmployeeModal
                             showModal={showModal}
                             handleCloseModal={handleCloseModal}
                             selectedEmployee={selectedEmployee}
+                            onValueChange={handleRefetchList}
                         >
-                        </EditEmployeeModal>
+                        </EditEmployeeModal>}
                     </div>
                 </div>
             </div>
