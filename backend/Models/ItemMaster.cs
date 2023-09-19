@@ -13,9 +13,11 @@ public partial class ItemMaster
 
     public string ItemMake { get; set; } = null!;
 
-    public string ItemCategory { get; set; } = null!;
+    public string? ItemCategory { get; set; }
 
     public int ItemValuation { get; set; }
 
     public virtual ICollection<EmployeeRequestDetail> EmployeeRequestDetails { get; set; } = new List<EmployeeRequestDetail>();
+
+    public virtual LoanCardMaster? ItemCategoryNavigation { get; set; }
 }
