@@ -2,6 +2,7 @@
 using backend.Models.Request;
 using backend.Repository.Interfaces;
 using backend.Services;
+using backend.Util;
 
 namespace backend.Repository
 {
@@ -69,9 +70,38 @@ namespace backend.Repository
                 existingEmployeeRequest.RequestStatus = employeeRequestDetail.RequestStatus ?? existingEmployeeRequest.RequestStatus;
                 existingEmployeeRequest.ReturnDate = employeeRequestDetail.ReturnDate ?? existingEmployeeRequest.ReturnDate;
 
-                if(existingEmployeeRequest.RequestStatus == "Approved")
+                //Adding approveed loans to employee loan card details
+                if (existingEmployeeRequest.RequestStatus == "Approved")
                 {
-                    //implement add to employeeLoanCardDetails
+                    var loanCategory = _db.ItemMasters
+                        .Where(item => existingEmployeeRequest.ItemId == item.ItemId)
+                        .Select(item => item.ItemCategory)
+                        .FirstOrDefault();
+
+                    var loanId = _db.LoanCardMasters
+                        .Where(loan => loan.LoanType == loanCategory)
+                        .Select(loan => loan.LoanId)
+                        .FirstOrDefault();
+
+                    
+                    var employeeLoanCardDetail = new EmployeeLoanCardDetail
+                    {
+                        CardId = UIDGenerator.GenerateUniqueVarcharId("LOAN_CARD"),
+                        EmployeeId = existingEmployeeRequest.EmployeeId,
+                        LoanId = loanId,
+                        CardIssueDate = DateTime.Now.Date
+                    };
+                    try
+                    {
+                        _db.EmployeeLoanCardDetails.Add(employeeLoanCardDetail);
+                        _db.SaveChanges();
+                        //return employeeLoanCardDetail.CardId;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        return false;
+                    }
                 }
                 try
                 {
