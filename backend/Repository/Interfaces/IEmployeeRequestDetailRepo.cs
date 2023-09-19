@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using backend.Models.Request;
+using backend.Models.Response;
 
 namespace backend.Repository.Interfaces
 {
@@ -13,5 +14,7 @@ namespace backend.Repository.Interfaces
         public string AddEmployeeRequest(EmployeeRequestDetail employeeRequestDetail);
         public bool UpdateEmployeeRequest(UpdateEmployeeLoanRequest employeeRequestDetail);
         public EmployeeRequestDetail DeleteEmployeeRequest(string id);
+
+        public List<LoanDetailsResponse> GetAllLoanDetailsByEmployeeId(string employeeId);
     }
 }
