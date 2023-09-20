@@ -33,7 +33,7 @@ public partial class LoansContext : DbContext
     {
         modelBuilder.Entity<EmployeeLoanCardDetail>(entity =>
         {
-            entity.HasKey(e => e.CardId).HasName("PK__Employee__45A7902B34FAB92B");
+            entity.HasKey(e => e.CardId).HasName("PK__Employee__45A7902BFDE8078F");
 
             entity.ToTable("Employee_loan_card_details");
 
@@ -45,22 +45,22 @@ public partial class LoansContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("date")
                 .HasColumnName("Card_issue_date");
-            entity.Property(e => e.EmployeeId)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("Employee_id");
             entity.Property(e => e.LoanId)
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("Loan_id");
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeLoanCardDetails)
-                .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__Employee___Emplo__6E01572D");
+            entity.Property(e => e.RequestId)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Request_id");
 
             entity.HasOne(d => d.Loan).WithMany(p => p.EmployeeLoanCardDetails)
                 .HasForeignKey(d => d.LoanId)
-                .HasConstraintName("FK__Employee___Loan___6EF57B66");
+                .HasConstraintName("FK__Employee___Loan___7E37BEF6");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.EmployeeLoanCardDetails)
+                .HasForeignKey(d => d.RequestId)
+                .HasConstraintName("FK__Employee___Reque__7D439ABD");
         });
 
         modelBuilder.Entity<EmployeeMaster>(entity =>

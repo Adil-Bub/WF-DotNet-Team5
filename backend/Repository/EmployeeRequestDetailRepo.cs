@@ -88,7 +88,7 @@ namespace backend.Repository
                     var employeeLoanCardDetail = new EmployeeLoanCardDetail
                     {
                         CardId = UIDGenerator.GenerateUniqueVarcharId("LOAN_CARD"),
-                        EmployeeId = existingEmployeeRequest.EmployeeId,
+                        RequestId = existingEmployeeRequest.RequestId,
                         LoanId = loanId,
                         CardIssueDate = DateTime.Now.Date
                     };

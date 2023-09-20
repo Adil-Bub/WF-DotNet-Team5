@@ -47,11 +47,8 @@ Return_date DATE,
 --have added card id field since there is no unique key
 create table Employee_loan_card_details(
 Card_id varchar(100) primary key,
-Employee_id varchar(100) references Employee_master(Employee_id),
+Request_id varchar(100) references Employee_request_details(Request_id),
 Loan_id varchar(100) references Loan_card_master(Loan_id),
 Card_issue_date DATE default getdate()
 );
-
-
-
 
