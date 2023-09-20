@@ -19,7 +19,7 @@ namespace backend.Controllers
             _employeeRequestService = employeeRequestService;
         }
         [HttpGet("all")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> GetAllEmployeeRequests()
         {
             var employeeRequests = _employeeRequestService.GetAllEmployeeRequests();
@@ -109,7 +109,7 @@ namespace backend.Controllers
             }
 
             var loanDetails = _employeeRequestService.GetAllLoanDetailsByEmployeeId(employeeId);
-            if(loanDetails==null)
+            if (loanDetails==null)
             {
                 return NoContent();
             }

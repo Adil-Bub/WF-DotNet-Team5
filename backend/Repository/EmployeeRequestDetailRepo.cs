@@ -89,13 +89,21 @@ namespace backend.Repository
                     {
                         CardId = UIDGenerator.GenerateUniqueVarcharId("LOAN_CARD"),
                         RequestId = existingEmployeeRequest.RequestId,
+                        EmployeeId = existingEmployeeRequest.EmployeeId,
                         LoanId = loanId,
                         CardIssueDate = DateTime.Now.Date
                     };
                     try
                     {
-                        _db.EmployeeLoanCardDetails.Add(employeeLoanCardDetail);
-                        _db.SaveChanges();
+                        var loanCard = _db.EmployeeLoanCardDetails
+                            .Where(lc => lc.RequestId ==  existingEmployeeRequest.RequestId)
+                            .FirstOrDefault();
+                        if(loanCard == null)
+                        {
+                            _db.EmployeeLoanCardDetails.Add(employeeLoanCardDetail);
+                            _db.SaveChanges();
+                        }
+                        
                         //return employeeLoanCardDetail.CardId;
                     }
                     catch (Exception ex)

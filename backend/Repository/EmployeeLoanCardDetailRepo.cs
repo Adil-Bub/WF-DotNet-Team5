@@ -25,5 +25,17 @@ namespace backend.Repository
                 return null;
             }
         }
+
+        public List<EmployeeLoanCardDetail> GetAllApprovedLoans()
+        {
+            return _db.EmployeeLoanCardDetails.ToList();
+        }
+
+        public List<EmployeeLoanCardDetail> GetAllApprovedLoansByEmployeeId(string employeeId)
+        {
+            return _db.EmployeeLoanCardDetails
+                .Where(loanCard => loanCard.EmployeeId == employeeId)
+                .ToList();
+        }
     }
 }
