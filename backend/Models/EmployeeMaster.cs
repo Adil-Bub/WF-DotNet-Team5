@@ -24,6 +24,8 @@ public partial class EmployeeMaster
 
     public DateTime? DateOfJoining { get; set; }
 
+    public virtual ICollection<EmployeeLoanCardDetail> EmployeeLoanCardDetails { get; set; } = new List<EmployeeLoanCardDetail>();
+
     public virtual ICollection<EmployeeRequestDetail> EmployeeRequestDetails { get; set; } = new List<EmployeeRequestDetail>();
 
     public EmployeeMaster() { }
