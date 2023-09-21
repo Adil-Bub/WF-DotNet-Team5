@@ -19,7 +19,7 @@ const ViewLoansPage = () => {
     const navigate = useNavigate();
 
     const fetchData = async () => {
-        const response = await axios.get('https://localhost:7189/api/LoanCard');
+        const response = await axios.get('https://localhost:7189/api/LoanCard/all');
         await setLoanCards(response.data);
         
     }

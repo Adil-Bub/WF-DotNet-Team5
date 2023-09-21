@@ -21,7 +21,7 @@ namespace backend.Controllers
 
 
         [HttpGet("all")]
-        [Authorize(Roles = "admin,employee")]
+        
         public async Task<ActionResult> GetAllLoanCards()
         {
             var loanCards =  _loanCardService.GetAllLoanCards();
