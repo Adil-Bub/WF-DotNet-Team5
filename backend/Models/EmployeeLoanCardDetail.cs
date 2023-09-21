@@ -7,6 +7,8 @@ public partial class EmployeeLoanCardDetail
 {
     public string CardId { get; set; } = null!;
 
+    public string? RequestId { get; set; }
+
     public string? EmployeeId { get; set; }
 
     public string? LoanId { get; set; }
@@ -16,4 +18,6 @@ public partial class EmployeeLoanCardDetail
     public virtual EmployeeMaster? Employee { get; set; }
 
     public virtual LoanCardMaster? Loan { get; set; }
+
+    public virtual EmployeeRequestDetail? Request { get; set; }
 }

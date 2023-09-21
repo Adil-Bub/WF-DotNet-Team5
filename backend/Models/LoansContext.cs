@@ -33,7 +33,7 @@ public partial class LoansContext : DbContext
     {
         modelBuilder.Entity<EmployeeLoanCardDetail>(entity =>
         {
-            entity.HasKey(e => e.CardId).HasName("PK__Employee__45A7902BF84B4B5E");
+            entity.HasKey(e => e.CardId).HasName("PK__Employee__45A7902B4A72FCDB");
 
             entity.ToTable("Employee_loan_card_details");
 
@@ -53,14 +53,22 @@ public partial class LoansContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("Loan_id");
+            entity.Property(e => e.RequestId)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("Request_id");
 
             entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeLoanCardDetails)
                 .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__Employee___Emplo__38996AB5");
+                .HasConstraintName("FK__Employee___Emplo__02FC7413");
 
             entity.HasOne(d => d.Loan).WithMany(p => p.EmployeeLoanCardDetails)
                 .HasForeignKey(d => d.LoanId)
-                .HasConstraintName("FK__Employee___Loan___398D8EEE");
+                .HasConstraintName("FK__Employee___Loan___03F0984C");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.EmployeeLoanCardDetails)
+                .HasForeignKey(d => d.RequestId)
+                .HasConstraintName("FK__Employee___Reque__02084FDA");
         });
 
         modelBuilder.Entity<EmployeeMaster>(entity =>
@@ -105,7 +113,7 @@ public partial class LoansContext : DbContext
 
         modelBuilder.Entity<EmployeeRequestDetail>(entity =>
         {
-            entity.HasKey(e => e.RequestId).HasName("PK__Employee__E9C0AF0B31B1283C");
+            entity.HasKey(e => e.RequestId).HasName("PK__Employee__E9C0AF0B7804DEDB");
 
             entity.ToTable("Employee_request_details");
 
@@ -136,16 +144,16 @@ public partial class LoansContext : DbContext
 
             entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeRequestDetails)
                 .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__Employee___Emplo__32E0915F");
+                .HasConstraintName("FK__Employee___Emplo__68487DD7");
 
             entity.HasOne(d => d.Item).WithMany(p => p.EmployeeRequestDetails)
                 .HasForeignKey(d => d.ItemId)
-                .HasConstraintName("FK__Employee___Item___33D4B598");
+                .HasConstraintName("FK__Employee___Item___693CA210");
         });
 
         modelBuilder.Entity<ItemMaster>(entity =>
         {
-            entity.HasKey(e => e.ItemId).HasName("PK__Item_mas__3FB403ACA918D505");
+            entity.HasKey(e => e.ItemId).HasName("PK__Item_mas__3FB403ACCFDA2565");
 
             entity.ToTable("Item_master");
 
@@ -171,13 +179,20 @@ public partial class LoansContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Item_make");
             entity.Property(e => e.ItemValuation).HasColumnName("Item_valuation");
+
+            entity.HasOne(d => d.ItemCategoryNavigation).WithMany(p => p.ItemMasters)
+                .HasPrincipalKey(p => p.LoanType)
+                .HasForeignKey(d => d.ItemCategory)
+                .HasConstraintName("FK__Item_mast__Item___6477ECF3");
         });
 
         modelBuilder.Entity<LoanCardMaster>(entity =>
         {
-            entity.HasKey(e => e.LoanId).HasName("PK__Loan_car__937D5B6B963D0A8B");
+            entity.HasKey(e => e.LoanId).HasName("PK__Loan_car__937D5B6B942A5531");
 
             entity.ToTable("Loan_card_master");
+
+            entity.HasIndex(e => e.LoanType, "UQ__Loan_car__9F0F31C04D50CBE9").IsUnique();
 
             entity.Property(e => e.LoanId)
                 .HasMaxLength(100)

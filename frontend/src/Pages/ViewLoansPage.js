@@ -23,7 +23,6 @@ const ViewLoansPage = () => {
         await setLoanCards(response.data);
         
     }
-    console.log(loanCards[1])
 
     useEffect(() => {
         fetchData();

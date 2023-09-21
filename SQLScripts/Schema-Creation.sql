@@ -9,7 +9,7 @@ Item_id varchar(100) primary key,
 Item_description varchar(200) NOT NULL,
 Issue_status char(1) NOT NULL,
 Item_make varchar(50) NOT NULL,
-Item_category varchar(50) NOT NULL,
+Item_category varchar(50) REFERENCES Loan_card_master(Loan_type),
 Item_valuation int NOT NULL check (Item_valuation between 0 and 999999)
 );
 
@@ -47,13 +47,8 @@ Return_date DATE,
 --have added card id field since there is no unique key
 create table Employee_loan_card_details(
 Card_id varchar(100) primary key,
+Request_id varchar(100) references Employee_request_details(Request_id),
 Employee_id varchar(100) references Employee_master(Employee_id),
 Loan_id varchar(100) references Loan_card_master(Loan_id),
 Card_issue_date DATE default getdate()
 );
-
-INSERT INTO Item_master VALUES
- (1000001,'Tea Table','Y','Wooden','Furniture',5000),
-  (1000002,'Dining Table','Y','Wooden','Furniture',15000),
-   (1000003,'Dining Set','N','Glass','Crockery',9000),
-    (1000004,'Pen Set','Y','Plastic','Stationary',2000);

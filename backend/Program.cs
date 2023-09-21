@@ -49,11 +49,14 @@ builder.Services.AddDbContext<LoansContext>(options =>
 
 builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
 builder.Services.AddScoped<ILoanCardRepo, LoanCardRepo>();
+builder.Services.AddScoped<IEmployeeRequestDetailRepo, EmployeeRequestDetailRepo>();
+builder.Services.AddScoped<IEmployeeLoanCardDetailRepo, EmployeeLoanCardDetailRepo>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ILoanCardService, LoanCardService>();
-
+builder.Services.AddScoped<IEmployeeRequestService, EmployeeRequestService>();
+builder.Services.AddScoped<IEmployeeLoanCardDetailService, EmployeeLoanCardDetailService>();
 
 builder.Services.AddDataProtection();
 

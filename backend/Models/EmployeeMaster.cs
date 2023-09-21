@@ -41,5 +41,5 @@ public partial class EmployeeMaster
         Gender = registerRequest.Gender;
         DateOfBirth = registerRequest.DateOfBirth;
         DateOfJoining = DateTime.Now.Date;
-    } 
+    }
 }
