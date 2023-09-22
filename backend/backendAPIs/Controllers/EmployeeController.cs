@@ -21,7 +21,7 @@ namespace backend.Controllers
 
         [HttpGet("all")]
         [Authorize(Roles ="admin")]
-        public async Task<ActionResult> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeResponse>>> GetEmployees()
         {
             var response = _employeeService.GetAllEmployees();
             return Ok(response);
