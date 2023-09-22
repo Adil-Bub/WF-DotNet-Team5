@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
 import axios from "axios";
-import { NavBar } from "../Component/Navbar";
+import { NavBar } from "../Component/LUMANav";
 import '../App.css';
 import { AppContext } from "../Context/App.context";
 import { Alert } from "bootstrap";

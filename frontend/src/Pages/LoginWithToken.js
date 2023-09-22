@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from 'axios';
 import { AppContext } from "../Context/App.context";
 import { useNavigate, Link } from 'react-router-dom';
+import { NavBar } from "../Component/Navbar";
 //npm install react-router-dom 
 const LoginWithToken = () => {
     const [loginobj, setLogin] = useState({ EmployeeId: '', Password: '' });
@@ -42,9 +43,8 @@ const LoginWithToken = () => {
     }
     return (
         <div>
-            <nav className="navbar" style={{'background':'#cce6ff'}}>
-                <h4 className="pl-2">Loan management system</h4>
-            </nav>
+            <NavBar/>
+           
             <div className="container d-flex justify-content-center align-items-center vh-100">
                 <div className="card shadow p-4">
                     <form className="card-body" onSubmit={handleSubmit}>

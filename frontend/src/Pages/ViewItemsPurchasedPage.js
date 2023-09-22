@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from 'axios';
 import { AppContext } from "../Context/App.context";
 import { useNavigate } from 'react-router-dom';
-import { NavBar } from "../Component/Navbar";
+import { NavBar } from "../Component/LUMANav";
 const ViewItemsPurchasedPage = () => {
 
     const { user, setUser } = useContext(AppContext);

@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect} from "react";
 import axios from 'axios';
 import { AppContext } from "../Context/App.context";
 import { useNavigate, Link } from 'react-router-dom';
-import { NavBar } from "../Component/Navbar";
+import { NavBar } from "../Component/LUMANav";
 
 
 const imgObj = {

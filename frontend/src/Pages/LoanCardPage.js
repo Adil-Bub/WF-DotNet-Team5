@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AppContext } from "../Context/App.context";
 import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa'
+import { NavBar } from "../Component/LAMANav";
 
 
 const LoanCardPage = () => {
@@ -33,9 +34,10 @@ const LoanCardPage = () => {
        
 
                 <div>
-                    <nav className="navbar" style={{ 'background': '#cce6ff' }}>
+                    <NavBar/>
+                    
                         <h4 className="pl-2">Loan management system: Admin</h4>
-                    </nav>
+                 
                     <div className="container mt-5">
                         <div className="row justify-content-center">
                             <div className="table-responsive">

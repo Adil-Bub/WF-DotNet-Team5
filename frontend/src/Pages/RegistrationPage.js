@@ -2,6 +2,7 @@ import React , {useContext,useState} from "react";
 import axios from 'axios';
 import { AppContext } from "../Context/App.context";
 import {useNavigate} from 'react-router-dom';
+import { NavBar } from "../Component/Navbar";
 
 
 //npm install react-router-dom 
@@ -73,6 +74,7 @@ const RegistrationPage = () => {
     }
     return (
         <div className="text-center">
+            <NavBar/>
             <h1>       
                 Hi User👋
             </h1>
