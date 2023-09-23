@@ -63,6 +63,7 @@ const RegistrationPage = () => {
                 .post('https://localhost:7189/api/Authorization/register', signUpObj)
                 //.get('./data.json')
                 setSignUpObj(response.data);
+                localStorage.setItem('user', JSON.stringify(response.data));
                 console.log(response.data);
                 navigate('/dashboard/user');
                 

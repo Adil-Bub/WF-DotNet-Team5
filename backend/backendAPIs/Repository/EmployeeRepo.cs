@@ -68,12 +68,14 @@ namespace backend.Repository
                 existingEmployee.Department = employee.Department ?? existingEmployee.Department;
                 existingEmployee.Gender = employee.Gender ?? existingEmployee.Gender;
                 existingEmployee.DateOfBirth = employee.DateOfBirth ?? existingEmployee.DateOfBirth;
+                existingEmployee.DateOfJoining = employee.DateOfJoining ?? existingEmployee.DateOfJoining;
 
-                if(employee.Password!=null)
+                /*
+                 * Functionality for admin only
+                 * if (employee.Password!=null)
                 {
                     (existingEmployee.PasswordHash, existingEmployee.Salt) = PasswordHelper.HashPassword(employee.Password);
-                }
-
+                }*/
                 try
                 {
                     _db.Entry(existingEmployee).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
