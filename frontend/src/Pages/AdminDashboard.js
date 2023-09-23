@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from 'axios';
 import { AppContext } from "../Context/App.context";
 import { useNavigate } from 'react-router-dom';
+import { NavBar } from "../Component/LAMANav";
 
 const AdminDashboard = () => {
 
@@ -20,6 +21,8 @@ const AdminDashboard = () => {
         navigate('/dashboard/admin/all-items');
     }
     return (
+        <>
+        <NavBar/>
         <div className="text-center">
             <h1>
             Loan Management Application  
@@ -40,6 +43,7 @@ const AdminDashboard = () => {
                 </div> 
             </div>
         </div>
+        </>
     );
 }
 

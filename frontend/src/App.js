@@ -17,10 +17,7 @@ import { RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './Component/ProtectedRoute.js';
 import AdminRoute from './Component/AdminRoute';
 const router = createBrowserRouter([
-  // {
-  //   path:"/",
-  //   element:<HomePage/>,
-  // },
+ 
   {
     path:"/",
     element:<LoginwithToken/>,

@@ -14,5 +14,9 @@ namespace backend.Services.Interfaces
         public string AddEmployeeRequest(EmployeeLoanRequest employeeLoanRequest);
         public bool UpdateEmployeeRequest(UpdateEmployeeLoanRequest employeeRequestDetail);
         public EmployeeRequestDetail DeleteEmployeeRequest(string id);
+
+        public List<LoanDetailsResponse> GetAllLoanDetailsByEmployeeId(string employeeId);
+        public List<LoanDetailsResponse> GetAllLoanDetailsByRequestId(string requestId);
+
     }
 }

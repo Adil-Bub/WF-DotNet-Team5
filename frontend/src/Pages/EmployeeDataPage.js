@@ -3,7 +3,8 @@ import axios from 'axios';
 import { AppContext } from "../Context/App.context";
 import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import EditEmployeeModal from "../Component/EditEmployeeModal";
+import { NavBar } from "../Component/LAMANav";
+import EditEmployeeModal  from "../Component/EditEmployeeModal";
 
 const EmployeeDataPage = () => {
 
@@ -46,9 +47,10 @@ const EmployeeDataPage = () => {
 
     return (
         <div>
-            <nav className="navbar" style={{ 'background': '#cce6ff' }}>
-                <h4 className="pl-2">Loan management system: Employee details</h4>
-            </nav>
+            <NavBar />
+
+            <h4 className="pl-2">Loan management system: Employee details</h4>
+
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     <div className="table-responsive">

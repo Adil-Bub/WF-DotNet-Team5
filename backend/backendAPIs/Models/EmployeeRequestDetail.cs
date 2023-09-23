@@ -19,5 +19,7 @@ public partial class EmployeeRequestDetail
 
     public virtual EmployeeMaster? Employee { get; set; }
 
+    public virtual ICollection<EmployeeLoanCardDetail> EmployeeLoanCardDetails { get; set; } = new List<EmployeeLoanCardDetail>();
+
     public virtual ItemMaster? Item { get; set; }
 }

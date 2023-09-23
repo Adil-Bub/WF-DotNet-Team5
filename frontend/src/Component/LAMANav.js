@@ -12,9 +12,11 @@ export function NavBar(){
         <>
         <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href='/dashboard/user/'>Loan Management System</Navbar.Brand>
+          <Navbar.Brand href='/dashboard/admin/'>LAMA</Navbar.Brand>
           <Nav className="me-auto">
-           
+            <NavLink to='/dashboard/admin/employee-data'>Employees</NavLink>
+            <Nav.Link href='/dashboard/admin/loan-card'>Loans</Nav.Link>
+            <Nav.Link href='/dashboard/admin/all-items'>Items</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
