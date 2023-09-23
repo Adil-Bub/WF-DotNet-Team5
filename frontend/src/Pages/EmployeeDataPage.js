@@ -19,6 +19,18 @@ const EmployeeDataPage = () => {
         setShowModal(false);
     };
 
+    function deleteEmployee(){
+        axios.delete(`https://localhost:7189/api/Employee/${selectedEmployee.employeeId}`, {
+            headers: { 'Authorization': 'Bearer ' + user.token }
+        })
+        .then((response) => {
+            alert('Successfully deleting employee details!');
+            setSelectedEmployee({});
+        }).catch((error) => {
+            alert('Error deleting employee details! ', error);
+        });
+    };
+
     useEffect(() => {
         axios
             .get('https://localhost:7189/api/Employee/all', {
@@ -30,7 +42,7 @@ const EmployeeDataPage = () => {
             }).catch((error) => {
                 alert('Error fetching data ', error);
             });
-    }, []);
+    }, [selectedEmployee]);
 
     return (
         <div>
@@ -71,7 +83,10 @@ const EmployeeDataPage = () => {
                                             }}></FaEdit>
                                         </td>
                                         <td>
-                                            <FaTrash className="delete-icon" color="red"></FaTrash>
+                                            <FaTrash className="delete-icon" color="red" onClick={() => {
+                                                setSelectedEmployee(item);
+                                                deleteEmployee();
+                                            }}></FaTrash>
                                         </td>
                                     </tr>
                                 ))}
@@ -81,7 +96,7 @@ const EmployeeDataPage = () => {
                             showModal={showModal}
                             handleCloseModal={handleCloseModal}
                             selectedEmployee={selectedEmployee}
-                            onValueChange={handleRefetchList}
+                            setShowModal={setShowModal}
                         >
                         </EditEmployeeModal>}
                     </div>

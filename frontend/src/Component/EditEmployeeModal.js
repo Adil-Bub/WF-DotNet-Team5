@@ -4,7 +4,7 @@ import axios from 'axios';
 import { AppContext } from '../Context/App.context';
 
 //Todo validation errors
-const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee }) => {
+const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee, setShowModal }) => {
     const storedUser = localStorage.getItem('user');
     const user = storedUser ? JSON.parse(storedUser) : null;
     const [employee, setEmployee] = useState(selectedEmployee);
@@ -27,6 +27,7 @@ const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee }) =>
             })
             .then((response) => {
                 alert('Successfully edited employee details!');
+                //setShowModal(false);
             }).catch((error) => {
                 alert('Error editing employee details! ', error);
             });
@@ -71,7 +72,7 @@ const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee }) =>
                         <Form.Control
                             as="select"
                             name="gender"
-                            value={employee.gender}
+                            value={employee.gender == 'F' || employee.gender == 'f'  ? 'F': 'M'}
                             onChange={handleChange}
                         >
                             <option value={"M"}>Male</option>
