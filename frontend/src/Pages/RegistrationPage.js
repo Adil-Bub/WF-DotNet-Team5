@@ -1,14 +1,12 @@
-import React , {useContext,useState} from "react";
+import React , {useState} from "react";
 import axios from 'axios';
-import { AppContext } from "../Context/App.context";
 import {useNavigate} from 'react-router-dom';
 import { NavBar } from "../Component/Navbar";
 
 
 //npm install react-router-dom 
 const RegistrationPage = () => {
-    const [signUpObj,setSignUpObj] = useState({EID: '', Pass: '', Name:'', Desg: '', Dept: '', Gen: '', DoB: '', DoJ: ' '});
-    const [empID,setEmpID] =useState('');
+    const [signUpObj,setSignUpObj] = useState({Pass: '', Name:'', Desg: '', Dept: '', Gen: '', DoB: '', DoJ: ' '});
     const [empPass,setEmpPass] = useState('');
     const [empName,setEmpName] = useState('');
     const [empDesg,setEmpDesg] = useState('');
@@ -18,13 +16,11 @@ const RegistrationPage = () => {
     const [empDoJ,setEmpDoJ] = useState('');
 
     const [error,setError] = useState(false);
-    const{user,setUser} = useState(AppContext);
-    
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
+
     const navigate = useNavigate();
 
-    const handleEmpID = (event) => {
-        setEmpID(event.target.value);
-    }
     const handleEmpPass = (event) => {
         setEmpPass(event.target.value);
     }
@@ -48,9 +44,8 @@ const RegistrationPage = () => {
     }
     
     const handleSubmit = async (event) => {
-        signUpObj.EmployeeId = empID;
-        signUpObj.Password = empPass;
         signUpObj.EmployeeName = empName;
+        signUpObj.Password = empPass;
         signUpObj.Designation = empDesg;
         signUpObj.Department = empDept;
         signUpObj.Gender = empGen;
@@ -58,7 +53,6 @@ const RegistrationPage = () => {
         signUpObj.DateOfJoining = empDoJ;
         event.preventDefault();
         try {
-
             const response = await axios
                 .post('https://localhost:7189/api/Authorization/register', signUpObj)
                 //.get('./data.json')
@@ -66,8 +60,6 @@ const RegistrationPage = () => {
                 localStorage.setItem('user', JSON.stringify(response.data));
                 console.log(response.data);
                 navigate('/dashboard/user');
-                
-               
         }
         catch (error) {
             setError(error.Message);
@@ -87,15 +79,10 @@ const RegistrationPage = () => {
                 <div className="container w-50 p-5 mb-4 text-center fs-5">
                     <div className="row">
                         <div className="mb-3 col">
-                        Employee ID<input type="text" className="form-control" value={empID} onChange={handleEmpID} />
+                            Create Username<input type="text" className="form-control"  value={empName} onChange={handleEmpName} />
                         </div>
                         <div className="mb-3 col">
-                        Create Password<input type="password" className="form-control" value={empPass} onChange={handleEmpPass} />
-                        </div>
-                    </div>
-                    <div className="row mt-3">
-                        <div className="mb-3">
-                            Create Username<input type="text" className="form-control"  value={empName} onChange={handleEmpName} />
+                            Create Password<input type="password" className="form-control" value={empPass} onChange={handleEmpPass} />
                         </div>
                     </div>
                     

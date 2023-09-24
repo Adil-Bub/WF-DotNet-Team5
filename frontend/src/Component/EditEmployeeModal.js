@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import { AppContext } from '../Context/App.context';
 
 //Todo validation errors
 const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee, setShowModal }) => {

@@ -1,13 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from 'axios';
-import { AppContext } from "../Context/App.context";
-import { useNavigate } from 'react-router-dom';
+
 import { NavBar } from "../Component/LAMANav";
 const ItemsMasterDataPage = () => {
 
-    const { user, setUser } = useContext(AppContext);
-    const navigate = useNavigate();
-
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
    
     return (
         <>

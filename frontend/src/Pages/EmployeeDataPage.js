@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { AppContext } from "../Context/App.context";
-import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { NavBar } from "../Component/LAMANav";
 import EditEmployeeModal  from "../Component/EditEmployeeModal";
@@ -10,26 +8,14 @@ const EmployeeDataPage = () => {
 
     const storedUser = localStorage.getItem('user');
     const user = storedUser ? JSON.parse(storedUser) : null;
+    
     const [employees, setEmployees] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState({});
-    const navigate = useNavigate();
 
     const handleCloseModal = () => {
         setSelectedEmployee(null);
         setShowModal(false);
-    };
-
-    function deleteEmployee(){
-        axios.delete(`https://localhost:7189/api/Employee/${selectedEmployee.employeeId}`, {
-            headers: { 'Authorization': 'Bearer ' + user.token }
-        })
-        .then((response) => {
-            alert('Successfully deleting employee details!');
-            setSelectedEmployee({});
-        }).catch((error) => {
-            alert('Error deleting employee details! ', error);
-        });
     };
 
     useEffect(() => {
@@ -76,8 +62,8 @@ const EmployeeDataPage = () => {
                                         <td>{item.designation}</td>
                                         <td>{item.department}</td>
                                         <td>{item.gender}</td>
-                                        <td>{item.dateOfBirth}</td>
-                                        <td>{item.dateOfJoining}</td>
+                                        <td>{item.dateOfBirth.substring(0,10)}</td>
+                                        <td>{item.dateOfJoining.substring(0,10)}</td>
                                         <td>
                                             <FaEdit className="edit-icon" color="blue" onClick={() => {
                                                 setSelectedEmployee(item);
@@ -86,8 +72,10 @@ const EmployeeDataPage = () => {
                                         </td>
                                         <td>
                                             <FaTrash className="delete-icon" color="red" onClick={() => {
-                                                setSelectedEmployee(item);
-                                                deleteEmployee();
+                                                axios
+                                                .delete(`https://localhost:7189/api/Employee/${item.employeeId}`, {
+                                                        headers: { 'Authorization': 'Bearer ' + user.token }
+                                                }).then(setEmployees(employees.filter(employee => employee.employeeId != item.employeeId)))
                                             }}></FaTrash>
                                         </td>
                                     </tr>

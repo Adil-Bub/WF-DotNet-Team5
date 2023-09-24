@@ -1,16 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from 'axios';
-import { AppContext } from "../Context/App.context";
 import { useNavigate, Link } from 'react-router-dom';
 import { NavBar } from "../Component/Navbar";
-//npm install react-router-dom 
+
 const LoginWithToken = () => {
     const [loginobj, setLogin] = useState({ EmployeeId: '', Password: '' });
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
-    const { user, setUser } = useContext(AppContext);
+
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
+
     const navigate = useNavigate();
+    
     const handleUsername = (event) => {
         setUsername(event.target.value);
     }
@@ -26,8 +29,7 @@ const LoginWithToken = () => {
 
             const response = await axios
                 .post('https://localhost:7189/api/Authorization/login', loginobj)
-            //.get('./data.json')
-            setUser(response.data);
+            // setUser(response.data);
             localStorage.setItem('user', JSON.stringify(response.data));
             console.log(response.data);
             if (response.data.designation === 'admin') {
@@ -45,7 +47,6 @@ const LoginWithToken = () => {
     return (
         <div>
             <NavBar/>
-           
             <div className="container d-flex justify-content-center align-items-center vh-100">
                 <div className="card shadow p-4">
                     <form className="card-body" onSubmit={handleSubmit}>
@@ -75,12 +76,12 @@ const LoginWithToken = () => {
                         <div className="d-grid gap-2">
                             <button type="submit" className="btn btn-primary">Submit</button>
                         </div>
-                        {error && (
-              <div className="alert alert-danger mt-3" role="alert">
-                Login failed. Please check your Credentials.
-              </div>
+            {error && (
+                <div className="alert alert-danger mt-3" role="alert">
+                    Login failed. Please check your Credentials.
+                </div>
             )}
-            <p className="mt-3">
+            <p className="text-center mt-3">
               Don't have an account? <Link to="/register">Sign Up</Link>
             </p>
                     </form>

@@ -1,18 +1,23 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import axios from 'axios';
-import { AppContext } from "../Context/App.context";
-import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { NavBar } from "../Component/LAMANav";
+import EditLoanCardModal  from "../Component/EditLoanCardModal";
 
 
 const LoanCardPage = () => {
 
-    const { user, setUser } = useContext(AppContext);
-    const navigate = useNavigate();
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    
+    const [showModal, setShowModal] = useState(false);
+    const [selectedLoanCard, setSelectedLoanCard] = useState({});
     const [loanCards, setLoanCards] = useState([]);
 
-
+    const handleCloseModal = () => {
+        setSelectedLoanCard(null);
+        setShowModal(false);
+    };
 
 
 
@@ -28,12 +33,10 @@ const LoanCardPage = () => {
             .catch((error) => {
                 console.error('Error fetching data: ', error);
             });
-        }, [user.token]);
+        }, [selectedLoanCard]);
    
     return (
-       
-
-                <div>
+            <div>
                     <NavBar/>
                     
                         <h4 className="pl-2">Loan management system: Admin</h4>
@@ -59,7 +62,8 @@ const LoanCardPage = () => {
                                         <td>{item.durationInYears}</td>
                                         <td>
                                                     <FaEdit className="edit-icon" color="blue" onClick={() => {
-                                                    
+                                                    setSelectedLoanCard(item);
+                                                    setShowModal(true);
                                                     }}></FaEdit>
                                                 </td>
                                                 <td>
@@ -76,6 +80,13 @@ const LoanCardPage = () => {
                                         ))}
                                     </tbody>
                                 </table>
+                                {showModal && <EditLoanCardModal
+                            showModal={showModal}
+                            handleCloseModal={handleCloseModal}
+                            selectedLoanCard={selectedLoanCard}
+                            setShowModal={setShowModal}
+                        >
+                        </EditLoanCardModal>}
                             </div>
                         </div>
                     </div>
