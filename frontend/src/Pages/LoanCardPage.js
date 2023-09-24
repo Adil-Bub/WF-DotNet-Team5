@@ -63,7 +63,14 @@ const LoanCardPage = () => {
                                                     }}></FaEdit>
                                                 </td>
                                                 <td>
-                                                    <FaTrash className="delete-icon" color="red"></FaTrash>
+                                                    <FaTrash className="delete-icon" color="red" onClick={() => {
+                                                        axios
+                                                        .delete(`https://localhost:7189/api/LoanCard/${item.loanId}`, {
+                                                            headers: { 'Authorization': 'Bearer ' + user.token }
+                                                        })
+                                                        setLoanCards(loanCards.filter(loanCard => loanCard.loanId != item.loanId))
+                                                        
+                                                    }}></FaTrash>
                                                 </td>
                                             </tr>
                                         ))}
