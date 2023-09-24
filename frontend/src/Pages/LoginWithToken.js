@@ -74,7 +74,7 @@ const LoginWithToken = () => {
                             />
                         </div>
                         <div className="d-grid gap-2">
-                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="submit" className="btn btn-dark">Submit</button>
                         </div>
             {error && (
                 <div className="alert alert-danger mt-3" role="alert">

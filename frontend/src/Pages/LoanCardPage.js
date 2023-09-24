@@ -38,9 +38,7 @@ const LoanCardPage = () => {
     return (
             <div>
                     <NavBar/>
-                    
-                        <h4 className="pl-2">Loan management system: Admin</h4>
-                 
+                                    
                     <div className="container mt-5">
                         <div className="row justify-content-center">
                             <div className="table-responsive">

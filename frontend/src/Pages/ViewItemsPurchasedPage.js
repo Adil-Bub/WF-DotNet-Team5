@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { NavBar } from "../Component/LUMANav";
+
 const ViewItemsPurchasedPage = () => {
 
     const storedUser = localStorage.getItem('user');
-    const { user, setUser } = storedUser ? JSON.parse(storedUser) : null;
-    const navigate = useNavigate();
+    const user = storedUser ? JSON.parse(storedUser) : null;
 
    
     return (

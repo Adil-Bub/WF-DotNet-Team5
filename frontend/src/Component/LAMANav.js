@@ -13,6 +13,7 @@ export function NavBar(){
             <Nav.Link href='/dashboard/admin/employee-data'>Employees</Nav.Link>
             <Nav.Link href='/dashboard/admin/loan-card'>Loans</Nav.Link>
             <Nav.Link href='/dashboard/admin/all-items'>Items</Nav.Link>
+            <Nav.Link href='/dashboard/admin/loan-requests'>Requests</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

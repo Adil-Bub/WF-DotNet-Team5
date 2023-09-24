@@ -18,5 +18,7 @@ namespace backend.Services.Interfaces
         public List<LoanDetailsResponse> GetAllLoanDetailsByEmployeeId(string employeeId);
         public List<LoanDetailsResponse> GetAllLoanDetailsByRequestId(string requestId);
 
+        public List<LoanDetailsAdminResponse> GetAllRequestDetails();
+
     }
 }

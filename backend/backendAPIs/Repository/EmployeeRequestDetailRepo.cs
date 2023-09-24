@@ -1,9 +1,15 @@
-﻿using backend.Models;
+﻿using Azure.Core;
+using backend.Models;
 using backend.Models.Request;
 using backend.Models.Response;
 using backend.Repository.Interfaces;
 using backend.Services;
 using backend.Util;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection.Emit;
+using System;
 
 namespace backend.Repository
 {
@@ -198,6 +204,38 @@ namespace backend.Repository
                 .ToList();
 
             return loanDetails;
+        }
+
+        public List<LoanDetailsAdminResponse>? GetAllRequestDetails()
+        {
+            List<EmployeeRequestDetail> loanDetails;
+            List<LoanDetailsAdminResponse> loanDetailsResponse;
+            try
+            {
+                loanDetails = _db.EmployeeRequestDetails.Include(r => r.Item).ThenInclude(r => r.ItemCategoryNavigation).ToList();
+                loanDetailsResponse = loanDetails.Select(request => new LoanDetailsAdminResponse
+                {
+                    RequestId = request.RequestId,
+                    ItemId = request.Item.ItemId,
+                    ItemCategory = request.Item.ItemDescription,
+                    ItemDescription = request.Item.ItemDescription,
+                    IssueStatus = request.Item.IssueStatus,
+                    ItemMake = request.Item.ItemMake,
+                    ItemValuation = request.Item.ItemValuation,
+                    RequestDate = request.RequestDate,
+                    RequestStatus = request.RequestStatus,
+                    ReturnDate = request.ReturnDate,
+                    LoanId = request.Item.ItemCategoryNavigation.LoanId,
+                    DurationInYears = request.Item.ItemCategoryNavigation.DurationInYears
+
+                }).ToList();
+
+                return loanDetailsResponse;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }

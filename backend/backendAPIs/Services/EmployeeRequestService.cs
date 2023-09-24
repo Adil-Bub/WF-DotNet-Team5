@@ -125,6 +125,11 @@ namespace backend.Services
             return _employeeRequestDetailRepo.GetAllLoanDetailsByEmployeeId(employeeId);   
         }
 
+        public List<LoanDetailsAdminResponse> GetAllRequestDetails()
+        {
+            return _employeeRequestDetailRepo.GetAllRequestDetails();
+        }
+
         public List<LoanDetailsResponse> GetAllLoanDetailsByRequestId(string requestId)
         {
             throw new NotImplementedException();

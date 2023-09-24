@@ -5,12 +5,13 @@ import { NavBar } from "../Component/LUMANav";
 import '../App.css';
 
 const ApplyLoansPage = () => {
+
   const storedUser = localStorage.getItem('user');
   const user = storedUser ? JSON.parse(storedUser) : null;
   const navigate = useNavigate();
 
   const url ='https://localhost:7189/api/Items';
-    
+
   const [data, setData] = useState([]);
 
   const fetchInfo = () => {

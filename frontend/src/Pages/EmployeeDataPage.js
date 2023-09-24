@@ -34,9 +34,6 @@ const EmployeeDataPage = () => {
     return (
         <div>
             <NavBar />
-
-            <h4 className="pl-2">Loan management system: Employee details</h4>
-
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     <div className="table-responsive">
