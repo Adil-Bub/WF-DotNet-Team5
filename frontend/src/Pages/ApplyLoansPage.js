@@ -4,8 +4,7 @@ import { NavBar } from "../Component/LUMANav";
 import '../App.css';
 
 const ApplyLoansPage = () => {
-    const url ='https://localhost:7189/api/Items';
-  
+  const url ='https://localhost:7189/api/Items';
   const [data, setData] = useState([]);
 
   const fetchInfo = () => {

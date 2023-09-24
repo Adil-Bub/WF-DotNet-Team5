@@ -17,5 +17,7 @@ namespace backend.Repository.Interfaces
         public EmployeeRequestDetail DeleteEmployeeRequest(string id);
 
         public List<LoanDetailsResponse> GetAllLoanDetailsByEmployeeId(string employeeId);
+
+        public List<LoanDetailsAdminResponse> GetAllRequestDetails();
     }
 }

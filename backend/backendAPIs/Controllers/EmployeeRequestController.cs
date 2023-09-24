@@ -1,10 +1,8 @@
 ﻿using backend.Services.Interfaces;
 using backend.Models.Request;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using backend.Services;
-using backend.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
 
 namespace backend.Controllers
 {
@@ -29,6 +27,18 @@ namespace backend.Controllers
                 return NoContent();
             }
             return Ok(employeeRequests);
+        }
+
+        [HttpGet("requests")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> GetAllRequestDetails()
+        {
+            var requestDetails = _employeeRequestService.GetAllRequestDetails();
+            if (requestDetails != null)
+            {
+                return Ok(requestDetails);
+            }
+            return StatusCode(500, "Internal server error");
         }
 
         [HttpGet("/request-id/{request-id}")]
@@ -115,6 +125,7 @@ namespace backend.Controllers
             }
             return Ok(loanDetails);
         }
+
         [HttpPost("add")]
         [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> AddEmployeeRequest(EmployeeLoanRequest employeeLoanRequest)
@@ -124,7 +135,7 @@ namespace backend.Controllers
                 return BadRequest("Invalid loan request");
             }
             var requestId = _employeeRequestService.AddEmployeeRequest(employeeLoanRequest);
-            if (requestId== null)
+            if (requestId == null)
             {
                 return BadRequest("Failed to add new loan request");
             }
