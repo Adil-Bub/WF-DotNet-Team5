@@ -100,6 +100,23 @@ namespace backend.Repository
             }
             else
             {
+                var employeeRequests = _db.EmployeeRequestDetails
+                    .Where(request => request.EmployeeId == employeeId)
+                    .ToList();
+
+                //Deleting approved requests
+                var employeeLoanCards = _db.EmployeeLoanCardDetails
+                    .Where(loanCard => loanCard.EmployeeId == employeeId)
+                    .ToList();
+                _db.EmployeeLoanCardDetails.RemoveRange(employeeLoanCards);
+                _db.SaveChanges();
+
+                //deleting all requests
+                _db.EmployeeRequestDetails.RemoveRange(employeeRequests);
+                _db.SaveChanges();
+
+
+                //deleting the employee
                 _db.EmployeeMasters.Remove(employee);
                 _db.SaveChanges();
                 var deletedEmployee = new EmployeeResponse
