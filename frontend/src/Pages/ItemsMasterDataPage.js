@@ -72,7 +72,13 @@ const ItemsMasterDataPage = () => {
                                                     }}></FaEdit>
                                                 </td>
                                                 <td>
-                                                    <FaTrash className="delete-icon" color="red"></FaTrash>
+                                                    <FaTrash className="delete-icon" color="red" onClick={() => {
+                                                        axios
+                                                        .delete(`https://localhost:7189/api/Items/`, {
+                                                                headers: { 'Authorization': 'Bearer ' + user.token }
+                                                        }).then(setItems(items.filter(x => x.itemId != item.itemId)))
+                                                    }
+                                                    }></FaTrash>
                                                 </td>
                                             </tr>
                                         ))}
