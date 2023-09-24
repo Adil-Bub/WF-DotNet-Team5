@@ -23,7 +23,7 @@ const LoanRequestsPage = () => {
             }).catch((error) => {
                 alert('Error fetching data ', error);
             });
-    });
+    }, []);
 
     const handleRequestDateChange = (date) => {
       setDate(date);
@@ -44,11 +44,11 @@ const LoanRequestsPage = () => {
         }
         console.log(payload);
         axios
-            .put(`https://localhost:7189/api/EmployeeRequestDetails/${requestId}`, payload, {
+            .put(`https://localhost:7189/api/EmployeeRequest/${requestId}`, payload, {
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
-                //console.log(response.data);
+                console.log(response.data);
                 alert('Successfully changed request status!');
             }).catch((error) => {
                 alert('Error editing details! ', error);
@@ -60,7 +60,7 @@ const LoanRequestsPage = () => {
         <div>
         <NavBar/>
         {requests.map((request) => (
-            <Container fluid>
+            <Container fluid key={request.requestId}>
             <Row>
                 <Col xs={12} sm={10} md={8} lg={10} className="mx-auto" key={request.requestId}>
                   <Card className="m-3">
@@ -73,26 +73,26 @@ const LoanRequestsPage = () => {
                       <Card.Text>Request Date: {request.requestDate}</Card.Text>
                       <Card.Text>Request Status: {request.requestStatus}</Card.Text>
                       <Card.Text>Repayment Tenure: {request.durationInYears}</Card.Text>
-                      {request.returnDate == null ? <></> : 
+                      {request.returnDate == null || request.requestStatus == 'Pending Approval' ? <></> : 
                       <Card.Text>Return Date: {request.returnDate}</Card.Text>}
                       <Form>
                       <Form.Group>
                         <Form.Label>Status:</Form.Label>
                         <Form.Control
                           as="select"
-                          value={request.requestStatus}
+                          value={status}
                           onChange={(e) => handleStatusChange(e.target.value)}
                         >
                           <option value="Pending Approval">Pending Approval</option>
                           <option value="Approved">Approved</option>
                           <option value="Rejected">Rejected</option>
                         </Form.Control>
-                        {request.returnDate == null ? <>
+                        {request.returnDate == null || request.requestStatus == 'Pending Approval' ? <>
                         <Form.Label>Return Date:</Form.Label>
                         <Form.Control
                           type="date"
-                          defaultValue={date}
-                          onBlur={(e) => handleRequestDateChange(e.target.value)}
+                          onChange={(e) => handleRequestDateChange(e.target.value)}
+                          value={date}
                         />
                           </> : <></>}
                       </Form.Group>
