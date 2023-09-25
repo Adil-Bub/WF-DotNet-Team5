@@ -66,7 +66,11 @@ const Card = ({ myLoan }) => {
             </div>
           )}
           <div className="card-footer">
-            <p>Return Date: {myLoan.returnDate}</p>
+            { (myLoan.returnDate!=null) ? (
+                <p>Return Date: {myLoan.returnDate} </p>
+            ) : (
+                <p>Return Date to be updated by admin</p>
+            )}
             <p>Loan ID: {myLoan.loanId}</p>
             <p>Duration (Years): {myLoan.durationInYears}</p>
           </div>
