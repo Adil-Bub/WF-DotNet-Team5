@@ -44,6 +44,7 @@ namespace backend.Controllers
         [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> UpdateEmployee(string id, [FromBody] UpdateEmployeeRequest employee)
         {
+            //pass the fields not being edited as null or same value (in UpdateEmployeeRequest)
             if(employee == null)
             {
                 return BadRequest("Invalid employee data");
