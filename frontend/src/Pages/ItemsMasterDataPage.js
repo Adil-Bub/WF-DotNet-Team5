@@ -35,7 +35,7 @@ const ItemsMasterDataPage = () => {
             .catch((error) => {
                 console.error('Error fetching data: ', error);
             });
-        }, [user.token]);
+        }, [selectedItem]);
    
     return (
        
