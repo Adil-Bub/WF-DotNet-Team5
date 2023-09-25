@@ -74,8 +74,9 @@ namespace backend.Repository
             Console.WriteLine("employee is " + existingEmployeeRequest);
             if (existingEmployeeRequest != null)
             {
+                var duration = 0;
+                var issueDate = DateTime.Now.Date;
                 existingEmployeeRequest.RequestStatus = employeeRequestDetail.RequestStatus ?? existingEmployeeRequest.RequestStatus;
-                existingEmployeeRequest.ReturnDate = employeeRequestDetail.ReturnDate ?? existingEmployeeRequest.ReturnDate;
 
                 //Adding approveed loans to employee loan card details
                 if (existingEmployeeRequest.RequestStatus == "Approved")
@@ -90,6 +91,10 @@ namespace backend.Repository
                         .Select(loan => loan.LoanId)
                         .FirstOrDefault();
 
+                    duration = _db.LoanCardMasters
+                        .Where(loan => loan.LoanId == loanId)
+                        .Select(loan => loan.DurationInYears)
+                        .FirstOrDefault();
                     
                     var employeeLoanCardDetail = new EmployeeLoanCardDetail
                     {
@@ -120,6 +125,8 @@ namespace backend.Repository
                 }
                 try
                 {
+                    //calculating return date as approved loan card issue date + duration of loancard
+                    existingEmployeeRequest.ReturnDate = issueDate.AddYears(duration);
                     _db.Entry(existingEmployeeRequest).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     _db.SaveChangesAsync();
                     return true;
