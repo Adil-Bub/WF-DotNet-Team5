@@ -15,7 +15,7 @@ export function NavBar(){
             <Nav.Link href='/dashboard/admin/all-items'>Items</Nav.Link>
             <Nav.Link href='/dashboard/admin/loan-requests'>Requests</Nav.Link>
           </Nav>
-          <Button href="#">Link</Button> <Button type="submit">Button</Button>{' '}
+          {/* <Button href="#">Link</Button> <Button type="submit">Button</Button>{' '} */}
           {/* <Button  as="input" type="reset" value="Reset" variant="danger"/> */}
           {/* <Button as="input" type="reset" value="Reset" /> */}
         </Container>

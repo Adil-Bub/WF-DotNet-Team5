@@ -3,6 +3,8 @@ import axios from 'axios';
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { NavBar } from "../Component/LAMANav";
 import EditLoanCardModal  from "../Component/EditLoanCardModal";
+import AddLoanCardModal  from "../Component/AddLoanCardModal";
+import { Button } from "react-bootstrap";
 
 
 const LoanCardPage = () => {
@@ -11,6 +13,7 @@ const LoanCardPage = () => {
     const user = storedUser ? JSON.parse(storedUser) : null;
     
     const [showModal, setShowModal] = useState(false);
+    const [showAdd, setShowAdd] = useState(false);
     const [selectedLoanCard, setSelectedLoanCard] = useState({});
     const [loanCards, setLoanCards] = useState([]);
 
@@ -19,6 +22,10 @@ const LoanCardPage = () => {
         setShowModal(false);
     };
 
+    const handleAdd = () => {
+        setSelectedLoanCard(null);
+        setShowAdd(false);
+    };
 
 
     useEffect(() => {
@@ -38,7 +45,13 @@ const LoanCardPage = () => {
     return (
             <div>
                     <NavBar/>
-                                    
+                    <div className="container mt-3 d-flex justify-content-around align-items-center">
+                        <h5>
+                            All Available Loan Cards are Shown Below
+                        </h5>
+                        <Button onClick={()=>{setSelectedLoanCard({});setShowAdd(true)}}>Add Loan Card</Button>
+                    </div>
+                    
                     <div className="container mt-5">
                         <div className="row justify-content-center">
                             <div className="table-responsive">
@@ -53,7 +66,7 @@ const LoanCardPage = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="table-group-divider text-center">
-                                        {loanCards.map((item) => (
+                                        {loanCards.length && loanCards.map((item) => (
                                     <tr key={item.loanId}>
                                         <td>{item.loanId}</td>
                                         <td>{item.loanType}</td>
@@ -85,6 +98,11 @@ const LoanCardPage = () => {
                             setShowModal={setShowModal}
                         >
                         </EditLoanCardModal>}
+                        {showAdd && <AddLoanCardModal
+                        showAdd={showAdd}
+                        handleAdd={handleAdd}
+                        setShowAdd={setShowAdd}>
+                            </AddLoanCardModal>}
                             </div>
                         </div>
                     </div>
