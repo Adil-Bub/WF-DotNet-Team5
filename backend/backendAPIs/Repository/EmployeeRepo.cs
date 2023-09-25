@@ -68,12 +68,14 @@ namespace backend.Repository
                 existingEmployee.Department = employee.Department ?? existingEmployee.Department;
                 existingEmployee.Gender = employee.Gender ?? existingEmployee.Gender;
                 existingEmployee.DateOfBirth = employee.DateOfBirth ?? existingEmployee.DateOfBirth;
+                existingEmployee.DateOfJoining = employee.DateOfJoining ?? existingEmployee.DateOfJoining;
 
-                if(employee.Password!=null)
+                /*
+                 * Functionality for admin only
+                 * if (employee.Password!=null)
                 {
                     (existingEmployee.PasswordHash, existingEmployee.Salt) = PasswordHelper.HashPassword(employee.Password);
-                }
-
+                }*/
                 try
                 {
                     _db.Entry(existingEmployee).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -98,6 +100,23 @@ namespace backend.Repository
             }
             else
             {
+                var employeeRequests = _db.EmployeeRequestDetails
+                    .Where(request => request.EmployeeId == employeeId)
+                    .ToList();
+
+                //Deleting approved requests
+                var employeeLoanCards = _db.EmployeeLoanCardDetails
+                    .Where(loanCard => loanCard.EmployeeId == employeeId)
+                    .ToList();
+                _db.EmployeeLoanCardDetails.RemoveRange(employeeLoanCards);
+                _db.SaveChanges();
+
+                //deleting all requests
+                _db.EmployeeRequestDetails.RemoveRange(employeeRequests);
+                _db.SaveChanges();
+
+
+                //deleting the employee
                 _db.EmployeeMasters.Remove(employee);
                 _db.SaveChanges();
                 var deletedEmployee = new EmployeeResponse

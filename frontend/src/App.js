@@ -16,6 +16,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './Component/ProtectedRoute.js';
 import AdminRoute from './Component/AdminRoute';
+
+import MyLoansPage from './Pages/MyLoansPage';
+
+import LoanRequestsPage from './Pages/LoanRequestsPage';
+
 const router = createBrowserRouter([
  
   {
@@ -76,10 +81,24 @@ const router = createBrowserRouter([
     </ProtectedRoute>
   },
   {
-    path: "/dashboard/user/items=purchased",
+    path: "/dashboard/user/items-purchased",
     element: <ProtectedRoute>
       <ViewItemsPurchasedPage />
     </ProtectedRoute>
+  },
+  {
+
+    path: "/dashboard/user/my-loans",
+    element: <ProtectedRoute>
+      <MyLoansPage />
+    </ProtectedRoute>
+  },
+  {
+    path: "/dashboard/admin/loan-requests",
+    element: <AdminRoute>
+      <LoanRequestsPage/>
+    </AdminRoute>
+
   }
 
 ]);

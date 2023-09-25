@@ -1,12 +1,11 @@
-import React, { useContext, useState } from "react";
-import axios from 'axios';
-import { AppContext } from "../Context/App.context";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { NavBar } from "../Component/LAMANav";
 
 const AdminDashboard = () => {
 
-    const { user, setUser } = useContext(AppContext);
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
     const navigate = useNavigate();
 
     const navigateToEmployeeData = () => {

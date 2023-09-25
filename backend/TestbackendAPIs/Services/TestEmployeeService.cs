@@ -1,27 +1,29 @@
-﻿using backend.Controllers;
-using backend.Models.Request;
+﻿using backend.Services;
 using backend.Models.Response;
+using backend.Models;
+using backend.Repository.Interfaces;
 using backend.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using System.Globalization;
+using backend.Models.Request;
+using backend.Controllers;
 
-namespace TestbackendAPIs.Controllers
+namespace TestbackendAPIs.Services
 {
-    public class TestEmployeeController
+    public class TestEmployeeService
     {
-        private EmployeeController _employeeController;
-        private Mock<IEmployeeService> _mockEmployeeService;
+        private IEmployeeService _employeeService;
+        private Mock<IEmployeeRepo> _mockEmployeeRepo;
 
         private List<EmployeeResponse> employeeResponseList;
+        private EmployeeMaster employeeMaster;
         private EmployeeResponse employeeResponse;
-        
         [SetUp]
         public void Setup()
         {
-            _mockEmployeeService = new Mock<IEmployeeService>();
-            _employeeController = new EmployeeController(_mockEmployeeService.Object);
+            _mockEmployeeRepo = new Mock<IEmployeeRepo>();
+            _employeeService = new EmployeeService(_mockEmployeeRepo.Object);
 
             employeeResponseList = new List<EmployeeResponse>() {
             new EmployeeResponse
@@ -46,6 +48,18 @@ namespace TestbackendAPIs.Controllers
                 DateOfJoining = DateTime.Now.Date
             }
         };
+            employeeMaster = new EmployeeMaster
+            {
+                EmployeeId = "EMP-1234",
+                PasswordHash = "1234", 
+                Salt = "1234",
+                EmployeeName = "Test",
+                Designation = "admin",
+                Department = "IT",
+                Gender = "F",
+                DateOfBirth = DateTime.Now.Date,
+                DateOfJoining = DateTime.Now.Date
+            };
             employeeResponse = new EmployeeResponse
             {
                 EmployeeId = "EMP-1234",
@@ -59,23 +73,23 @@ namespace TestbackendAPIs.Controllers
         }
 
         [Test]
-        public void TestGetEmployees()
+        public void TestGetAllEmployees()
         {
-            _mockEmployeeService.Setup(service => service.GetAllEmployees()).Returns(employeeResponseList);
+            _mockEmployeeRepo.Setup(repo => repo.GetAllEmployees()).Returns(employeeResponseList);
 
-            var result = _employeeController.GetEmployees();
+            var result = _employeeService.GetAllEmployees();
 
-            Assert.That(result, Is.InstanceOf<Task<ActionResult<IEnumerable<EmployeeResponse>>>>());
+            Assert.That(result, Is.InstanceOf<List<EmployeeResponse>>());
         }
 
         [TestCase("EMP-1234")]
         public void TestGetEmployeeById(string id)
         {
-            _mockEmployeeService.Setup(service => service.GetEmployeeById(id)).Returns(employeeResponse);
+            _mockEmployeeRepo.Setup(repo => repo.GetEmployeeById(id)).Returns(employeeMaster);
 
-            var result = _employeeController.GetEmployeeById(id);
+            var result = _employeeService.GetEmployeeById(id);
 
-            Assert.That(result, Is.InstanceOf<Task<ActionResult<EmployeeResponse>>>());
+            Assert.IsInstanceOf<EmployeeResponse>(result);
         }
 
         [TestCase("EMP-1234")]
@@ -91,24 +105,23 @@ namespace TestbackendAPIs.Controllers
                 DateOfBirth = DateTime.Now.Date,
                 DateOfJoining = DateTime.Now.Date
             };
-            _mockEmployeeService.Setup(service => service.UpdateEmployee( updateEmployeeRequest)).Returns(true);
 
-            var result =   _employeeController.UpdateEmployee(id, updateEmployeeRequest);
+            _mockEmployeeRepo.Setup(repo => repo.UpdateEmployee(updateEmployeeRequest)).Returns(true);
 
-            Assert.IsInstanceOf<Task<ActionResult>>(result);
+            var result = _employeeService.UpdateEmployee(updateEmployeeRequest);
+
+            Assert.IsTrue(result);
         }
 
         [TestCase("EMP-1234")]
         public void TestDeleteEmployee(string id)
         {
-            
-            _mockEmployeeService.Setup(service => service.DeleteEmployee(id)).Returns(employeeResponse);
 
-            var result = _employeeController.DeleteEmployee(id);
+            _mockEmployeeRepo.Setup(repo => repo.DeleteEmployee(id)).Returns(employeeResponse);
 
-            Assert.IsInstanceOf<Task<ActionResult>>(result);
+            var result = _employeeService.DeleteEmployee(id);
+
+            Assert.IsInstanceOf<EmployeeResponse>(result);
         }
-
-
     }
 }

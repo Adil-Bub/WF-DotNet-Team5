@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect} from "react";
+import React, { useState, useEffect} from "react";
 import axios from 'axios';
-import { AppContext } from "../Context/App.context";
 import { useNavigate, Link } from 'react-router-dom';
 import { NavBar } from "../Component/LUMANav";
 
@@ -14,7 +13,8 @@ const imgObj = {
 
 const ViewLoansPage = () => {
 
-    const { user, setUser } = useContext(AppContext);
+    const storedUser = localStorage.getItem('user');
+    const { user, setUser } = storedUser ? JSON.parse(storedUser) : null;
     const [ loanCards, setLoanCards ] = useState([]);
     const navigate = useNavigate();
 

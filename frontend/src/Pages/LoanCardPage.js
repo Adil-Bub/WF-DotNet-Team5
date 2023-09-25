@@ -1,18 +1,23 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import axios from 'axios';
-import { AppContext } from "../Context/App.context";
-import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { NavBar } from "../Component/LAMANav";
+import EditLoanCardModal  from "../Component/EditLoanCardModal";
 
 
 const LoanCardPage = () => {
 
-    const { user, setUser } = useContext(AppContext);
-    const navigate = useNavigate();
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    
+    const [showModal, setShowModal] = useState(false);
+    const [selectedLoanCard, setSelectedLoanCard] = useState({});
     const [loanCards, setLoanCards] = useState([]);
 
-
+    const handleCloseModal = () => {
+        setSelectedLoanCard(null);
+        setShowModal(false);
+    };
 
 
 
@@ -28,16 +33,12 @@ const LoanCardPage = () => {
             .catch((error) => {
                 console.error('Error fetching data: ', error);
             });
-        }, [user.token]);
+        }, [selectedLoanCard]);
    
     return (
-       
-
-                <div>
+            <div>
                     <NavBar/>
-                    
-                        <h4 className="pl-2">Loan management system: Admin</h4>
-                 
+                                    
                     <div className="container mt-5">
                         <div className="row justify-content-center">
                             <div className="table-responsive">
@@ -59,16 +60,31 @@ const LoanCardPage = () => {
                                         <td>{item.durationInYears}</td>
                                         <td>
                                                     <FaEdit className="edit-icon" color="blue" onClick={() => {
-                                                    
+                                                    setSelectedLoanCard(item);
+                                                    setShowModal(true);
                                                     }}></FaEdit>
                                                 </td>
                                                 <td>
-                                                    <FaTrash className="delete-icon" color="red"></FaTrash>
+                                                    <FaTrash className="delete-icon" color="red" onClick={() => {
+                                                        axios
+                                                        .delete(`https://localhost:7189/api/LoanCard/${item.loanId}`, {
+                                                            headers: { 'Authorization': 'Bearer ' + user.token }
+                                                        })
+                                                        setLoanCards(loanCards.filter(loanCard => loanCard.loanId != item.loanId))
+                                                        
+                                                    }}></FaTrash>
                                                 </td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
+                                {showModal && <EditLoanCardModal
+                            showModal={showModal}
+                            handleCloseModal={handleCloseModal}
+                            selectedLoanCard={selectedLoanCard}
+                            setShowModal={setShowModal}
+                        >
+                        </EditLoanCardModal>}
                             </div>
                         </div>
                     </div>
