@@ -26,9 +26,9 @@ const EditItemModal = ({ showModal, handleCloseModal, selectedItem, setShowModal
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
-                alert('Successfully edited loan-card details!');
+                alert('Successfully edited item details!');
             }).catch((error) => {
-                alert('Error editing loan-card details! ', error);
+                alert('Error editing item details! ', error);
             });
     }
 

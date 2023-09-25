@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { NavBar } from "../Component/LAMANav";
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import EditItemModal  from "../Component/EditItemModal";
+import AddItemModal from "../Component/AddItemModal";
+import { Button } from "react-bootstrap";
 
 
 const ItemsMasterDataPage = () => {
@@ -16,11 +18,17 @@ const ItemsMasterDataPage = () => {
     const [items, setItems] = useState([]);
 
     const [showModal, setShowModal] = useState(false);
+    const [showAdd, setShowAdd] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
 
     const handleCloseModal = () => {
         setSelectedItem(null);
         setShowModal(false);
+    };
+
+    const handleAdd = () => {
+        setSelectedItem(null);
+        setShowAdd(false);
     };
 
     useEffect(() => {
@@ -42,6 +50,12 @@ const ItemsMasterDataPage = () => {
 
                 <div>
                     <NavBar/>
+                    <div className="container mt-3 d-flex justify-content-around align-items-center">
+                        <h5>
+                            All Available Items are Shown Below
+                        </h5>
+                        <Button onClick={()=>{setSelectedItem({});setShowAdd(true)}}>Add Items</Button>
+                    </div>
                     <div className="container mt-5">
                         <div className="row justify-content-center">
                             <div className="table-responsive">
@@ -91,6 +105,11 @@ const ItemsMasterDataPage = () => {
                             setShowModal={setShowModal}
                         >
                         </EditItemModal>}
+                        {showAdd && <AddItemModal
+                        showAdd={showAdd}
+                        handleAdd={handleAdd}
+                        setShowAdd={setShowAdd}>
+                            </AddItemModal>}
                             </div>
                         </div>
                     </div>
