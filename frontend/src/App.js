@@ -5,7 +5,6 @@ import LoginwithToken from './Pages/LoginWithToken';
 import RegistrationPage from './Pages/RegistrationPage';
 import UserDashboard from "./Pages/UserDashboard";
 import AdminDashboard from './Pages/AdminDashboard';
-import HomePage from './Pages/HomePage';
 import ItemsMasterDataPage from './Pages/ItemsMasterDataPage';
 import EmployeeDataPage from './Pages/EmployeeDataPage';
 import LoanCardPage from './Pages/LoanCardPage';
@@ -16,27 +15,22 @@ import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './Component/ProtectedRoute.js';
 import AdminRoute from './Component/AdminRoute';
-
 import MyLoansPage from './Pages/MyLoansPage';
-
 import LoanRequestsPage from './Pages/LoanRequestsPage';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 const router = createBrowserRouter([
- 
+
   {
-    path:"/",
-    element:<LoginwithToken/>,
+    path: "/",
+    element: <LoginwithToken />,
   },
   {
     path: "/register",
     element: <RegistrationPage />,
   },
-  // {
-  //   path:"/profile",
-  //   element:<ProtectedRoute>
-  //     <ProfilePage/>
-  //   </ProtectedRoute>,
-  // }
   {
     path: "/dashboard/user",
     element: <ProtectedRoute>
@@ -87,7 +81,6 @@ const router = createBrowserRouter([
     </ProtectedRoute>
   },
   {
-
     path: "/dashboard/user/my-loans",
     element: <ProtectedRoute>
       <MyLoansPage />
@@ -96,20 +89,18 @@ const router = createBrowserRouter([
   {
     path: "/dashboard/admin/loan-requests",
     element: <AdminRoute>
-      <LoanRequestsPage/>
+      <LoanRequestsPage />
     </AdminRoute>
-
   }
-
 ]);
+
 function App() {
   return (
     <>
-   
-    < AppProvider>
-      <RouterProvider router={router} />
-    </AppProvider>
-
+      <AppProvider>
+        <RouterProvider router={router} />
+        <ToastContainer/>
+      </AppProvider>
     </>
   );
 }

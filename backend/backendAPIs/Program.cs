@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using backend.Services.Interfaces;
 using backend.Repository.Interfaces;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,8 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
-        Title = "Authorization", Version = "v1"
+        Title = "Authorization",
+        Version = "v1"
     });
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
@@ -32,7 +34,7 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
     });
-    options.AddSecurityRequirement( new OpenApiSecurityRequirement
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme{
@@ -44,6 +46,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
 builder.Services.AddDbContext<LoansContext>(options =>
       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -68,7 +71,6 @@ builder.Services.AddCors(options =>
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader();
-               
     });
 });
 
@@ -88,6 +90,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+Log.Logger = new LoggerConfiguration().MinimumLevel.Information().WriteTo.Console().CreateLogger();
 
 var app = builder.Build();
 
@@ -101,13 +104,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors();
 app.UseRouting();
 app.UseAuthentication();
-
 app.UseAuthorization();
 app.UseHttpsRedirection();
-
-
-
-
 
 app.MapControllers();
 

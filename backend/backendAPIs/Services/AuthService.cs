@@ -53,7 +53,7 @@ namespace backend.Services
             
             var key = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new LoginResponse(key, userInfo.EmployeeId, userInfo.Designation);
+            return new LoginResponse(key, userInfo.EmployeeId, userInfo.Designation, userInfo.EmployeeName);
         }
 
         EmployeeMaster? IAuthService.AuthenticateUser(LoginRequest loginRequest)

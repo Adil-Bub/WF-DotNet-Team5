@@ -3,11 +3,15 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { NavBar } from "../Component/Navbar";
 
+import { showErrorToast, showSuccessfulToast } from '../Util/toast';
+
 const LoginWithToken = () => {
+
+    const baseUrl = 'https://localhost:7189/api';
+
     const [loginobj, setLogin] = useState({ EmployeeId: '', Password: '' });
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false);
 
     const storedUser = localStorage.getItem('user');
     const user = storedUser ? JSON.parse(storedUser) : null;
@@ -26,24 +30,23 @@ const LoginWithToken = () => {
         loginobj.Password = password;
         event.preventDefault();
         try {
-
             const response = await axios
-                .post('https://localhost:7189/api/Authorization/login', loginobj)
-            // setUser(response.data);
+                .post(`${baseUrl}/Authorization/login`, loginobj);
             localStorage.setItem('user', JSON.stringify(response.data));
-            console.log(response.data);
+            showSuccessfulToast("Login successful!")
             if (response.data.designation === 'admin') {
                 navigate('/dashboard/admin');
             }
             else {
                 navigate('/dashboard/user');
             }
-
         }
         catch (error) {
-            setError(true);
+            console.log(error);
+            showErrorToast(error.response.data);
         }
     }
+
     return (
         <div>
             <NavBar/>
@@ -76,11 +79,6 @@ const LoginWithToken = () => {
                         <div className="d-grid gap-2">
                             <button type="submit" className="btn btn-dark">Submit</button>
                         </div>
-            {error && (
-                <div className="alert alert-danger mt-3" role="alert">
-                    Login failed. Please check your Credentials.
-                </div>
-            )}
             <p className="text-center mt-3">
               Don't have an account? <Link to="/register">Sign Up</Link>
             </p>
