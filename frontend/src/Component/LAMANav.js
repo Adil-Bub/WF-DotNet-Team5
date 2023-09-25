@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavLink from 'react-bootstrap/esm/NavLink';
 import { AppContext } from "../Context/App.context";
+import Button from 'react-bootstrap/Button';
 export function NavBar(){
   const { user, setUser } = useContext(AppContext);
 
@@ -18,6 +19,9 @@ export function NavBar(){
             <Nav.Link href='/dashboard/admin/loan-card'>Loans</Nav.Link>
             <Nav.Link href='/dashboard/admin/all-items'>Items</Nav.Link>
           </Nav>
+          <Button href="#">Link</Button> <Button type="submit">Button</Button>{' '}
+          {/* <Button  as="input" type="reset" value="Reset" variant="danger"/> */}
+          {/* <Button as="input" type="reset" value="Reset" /> */}
         </Container>
       </Navbar>
         </>

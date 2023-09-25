@@ -16,10 +16,18 @@ const ApplyLoansPage = () => {
   useEffect(() => {
     fetchInfo();
   }, []);
-  function handleClick(item) {
-    // Alert("Item Loan request sent");
-    console.log( item);
-} 
+
+  
+  const [error,setError] = useState(false);
+
+  const handleClick = async (item) => {
+    // signUpObj.EmployeeId = empID;
+   
+}
+//   function handleClick(item) {
+//     // Alert("Item Loan request sent");
+//     console.log( item);
+// } 
   return (
     <>
     <NavBar/>
