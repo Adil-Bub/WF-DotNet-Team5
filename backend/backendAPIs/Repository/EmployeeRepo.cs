@@ -21,10 +21,10 @@ namespace backend.Repository
         {
             try
             {
-                _db.Set<EmployeeMaster>().Add(employee);
-                _db.SaveChanges();
-                //_db.EmployeeMasters.Add(employee);
-                // _db.SaveChangesAsync();
+                //_db.Set<EmployeeMaster>().Add(employee);
+                //_db.SaveChanges();
+                _db.EmployeeMasters.Add(employee);
+                _db.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
@@ -61,6 +61,8 @@ namespace backend.Repository
         {
             var existingEmployee = _db.EmployeeMasters.FirstOrDefault(empl => empl.EmployeeId == employee.EmployeeId);
             Console.WriteLine("employee is " + employee);
+
+            _db.Attach(existingEmployee);
             if (existingEmployee != null) 
             {
                 existingEmployee.EmployeeName = employee.EmployeeName ?? existingEmployee.EmployeeName;
@@ -78,7 +80,6 @@ namespace backend.Repository
                 }*/
                 try
                 {
-                    _db.Entry(existingEmployee).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     _db.SaveChangesAsync();
                     return true;
                 }
@@ -93,7 +94,7 @@ namespace backend.Repository
 
         public EmployeeResponse? DeleteEmployee(string employeeId)
         {
-            EmployeeMaster? employee =  _db.EmployeeMasters.Find(employeeId);
+            EmployeeMaster? employee =  _db.EmployeeMasters.FirstOrDefault(emp => emp.EmployeeId == employeeId);
             if (employee == null)
             {
                 return null;
