@@ -13,13 +13,19 @@ const ApplyLoansPage = () => {
   const navigate = useNavigate();
 
   const { selectedCategory } = useAppContext();
-  const url = 'https://localhost:7189/api/Items';
+  const url = 'https://localhost:7189/api/Items/all';
 
 
   const [data, setData] = useState([]);
 
   const fetchInfo = () => {
-    return axios.get(url).then((res) => setData(res.data));
+    return axios.get(url, {
+      headers: { 'Authorization': 'Bearer ' + user.token }
+  })
+    .then((res) => setData(res.data))
+    .catch((error) => {
+      console.error('Error fetching data: ', error);
+  });
   };
 
 
@@ -46,6 +52,7 @@ const ApplyLoansPage = () => {
         navigate("/dashboard/user/my-loans");
       }
       else {
+        console.log("hi");
         window.alert("Failed to apply, try again");
       }
     }
@@ -76,7 +83,7 @@ const ApplyLoansPage = () => {
                   Issue Status: {dataObj.issueStatus}  <br />
                 </p>
                 <div className="mt-3">
-                  <button className="btn btn-primary btn-lg" > Apply </button>
+                  <button className="btn btn-primary btn-lg" onClick={handleButtonClick}> Apply </button>
                 </div>
               </div>
             </div>
