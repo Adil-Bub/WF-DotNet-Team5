@@ -1,16 +1,16 @@
-﻿using backend.Repository.Interfaces;
-using backend.Models;
-using backend.Models.Request;
-using backend.Models.Response;
-using backend.Services.Interfaces;
+﻿using backendAPIs.Repository.Interfaces;
+using backendAPIs.Models;
+using backendAPIs.Models.Request;
+using backendAPIs.Models.Response;
+using backendAPIs.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using backend.Util;
+using backendAPIs.Util;
 
-namespace backend.Services
+namespace backendAPIs.Services
 {
     public class AuthService : IAuthService
     {

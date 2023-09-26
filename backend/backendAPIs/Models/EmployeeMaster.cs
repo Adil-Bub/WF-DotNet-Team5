@@ -1,8 +1,8 @@
-﻿using backend.Models.Request;
+﻿using backendAPIs.Models.Request;
 using System;
 using System.Collections.Generic;
 
-namespace backend.Models;
+namespace backendAPIs.Models;
 
 public partial class EmployeeMaster
 {

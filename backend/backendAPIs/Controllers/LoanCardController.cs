@@ -1,12 +1,12 @@
-﻿using backend.Models;
-using backend.Models.Request;
-using backend.Services.Interfaces;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Request;
+using backendAPIs.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 
-namespace backend.Controllers
+namespace backendAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -63,8 +63,8 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
-        public async Task<ActionResult> UpdateLoanCard(string id, [FromBody] LoanCardMaster loanCard)
+        //[Authorize(Roles = "admin")]
+        public async Task<ActionResult> UpdateLoanCard(string id, [FromBody] UpdateLoanCardRequest loanCard)
         {
             if(loanCard == null)
             {

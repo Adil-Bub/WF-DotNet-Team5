@@ -1,11 +1,11 @@
-﻿using backend.Models;
-using backend.Models.Request;
-using backend.Models.Response;
-using backend.Repository.Interfaces;
-using backend.Services.Interfaces;
-using backend.Util;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Request;
+using backendAPIs.Models.Response;
+using backendAPIs.Repository.Interfaces;
+using backendAPIs.Services.Interfaces;
+using backendAPIs.Util;
 
-namespace backend.Services
+namespace backendAPIs.Services
 {
     public class LoanCardService : ILoanCardService
     {
@@ -62,7 +62,7 @@ namespace backend.Services
             return _loanCardRepo.AddLoanCard(loanCard);
         }
 
-        public bool UpdateLoanCard(LoanCardMaster loanCard)
+        public bool UpdateLoanCard(UpdateLoanCardRequest loanCard)
         {
             return _loanCardRepo.UpdateLoanCard(loanCard);
         }

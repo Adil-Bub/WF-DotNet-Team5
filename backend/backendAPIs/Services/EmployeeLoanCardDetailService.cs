@@ -1,10 +1,10 @@
-﻿using backend.Models;
-using backend.Services.Interfaces;
-using backend.Repository.Interfaces;
-using backend.Models.Response;
+﻿using backendAPIs.Models;
+using backendAPIs.Services.Interfaces;
+using backendAPIs.Repository.Interfaces;
+using backendAPIs.Models.Response;
 using Azure.Core;
 
-namespace backend.Services
+namespace backendAPIs.Services
 {
     public class EmployeeLoanCardDetailService : IEmployeeLoanCardDetailService
     {

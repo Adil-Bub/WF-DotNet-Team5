@@ -1,4 +1,4 @@
-﻿namespace backend.Util
+﻿namespace backendAPIs.Util
 {
     public class UIDGenerator
     {

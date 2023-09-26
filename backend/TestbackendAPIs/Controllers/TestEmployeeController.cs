@@ -1,7 +1,7 @@
-﻿using backend.Controllers;
-using backend.Models.Request;
-using backend.Models.Response;
-using backend.Services.Interfaces;
+﻿using backendAPIs.Controllers;
+using backendAPIs.Models.Request;
+using backendAPIs.Models.Response;
+using backendAPIs.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;

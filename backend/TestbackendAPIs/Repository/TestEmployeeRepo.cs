@@ -1,8 +1,8 @@
-﻿using backend.Models;
-using backend.Models.Request;
-using backend.Models.Response;
-using backend.Repository;
-using backend.Repository.Interfaces;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Request;
+using backendAPIs.Models.Response;
+using backendAPIs.Repository;
+using backendAPIs.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;

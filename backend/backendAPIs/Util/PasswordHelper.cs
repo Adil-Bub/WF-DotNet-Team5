@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace backend.Services
+namespace backendAPIs.Util
 {
     public class PasswordHelper
     {

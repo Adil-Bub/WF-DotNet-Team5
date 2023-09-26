@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Models;
+namespace backendAPIs.Models;
 
 public partial class LoansContext : DbContext
 {
