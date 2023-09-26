@@ -3,11 +3,13 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from 'react-router-dom';
+import { showInfoToast } from '../Util/toast';
 
 export function NavBar(){
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('user');
+    showInfoToast("Logged out!");
     navigate('/');
   }
     return (

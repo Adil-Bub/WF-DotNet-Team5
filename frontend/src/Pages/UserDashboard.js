@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { NavBar } from "../Component/LUMANav";
+import Card from 'react-bootstrap/Card';
 
 const UserDashboard = () => {
 
