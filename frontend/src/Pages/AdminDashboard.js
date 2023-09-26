@@ -45,7 +45,7 @@ const AdminDashboard = () => {
                             className="custom-card"
                             onClick={navigateToEmployeeData}>
                             <Card.Body className="d-flex flex-column align-items-center">
-                                <FaUsersBetweenLines size={100} color="darkblue" />
+                                <FaUsersBetweenLines size={100} color="darkcyan" />
                                 <Card.Text className="m-2">
                                     Employee Data
                                 </Card.Text>
@@ -58,7 +58,7 @@ const AdminDashboard = () => {
                             className="custom-card"
                             onClick={navigateToLoanCardManagement}>
                             <Card.Body className="d-flex flex-column align-items-center">
-                                <FaMoneyCheckAlt size={100} color="brown" />
+                                <FaMoneyCheckAlt size={100} color="darkcyan" />
                                 <Card.Text className="m-2">
                                     Loan Card Data
                                 </Card.Text>

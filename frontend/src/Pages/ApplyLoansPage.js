@@ -83,7 +83,7 @@ const ApplyLoansPage = () => {
                   Issue Status: {dataObj.issueStatus}  <br />
                 </p>
                 <div className="mt-3">
-                  <button className="btn btn-primary btn-lg" onClick={()=>handleButtonClick(dataObj)}> Apply </button>
+                  <button className="btn btn-outline-dark btn-lg" onClick={()=>handleButtonClick(dataObj)}> Apply </button>
                 </div>
               </div>
             </div>

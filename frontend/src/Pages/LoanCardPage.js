@@ -49,7 +49,7 @@ const LoanCardPage = () => {
                         <h5>
                             All Available Loan Cards are Shown Below
                         </h5>
-                        <Button onClick={()=>{setSelectedLoanCard({});setShowAdd(true)}}>Add Loan Card</Button>
+                        <Button variant="outline-dark" onClick={()=>{setSelectedLoanCard({});setShowAdd(true)}}>Add Loan Card</Button>
                     </div>
                     
                     <div className="container mt-5">
@@ -72,7 +72,7 @@ const LoanCardPage = () => {
                                         <td>{item.loanType}</td>
                                         <td>{item.durationInYears} Years</td>
                                         <td>
-                                                    <FaEdit className="edit-icon" color="blue" onClick={() => {
+                                                    <FaEdit className="edit-icon" color="darkcyan" onClick={() => {
                                                     setSelectedLoanCard(item);
                                                     setShowModal(true);
                                                     }}></FaEdit>

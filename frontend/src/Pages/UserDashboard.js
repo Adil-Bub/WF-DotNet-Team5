@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { NavBar } from "../Component/LUMANav";
 import Card from 'react-bootstrap/Card';
+import {BsFillFileEarmarkCheckFill} from 'react-icons/bs';
+import {BsFillEyeFill} from 'react-icons/bs';
 
 const UserDashboard = () => {
 
@@ -23,18 +25,42 @@ const UserDashboard = () => {
     return (
         <>
             <NavBar />
-            <div className="text-center">
-
-                <h1><br/>
-                    Loan Management Application
-                </h1>
+            <h2 style={{ marginTop: '20px' }}>
+                    User Dashboard
+                </h2>
                 <h4>
-                    User Dashboard for {user.employeeName}  ( {user.employeeId})
+                    Welcome {user.employeeName}! ({user.employeeId})
                 </h4>
-                <div className="container w-50 p-5 mb-4 text-center fs-5">
-                    <div className="d-inline-flex gap-3">
-                        <button type="button"  className="btn btn-outline-dark" onClick={navigateToViewLoans}>View Loans</button>
-                        <button type="button" className="btn btn-outline-dark" onClick={navigateToItemsPurchased}>Items Purchased</button>
+
+                <div className="container p-5 text-center fs-5">
+                    <div className="d-inline-flex flex-wrap gap-4">
+
+                        <Card style={{ width: '15rem', fontSize: '18px'}}
+                            border="dark"
+                            role="button"
+                            className="custom-card"
+                            onClick={navigateToViewLoans}>
+                            <Card.Body className="d-flex flex-column align-items-center">
+                                <BsFillEyeFill size={100} color="darkcyan" />
+                                <Card.Text className="m-2">
+                                    View Loans
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+
+                        <Card style={{ width: '15rem', fontSize: '18px'}}
+                            border="dark"
+                            role="button"
+                            className="custom-card"
+                            onClick={navigateToItemsPurchased}>
+                            <Card.Body className="d-flex flex-column align-items-center">
+                                <BsFillFileEarmarkCheckFill size={100} color="darkcyan" />
+                                <Card.Text className="m-2">
+                                    Item Purchased
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+
                     </div>
                 </div>
             </div>
