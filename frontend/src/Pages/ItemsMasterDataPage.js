@@ -80,7 +80,7 @@ const ItemsMasterDataPage = () => {
                                         <td>{item.itemMake}</td>
                                         <td>₹ {item.itemValuation}</td>
                                         <td>
-                                                    <FaEdit className="edit-icon" color="blue" onClick={() => {
+                                                    <FaEdit className="edit-icon" color="darkcyan" onClick={() => {
                                                     setSelectedItem(item);
                                                     setShowModal(true);
                                                     }}></FaEdit>

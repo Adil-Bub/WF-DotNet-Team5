@@ -51,7 +51,7 @@ const ViewLoansPage = () => {
                             <div class="card-body">
                                 <h3 class="card-title">{loanCard.loanType}</h3>
                                 <p class="card-text"><strong>Duration:</strong> {loanCard.durationInYears} Years</p>
-                                <Link class="btn btn-lg btn-primary" onClick={() => handleSubmit(loanCard.loanType)}>Apply for Loan</Link>
+                                <Link class="btn btn-lg btn-outline-dark " onClick={() => handleSubmit(loanCard.loanType)}>Apply for Loan</Link>
                             </div>
                         </div>
                     ))}

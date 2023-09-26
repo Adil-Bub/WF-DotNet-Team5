@@ -44,15 +44,15 @@ const EmployeeDataPage = () => {
                         <table className="table table-hover table-bordered" style={{borderRadius:'10px', overflow: 'hidden', border: '2px solid #ccc'}}>
                             <thead className="text-center align-items-center">
                                 <tr>
-                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Employee Id</th>
-                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Employee Name</th>
-                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Designation</th>
-                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Department</th>
-                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Gender</th>
-                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Date of Birth</th>
-                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Date of Joining</th>
-                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Edit</th>
-                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Delete</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Employee Id</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Employee Name</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Designation</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Department</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Gender</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Date of Birth</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Date of Joining</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Edit</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Delete</th>
                                 </tr>
                             </thead>
                             <tbody className="table-group-divider text-center">
