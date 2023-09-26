@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Diagnostics;
+using System.Threading;
 using backendAPIs.Util;
 
 namespace backendAPIs.Services
@@ -69,13 +71,14 @@ namespace backendAPIs.Services
         EmployeeMaster? IAuthService.RegisterUser(RegisterRequest registerRequest)
         {
             var employeeId = UIDGenerator.GenerateUniqueVarcharId("EMP");
-
+            var stopwatch = Stopwatch.StartNew();
             var (hashedPassword, salt) = PasswordHelper.HashPassword(registerRequest.Password);
 
             var employee = new EmployeeMaster(employeeId, hashedPassword, salt, registerRequest);
             try
             {
                 bool status = _employeeRepo.AddEmployee(employee);
+                while (stopwatch.ElapsedMilliseconds <1000) { }
                 if(status)
                 {
                     return _employeeRepo.GetEmployeeById(employee.EmployeeId) ;
