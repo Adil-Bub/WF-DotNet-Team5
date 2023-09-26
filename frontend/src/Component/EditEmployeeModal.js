@@ -4,10 +4,13 @@ import axios from 'axios';
 
 //Todo validation errors
 const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee, setShowModal }) => {
+    
+    const baseUrl = 'https://localhost:7189/api';
+
     const storedUser = localStorage.getItem('user');
     const user = storedUser ? JSON.parse(storedUser) : null;
+
     const [employee, setEmployee] = useState(selectedEmployee);
-    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         setEmployee(selectedEmployee);
@@ -21,7 +24,7 @@ const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee, setS
     function handleSubmit(event) {
         event.preventDefault();
         axios
-            .put(`https://localhost:7189/api/Employee/${employee.employeeId}`, employee, {
+            .put(`${baseUrl}/Employee/${employee.employeeId}`, employee, {
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
@@ -43,7 +46,7 @@ const EditEmployeeModal = ({ showModal, handleCloseModal, selectedEmployee, setS
                         <Form.Label>Employee Name</Form.Label>
                         <Form.Control
                             type='text'
-                            name='name'
+                            name='employeeName'
                             value={employee.employeeName}
                             onChange={handleChange}
                         />
