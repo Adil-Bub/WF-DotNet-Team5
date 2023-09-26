@@ -22,7 +22,7 @@ const EditItemModal = ({ showModal, handleCloseModal, selectedItem, setShowModal
     function handleSubmit(event) {
         event.preventDefault();
         axios
-            .put(`https://localhost:7189/api/Items/`, item, {
+            .put(`https://localhost:7189/api/Items/` + item.itemId, item, {
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
