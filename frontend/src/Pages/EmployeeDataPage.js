@@ -4,6 +4,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { NavBar } from "../Component/LAMANav";
 import EditEmployeeModal  from "../Component/EditEmployeeModal";
 import { showErrorToast, showInfoToast } from "../Util/toast";
+import { useNavigate } from 'react-router-dom';
 
 const EmployeeDataPage = () => {
 
@@ -12,7 +13,7 @@ const EmployeeDataPage = () => {
     const storedUser = localStorage.getItem('user');
     const user = storedUser ? JSON.parse(storedUser) : null;
 
-    var disable = false;
+    const navigate = useNavigate();
     
     const [employees, setEmployees] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -31,7 +32,8 @@ const EmployeeDataPage = () => {
             .then((response) => {
                 setEmployees(response.data);
             }).catch((error) => {
-                alert('Error fetching data ', error);
+                showErrorToast("Session expired! Please login!");
+                navigate('/');
             });
     }, [selectedEmployee]);
 
@@ -83,9 +85,11 @@ const EmployeeDataPage = () => {
                                                     .delete(`${baseUrl}/Employee/${item.employeeId}`, {
                                                             headers: { 'Authorization': 'Bearer ' + user.token }
                                                     }).then((response) => {
+                                                        showInfoToast("Deleted employee");
                                                         setSelectedEmployee({});
                                                     }).catch((error) => {
                                                         showErrorToast(error.message);
+                                                        setSelectedEmployee({});
                                                     });
                                                 }else{
                                                     showErrorToast("Cannot delete self!");
@@ -100,7 +104,6 @@ const EmployeeDataPage = () => {
                             showModal={showModal}
                             handleCloseModal={handleCloseModal}
                             selectedEmployee={selectedEmployee}
-                            setShowModal={setShowModal}
                         >
                         </EditEmployeeModal>}
                     </div>
