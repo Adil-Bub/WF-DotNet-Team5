@@ -75,6 +75,12 @@ const router = createBrowserRouter([
     </ProtectedRoute>
   },
   {
+    path: '/dashboard/user/loans/apply/:category',
+    element:<ProtectedRoute>
+    <ApplyLoansPage />
+  </ProtectedRoute>
+  },
+  {
     path: "/dashboard/user/items-purchased",
     element: <ProtectedRoute>
       <ViewItemsPurchasedPage />
