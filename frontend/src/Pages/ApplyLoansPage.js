@@ -43,7 +43,7 @@ const ApplyLoansPage = () => {
         employeeId: user.employeeId,
         itemId: item.itemId
       };
-
+      console.log(requestData)
       const response = await axios.post("https://localhost:7189/api/EmployeeRequest/add", requestData, {
         headers: { 'Authorization': 'Bearer ' + user.token }
       });
@@ -83,7 +83,7 @@ const ApplyLoansPage = () => {
                   Issue Status: {dataObj.issueStatus}  <br />
                 </p>
                 <div className="mt-3">
-                  <button className="btn btn-primary btn-lg" onClick={handleButtonClick}> Apply </button>
+                  <button className="btn btn-primary btn-lg" onClick={()=>handleButtonClick(dataObj)}> Apply </button>
                 </div>
               </div>
             </div>

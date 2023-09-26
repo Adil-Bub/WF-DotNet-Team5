@@ -60,7 +60,7 @@ const LoanRequestsPage = () => {
         {requests.filter((item)=>item.requestStatus == 'Pending Approval').map((request) => (
             <Container  key={request.requestId}>
             
-                  <Card className="m-3 text-center shadow">
+                  <Card className="m-3 text-center shadow w-25">
                     <Card.Body>
                       <Card.Header className="mb-3">Request ID: {request.requestId}</Card.Header>
                       <Card.Title>{request.itemDescription}</Card.Title>
