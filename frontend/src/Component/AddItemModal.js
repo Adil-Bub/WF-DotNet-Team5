@@ -27,7 +27,7 @@ const AddItemModal = ({ showAdd, handleAdd, setShowAdd }) => {
         itemMasterObj.itemValuation = itemValuation;
 
         axios
-            .post(`https://localhost:7189/api/Items`, itemMasterObj, {
+            .post(`https://localhost:7189/api/Items/add`, itemMasterObj, {
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {

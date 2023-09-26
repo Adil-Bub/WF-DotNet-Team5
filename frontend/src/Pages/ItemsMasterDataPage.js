@@ -33,7 +33,7 @@ const ItemsMasterDataPage = () => {
 
     useEffect(() => {
         axios
-            .get('https://localhost:7189/api/Items', {
+            .get('https://localhost:7189/api/Items/all', {
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
@@ -88,7 +88,7 @@ const ItemsMasterDataPage = () => {
                                                 <td>
                                                     <FaTrash className="delete-icon" color="red" onClick={() => {
                                                         axios
-                                                        .delete(`https://localhost:7189/api/Items/`, {
+                                                        .delete(`https://localhost:7189/api/Items/` + item.itemId, {
                                                                 headers: { 'Authorization': 'Bearer ' + user.token }
                                                         }).then(setItems(items.filter(x => x.itemId != item.itemId)))
                                                     }
