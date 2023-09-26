@@ -19,7 +19,6 @@ export function NavBar(){
           <Navbar.Brand href='/dashboard/user/'>LUMA</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href='/dashboard/user/loans'>View</Nav.Link>
-            <Nav.Link href='/dashboard/user/loans/apply'>Apply</Nav.Link>
             <Nav.Link href='/dashboard/user/items-purchased'>Orders</Nav.Link>
             <Nav.Link href='/dashboard/user/my-loans'>My Loans</Nav.Link>
           </Nav>

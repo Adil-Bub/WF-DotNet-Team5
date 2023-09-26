@@ -25,7 +25,7 @@ const UserDashboard = () => {
             <NavBar />
             <div className="text-center">
 
-                <h1>
+                <h1><br/>
                     Loan Management Application
                 </h1>
                 <h4>
@@ -33,12 +33,7 @@ const UserDashboard = () => {
                 </h4>
                 <div className="container w-50 p-5 mb-4 text-center fs-5">
                     <div className="d-inline-flex gap-3">
-                        <button type="button" className="btn btn-outline-dark" onClick={navigateToViewLoans}>View Loans</button>
-
-
-                        <button type="button" className="btn btn-outline-dark" onClick={navigateToApplyLoan}>Apply Loans</button>
-
-
+                        <button type="button"  className="btn btn-outline-dark" onClick={navigateToViewLoans}>View Loans</button>
                         <button type="button" className="btn btn-outline-dark" onClick={navigateToItemsPurchased}>Items Purchased</button>
                     </div>
                 </div>
