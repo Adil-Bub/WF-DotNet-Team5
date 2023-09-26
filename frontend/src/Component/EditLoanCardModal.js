@@ -48,7 +48,7 @@ const EditLoanCardModal = ({ showModal, handleCloseModal, selectedLoanCard, setS
                         />
                     </Form.Group>
                     <Form.Group controlId='formDesignation'>
-                        <Form.Label>durationInYears</Form.Label>
+                        <Form.Label>Duration in Years</Form.Label>
                         <Form.Control
                             type='text'
                             name='durationInYears'
@@ -56,7 +56,7 @@ const EditLoanCardModal = ({ showModal, handleCloseModal, selectedLoanCard, setS
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary mt-3" type="submit">
                         Submit
                     </Button>
                 </Form>

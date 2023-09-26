@@ -59,16 +59,16 @@ const ItemsMasterDataPage = () => {
                     <div className="container mt-5">
                         <div className="row justify-content-center">
                             <div className="table-responsive">
-                                <table className="table table-hover table-bordered">
+                                <table className="table table-hover table-bordered" style={{borderRadius:'10px', overflow: 'hidden', border: '2px solid #ccc'}}>
                                     <thead className="text-center align-items-center">
                                         <tr>
-                                            <th className="align-middle">Item ID</th>
-                                            <th className="align-middle">Category</th>
-                                            <th className="align-middle">Description</th>
-                                            <th className="align-middle">Make</th>
-                                            <th className="align-middle">Valuation</th>
-                                            <th className="align-middle">Edit</th>
-                                            <th className="align-middle">Delete</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Item ID</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Category</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Description</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Make</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Valuation</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Edit</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-group-divider text-center">

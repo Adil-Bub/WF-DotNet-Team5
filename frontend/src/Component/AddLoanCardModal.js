@@ -53,7 +53,7 @@ const AddLoanCardModal = ({ showAdd, handleAdd, setShowAdd }) => {
                             onChange={(event) => {setDurationInYears(event.target.value)}}
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary mt-3" type="submit">
                         Submit
                     </Button>
                 </Form>

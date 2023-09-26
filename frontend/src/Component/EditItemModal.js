@@ -40,7 +40,7 @@ const EditItemModal = ({ showModal, handleCloseModal, selectedItem, setShowModal
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId='formCategory'>
-                        <Form.Label>itemCategory</Form.Label>
+                        <Form.Label>Category</Form.Label>
                         <Form.Control
                             type='text'
                             name='itemCategory'
@@ -49,7 +49,7 @@ const EditItemModal = ({ showModal, handleCloseModal, selectedItem, setShowModal
                         />
                     </Form.Group>
                     <Form.Group controlId='formDescription'>
-                        <Form.Label>itemDescription</Form.Label>
+                        <Form.Label>Description</Form.Label>
                         <Form.Control
                             type='text'
                             name='itemDescription'
@@ -58,7 +58,7 @@ const EditItemModal = ({ showModal, handleCloseModal, selectedItem, setShowModal
                         />
                     </Form.Group>
                     <Form.Group controlId='formMake'>
-                        <Form.Label>itemMake</Form.Label>
+                        <Form.Label>Make</Form.Label>
                         <Form.Control
                             type='text'
                             name='itemMake'
@@ -67,7 +67,7 @@ const EditItemModal = ({ showModal, handleCloseModal, selectedItem, setShowModal
                         />
                     </Form.Group>
                     <Form.Group controlId='formValuation'>
-                        <Form.Label>itemValuation</Form.Label>
+                        <Form.Label>Valuation</Form.Label>
                         <Form.Control
                             type='text'
                             name='itemValuation'
@@ -75,7 +75,7 @@ const EditItemModal = ({ showModal, handleCloseModal, selectedItem, setShowModal
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary mt-3" type="submit">
                         Submit
                     </Button>
                 </Form>

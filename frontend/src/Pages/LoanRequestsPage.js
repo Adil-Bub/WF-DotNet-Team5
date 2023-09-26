@@ -56,43 +56,39 @@ const LoanRequestsPage = () => {
     return (
         <div>
         <NavBar/>
-        <div className="d-flex">
+        <div className="container d-flex">
         {requests.filter((item)=>item.requestStatus == 'Pending Approval').map((request) => (
-            <Container  key={request.requestId}>
-            
-                  <Card className="m-3 text-center shadow w-25">
-                    <Card.Body>
-                      <Card.Header className="mb-3">Request ID: {request.requestId}</Card.Header>
-                      <Card.Title>{request.itemDescription}</Card.Title>
-                      
-                        <Card.Text><strong>Make: </strong>{request.itemMake}</Card.Text>
-                        <Card.Text><strong>Category: </strong>{request.itemCategory}</Card.Text>
-                        <Card.Text><strong>Value: </strong>₹ {request.itemValuation}</Card.Text>
-                        <Card.Text><strong>Request Date: </strong>{request.requestDate.substring(0,10)}</Card.Text>
-                        <Card.Text><strong>Repayment Tenure: </strong>{request.durationInYears} Years</Card.Text>
-                      
-                        
-                        <Form>
-                        <Form.Group className="d-inline-flex align-items-center">
-                          <Form.Label><strong>Status: </strong></Form.Label>
-                          <Form.Control className="mx-2"
-                            as="select"
-                            value={status}
-                            onChange={(e) => handleStatusChange(e.target.value)}
-                          >
-                            <option value="Pending Approval">Pending Approval</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Rejected">Rejected</option>
-                          </Form.Control>                       
-                        </Form.Group>
-                        <Button className="mt-3 w-75" variant="dark" size="" onClick={() => handleSubmit(request.requestId)}>Submit</Button>
-                        </Form>
-                        
-                        
-                    </Card.Body>
-                  </Card>
+          <Card className="m-3 text-center shadow w-25">
+            <Card.Body>
+              <Card.Header className="mb-3">Request ID: {request.requestId}</Card.Header>
+              <Card.Title>{request.itemDescription}</Card.Title>
+              
+                <Card.Text><strong>Make: </strong>{request.itemMake}</Card.Text>
+                <Card.Text><strong>Category: </strong>{request.itemCategory}</Card.Text>
+                <Card.Text><strong>Value: </strong>₹ {request.itemValuation}</Card.Text>
+                <Card.Text><strong>Request Date: </strong>{request.requestDate.substring(0,10)}</Card.Text>
+                <Card.Text><strong>Repayment Tenure: </strong>{request.durationInYears} Years</Card.Text>
+              
                 
-          </Container>
+                <Form>
+                <Form.Group className="d-inline-flex align-items-center">
+                  <Form.Label><strong>Status: </strong></Form.Label>
+                  <Form.Control className="mx-2"
+                    as="select"
+                    value={status}
+                    onChange={(e) => handleStatusChange(e.target.value)}
+                  >
+                    <option value="Pending Approval">Pending Approval</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                  </Form.Control>                       
+                </Form.Group>
+                <Button className="mt-3 w-75" variant="dark" size="" onClick={() => handleSubmit(request.requestId)}>Submit</Button>
+                </Form>
+                
+                
+            </Card.Body>
+          </Card>
         ))}
         </div>
         

@@ -68,7 +68,7 @@ const EmployeeDataPage = () => {
                                         <td>{item.dateOfBirth.substring(0,10)}</td>
                                         <td>{item.dateOfJoining.substring(0,10)}</td>
                                         <td>
-                                            <FaEdit className="edit-icon" color="blue" onClick={() => {
+                                            <FaEdit className="edit-icon" color="darkcyan" onClick={() => {
                                                 if(item.employeeId != user.employeeId){
                                                     setSelectedEmployee(item);
                                                     setShowModal(true);

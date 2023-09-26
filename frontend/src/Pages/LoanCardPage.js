@@ -55,14 +55,14 @@ const LoanCardPage = () => {
                     <div className="container mt-5">
                         <div className="row justify-content-center">
                             <div className="table-responsive">
-                                <table className="table table-hover table-bordered">
+                                <table className="table table-hover table-bordered" style={{borderRadius:'10px', overflow: 'hidden', border: '2px solid #ccc'}}>
                                     <thead className="text-center align-items-center">
                                         <tr>
-                                            <th className="align-middle">Loan_Id</th>
-                                            <th className="align-middle">Loan_Type</th>
-                                            <th className="align-middle">Duration</th>
-                                            <th className="align-middle">Edit</th>
-                                            <th className="align-middle">Delete</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Loan Id</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Loan Type</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Duration</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Edit</th>
+                                            <th className="align-middle" style={{ backgroundColor: 'darkcyan', color: 'white' }}>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-group-divider text-center">

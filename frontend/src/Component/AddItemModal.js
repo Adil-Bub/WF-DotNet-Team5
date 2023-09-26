@@ -45,23 +45,15 @@ const AddItemModal = ({ showAdd, handleAdd, setShowAdd }) => {
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId='formDesc'>
-                        <Form.Label>Item Description</Form.Label>
+                        <Form.Label>Description</Form.Label>
                         <Form.Control
                             type='text'
                             name='itemDescription'
                             onChange={(event) => {setitemDescription(event.target.value)}}
                         />
                     </Form.Group>
-                    <Form.Group controlId='formissueStatus'>
-                        <Form.Label>Issue</Form.Label>
-                        <Form.Control
-                            type='text'
-                            name='issueStatus'
-                            onChange={(event) => {setissueStatus(event.target.value)}}
-                        />
-                    </Form.Group>
                     <Form.Group controlId='formitemMake'>
-                        <Form.Label>Make </Form.Label>
+                        <Form.Label>Make</Form.Label>
                         <Form.Control
                             type='text'
                             name='itemMake'
@@ -77,14 +69,14 @@ const AddItemModal = ({ showAdd, handleAdd, setShowAdd }) => {
                         />
                     </Form.Group>
                     <Form.Group controlId='formitemValuation'>
-                        <Form.Label>Valuation </Form.Label>
+                        <Form.Label>Valuation</Form.Label>
                         <Form.Control
                             type='text'
                             name='itemValuation'
                             onChange={(event) => {setitemValuation(event.target.value)}}
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary mt-3" type="submit">
                         Submit
                     </Button>
                 </Form>

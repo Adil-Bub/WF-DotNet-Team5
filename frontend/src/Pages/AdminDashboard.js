@@ -33,7 +33,7 @@ const AdminDashboard = () => {
                     Admin Dashboard
                 </h2>
                 <h4>
-                    Welcome {user.employeeName}! ({user.employeeId})
+                    Welcome <code>{user.employeeName} ({user.employeeId})</code>
                 </h4>
 
                 <div className="container p-5 text-center fs-5">
