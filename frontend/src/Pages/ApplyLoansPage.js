@@ -31,7 +31,7 @@ const ApplyLoansPage = () => {
   }, []);
 
   const handleButtonClick = async (item) => {
-
+    console.log('I was clicked')
     try {
       const requestData = {
         employeeId: user.employeeId,
@@ -41,7 +41,7 @@ const ApplyLoansPage = () => {
       const response = await axios.post("https://localhost:7189/api/EmployeeRequest/add", requestData, {
         headers: { 'Authorization': 'Bearer ' + user.token }
       });
-
+      console.log(response)
       if (response.status === 200) {
         navigate("/dashboard/user/my-loans");
       }

@@ -9,7 +9,7 @@ const Card = ({ myLoan }) => {
     const user = storedUser ? JSON.parse(storedUser) : null;
     const [isHovered, setIsHovered] = useState(false);
     const [approvalDetails, setApprovalDetails] = useState(null);
-  
+
     const handleMouseEnter = async () => {
       if (myLoan.requestStatus === 'Approved') {
         // Fetch approval details from your API
@@ -35,8 +35,13 @@ const Card = ({ myLoan }) => {
       setApprovalDetails(null);
       
     };
-  
-    const cardClass = `card ${isHovered && 'hovered-card'}`;
+    
+    let cardClass = `card mb-5 ${isHovered && 'hovered-card'}`;
+    if (myLoan.requestStatus == "Approved"){
+      cardClass += ' bg-dark text-white'
+    }
+      
+    
   
     return (
       <div
@@ -45,23 +50,22 @@ const Card = ({ myLoan }) => {
         onMouseLeave={handleMouseLeave}
       >
         <div className="card-header">
-          <h3>Item: {myLoan.itemDescription}</h3>
+          <h3>{myLoan.itemDescription}</h3>
         </div>
         <div className="card-body">
           <p>Item ID: {myLoan.itemId}</p>
           <p>Make: {myLoan.itemMake}</p>
           <p>Category: {myLoan.itemCategory}</p>
-          <p>Valuation: {myLoan.itemValuation}</p>
+          <p>Valuation: ₹ {myLoan.itemValuation}</p>
           <p>Request ID: {myLoan.requestId}</p>
-          <p>Employee ID: {myLoan.employeeId}</p>
-          <p>Request Date: {myLoan.requestDate}</p>
+          <p>Request Date: {myLoan.requestDate.substring(0,10)}</p>
           <p>Request Status: {myLoan.requestStatus}</p>
           {isHovered && approvalDetails && (
             <div className="approval-details">
               <p>Approved Loan Card Details:</p>
-              <ul>
+              <ul className="list-unstyled">
               <li>Card ID: {approvalDetails.cardId}</li>
-              <li>Card Issue Date: {approvalDetails.cardIssueDate}</li>
+              <li>Card Issue Date: {approvalDetails.cardIssueDate.substring(0,10).substring(0,10)}</li>
               </ul>
             </div>
           )}
@@ -69,10 +73,10 @@ const Card = ({ myLoan }) => {
             { (myLoan.returnDate!=null) ? (
                 <p>Return Date: {myLoan.returnDate} </p>
             ) : (
-                <p>Return Date to be updated by admin</p>
+                <p>Return Date TBD by Admin</p>
             )}
             <p>Loan ID: {myLoan.loanId}</p>
-            <p>Duration (Years): {myLoan.durationInYears}</p>
+            <p>Duration: {myLoan.durationInYears} Years</p>
           </div>
         </div>
       </div>
