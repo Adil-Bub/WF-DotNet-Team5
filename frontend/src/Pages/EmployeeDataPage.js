@@ -3,11 +3,16 @@ import axios from 'axios';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { NavBar } from "../Component/LAMANav";
 import EditEmployeeModal  from "../Component/EditEmployeeModal";
+import { showErrorToast, showInfoToast } from "../Util/toast";
 
 const EmployeeDataPage = () => {
 
+    const baseUrl = 'https://localhost:7189/api';
+
     const storedUser = localStorage.getItem('user');
     const user = storedUser ? JSON.parse(storedUser) : null;
+
+    var disable = false;
     
     const [employees, setEmployees] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -20,12 +25,11 @@ const EmployeeDataPage = () => {
 
     useEffect(() => {
         axios
-            .get('https://localhost:7189/api/Employee/all', {
+            .get(`${baseUrl}/Employee/all`, {
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
                 setEmployees(response.data);
-                //console.log(response.data);
             }).catch((error) => {
                 alert('Error fetching data ', error);
             });
@@ -37,18 +41,18 @@ const EmployeeDataPage = () => {
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     <div className="table-responsive">
-                        <table className="table table-hover table-bordered">
+                        <table className="table table-hover table-bordered" style={{borderRadius:'10px', overflow: 'hidden', border: '2px solid #ccc'}}>
                             <thead className="text-center align-items-center">
                                 <tr>
-                                    <th className="align-middle">Employee Id</th>
-                                    <th className="align-middle">Employee Name</th>
-                                    <th className="align-middle">Designation</th>
-                                    <th className="align-middle">Department</th>
-                                    <th className="align-middle">Gender</th>
-                                    <th className="align-middle">Date of Birth</th>
-                                    <th className="align-middle">Date of Joining</th>
-                                    <th className="align-middle">Edit</th>
-                                    <th className="align-middle">Delete</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Employee Id</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Employee Name</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Designation</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Department</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Gender</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Date of Birth</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Date of Joining</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Edit</th>
+                                    <th className="align-middle" style={{ backgroundColor: 'darkblue', color: 'white' }}>Delete</th>
                                 </tr>
                             </thead>
                             <tbody className="table-group-divider text-center">
@@ -63,16 +67,24 @@ const EmployeeDataPage = () => {
                                         <td>{item.dateOfJoining.substring(0,10)}</td>
                                         <td>
                                             <FaEdit className="edit-icon" color="blue" onClick={() => {
-                                                setSelectedEmployee(item);
-                                                setShowModal(true);
+                                                if(item.employeeId != user.employeeId){
+                                                    setSelectedEmployee(item);
+                                                    setShowModal(true);
+                                                }else{
+                                                    showErrorToast("Cannot change self roles!");
+                                                }
                                             }}></FaEdit>
                                         </td>
                                         <td>
                                             <FaTrash className="delete-icon" color="red" onClick={() => {
-                                                axios
-                                                .delete(`https://localhost:7189/api/Employee/${item.employeeId}`, {
-                                                        headers: { 'Authorization': 'Bearer ' + user.token }
-                                                }).then(setEmployees(employees.filter(employee => employee.employeeId != item.employeeId)))
+                                                if(item.employeeId != user.employeeId){
+                                                    axios
+                                                    .delete(`${baseUrl}/Employee/${item.employeeId}`, {
+                                                            headers: { 'Authorization': 'Bearer ' + user.token }
+                                                    }).then(setEmployees(employees.filter(employee => employee.employeeId != item.employeeId)));
+                                                }else{
+                                                    showErrorToast("Cannot delete self!");
+                                                }
                                             }}></FaTrash>
                                         </td>
                                     </tr>
