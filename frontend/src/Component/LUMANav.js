@@ -2,9 +2,14 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-
+import { useNavigate } from 'react-router-dom';
 
 export function NavBar(){
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigate('/');
+  }
     return (
         <>
         <Navbar bg="dark" data-bs-theme="dark">
@@ -16,6 +21,7 @@ export function NavBar(){
             <Nav.Link href='/dashboard/user/items-purchased'>Orders</Nav.Link>
             <Nav.Link href='/dashboard/user/my-loans'>My Loans</Nav.Link>
           </Nav>
+          <button className="btn btn-dark" onClick={handleLogout}>Logout</button>
         </Container>
       </Navbar>
         </>
