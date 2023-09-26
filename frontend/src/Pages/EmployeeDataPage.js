@@ -78,10 +78,15 @@ const EmployeeDataPage = () => {
                                         <td>
                                             <FaTrash className="delete-icon" color="red" onClick={() => {
                                                 if(item.employeeId != user.employeeId){
+                                                    setSelectedEmployee(item);
                                                     axios
                                                     .delete(`${baseUrl}/Employee/${item.employeeId}`, {
                                                             headers: { 'Authorization': 'Bearer ' + user.token }
-                                                    }).then(setEmployees(employees.filter(employee => employee.employeeId != item.employeeId)));
+                                                    }).then((response) => {
+                                                        setSelectedEmployee({});
+                                                    }).catch((error) => {
+                                                        showErrorToast(error.message);
+                                                    });
                                                 }else{
                                                     showErrorToast("Cannot delete self!");
                                                 }
