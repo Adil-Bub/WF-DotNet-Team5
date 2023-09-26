@@ -21,7 +21,7 @@ export function NavBar(){
             <Nav.Link href='/dashboard/user/items-purchased'>Orders</Nav.Link>
             <Nav.Link href='/dashboard/user/my-loans'>My Loans</Nav.Link>
           </Nav>
-          <button className="btn btn-dark" onClick={handleLogout}>Logout</button>
+          <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
         </Container>
       </Navbar>
         </>

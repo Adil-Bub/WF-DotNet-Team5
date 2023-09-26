@@ -9,7 +9,7 @@ const LoanRequestsPage = () => {
     const user = storedUser ? JSON.parse(storedUser) : null;
     const url ='https://localhost:7189/api/EmployeeRequest/requests';
     const [ requests, setRequests ] = useState([]); 
-    const [ date, setDate ] = useState(new Date().toISOString().substr(0, 10))
+    const [ date, setDate ] = useState(new Date().toISOString())
     const [ status, setStatus ] = useState("Pending Approval");
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const LoanRequestsPage = () => {
             })
             .then((response) => {
                 setRequests(response.data);
-                //console.log(response.data);
+                console.log(response.data);
             }).catch((error) => {
                 alert('Error fetching data ', error);
             });
@@ -59,22 +59,24 @@ const LoanRequestsPage = () => {
     return (
         <div>
         <NavBar/>
-        {requests.map((request) => (
-            <Container fluid key={request.requestId}>
-            <Row>
-                <Col xs={12} sm={10} md={8} lg={10} className="mx-auto" key={request.requestId}>
-                  <Card className="m-3">
+        {requests.filter((item)=>item.requestStatus == 'Pending Approval').map((request) => (
+            <Container key={request.requestId}>
+            
+                  <Card className="m-3 p-2">
                     <Card.Body>
-                      <Card.Title>Request ID: {request.requestId}</Card.Title>
-                      <Card.Text>Item Value: {request.itemValuation}</Card.Text>
-                      <Card.Text>Item: {request.itemDescription}</Card.Text>
-                      <Card.Text>Item Make: {request.itemMake}</Card.Text>
-                      <Card.Text>Item Category: {request.itemCategory}</Card.Text>
-                      <Card.Text>Request Date: {request.requestDate}</Card.Text>
-                      <Card.Text>Request Status: {request.requestStatus}</Card.Text>
-                      <Card.Text>Repayment Tenure: {request.durationInYears}</Card.Text>
-                      {request.returnDate == null || request.requestStatus == 'Pending Approval' ? <></> : 
-                      <Card.Text>Return Date: {request.returnDate}</Card.Text>}
+                      <Card.Header className="mb-3">Request ID: {request.requestId}</Card.Header>
+                      <Card.Title>{request.itemDescription}</Card.Title>
+                      <div className="row mt-3">
+                        <Card.Text className="col">Make: {request.itemMake}</Card.Text>
+                        <Card.Text className="col">Category: {request.itemCategory}</Card.Text>
+                        <Card.Text className="col">Value: ₹{request.itemValuation}</Card.Text>
+                      </div>
+                      <div className="row">
+                        <Card.Text className="col">Request Date: {request.requestDate.substring(0,10)}</Card.Text>
+                        <Card.Text className="col">Repayment Tenure: {request.durationInYears} Years</Card.Text>
+                        <Card.Text className="col">Return Date: {request.returnDate}</Card.Text>
+                      </div>
+                      
                       <Form>
                       <Form.Group>
                         <Form.Label>Status:</Form.Label>
@@ -86,22 +88,13 @@ const LoanRequestsPage = () => {
                           <option value="Pending Approval">Pending Approval</option>
                           <option value="Approved">Approved</option>
                           <option value="Rejected">Rejected</option>
-                        </Form.Control>
-                        {request.returnDate == null || request.requestStatus == 'Pending Approval' ? <>
-                        <Form.Label>Return Date:</Form.Label>
-                        <Form.Control
-                          type="date"
-                          onChange={(e) => handleRequestDateChange(e.target.value)}
-                          value={date}
-                        />
-                          </> : <></>}
+                        </Form.Control>                       
                       </Form.Group>
-                      <Button variant="dark" size="sm" onClick={() => handleSubmit(request.requestId)}>Submit</Button>
+                      <Button className="my-2" variant="dark" size="sm" onClick={() => handleSubmit(request.requestId)}>Submit</Button>
                       </Form>
                     </Card.Body>
                   </Card>
-                </Col>
-            </Row>
+                
           </Container>
         ))}
         </div>
