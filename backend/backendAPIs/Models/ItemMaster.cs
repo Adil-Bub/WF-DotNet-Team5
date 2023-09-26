@@ -17,7 +17,17 @@ public partial class ItemMaster
 
     public int ItemValuation { get; set; }
 
-    public virtual ICollection<EmployeeRequestDetail> EmployeeRequestDetails { get; set; } = new List<EmployeeRequestDetail>();
+    public ItemMaster() { }
 
-    public virtual LoanCardMaster? ItemCategoryNavigation { get; set; }
+    public ItemMaster(string itemId,string itemDescription,string issueStatus, string itemMake, string itemCategory,int itemValuation )
+    {
+        ItemId = itemId;
+        ItemDescription =itemDescription;
+        IssueStatus = issueStatus;
+        ItemMake = itemMake;
+        ItemCategory = itemCategory;
+        ItemValuation = itemValuation;
+    }
 }
+
+
