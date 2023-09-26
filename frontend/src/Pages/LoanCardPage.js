@@ -70,7 +70,7 @@ const LoanCardPage = () => {
                                     <tr key={item.loanId}>
                                         <td>{item.loanId}</td>
                                         <td>{item.loanType}</td>
-                                        <td>{item.durationInYears}</td>
+                                        <td>{item.durationInYears} Years</td>
                                         <td>
                                                     <FaEdit className="edit-icon" color="blue" onClick={() => {
                                                     setSelectedLoanCard(item);
