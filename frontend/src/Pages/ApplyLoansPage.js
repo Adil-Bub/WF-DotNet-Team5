@@ -17,6 +17,7 @@ const ApplyLoansPage = () => {
 
 
   const [data, setData] = useState([]);
+  const [disCard, setDisCard] = useState([]);
 
   const fetchInfo = () => {
     return axios.get(url, {
@@ -28,12 +29,19 @@ const ApplyLoansPage = () => {
   });
   };
 
+  const disabledItems = () => {
+    return axios.get(`https://localhost:7189/my-loans/${user.employeeId}`, {
+      headers: { 'Authorization': 'Bearer ' + user.token }
+  }).then((res) => setDisCard(res.data.map(item=>item.itemId)))
+  }
+
 
   const byCategory = data.filter((data) => data.itemCategory === selectedCategory);
 
 
   useEffect(() => {
     fetchInfo();
+    disabledItems();
   }, []);
 
   const handleButtonClick = async (item) => {
@@ -66,24 +74,22 @@ const ApplyLoansPage = () => {
     <>
       <NavBar />
       <div className="text-center">
-        <h1>
-          Choose your Item
-        </h1>
-        <div class="container text-center d-flex gap-3 mt-5">
+        <h4 className="mt-3">
+                    Choose Item for <code>{user.employeeName} ({user.employeeId})</code> from <code>{selectedCategory}</code> Category
+        </h4>
+        <div class="container text-center d-flex gap-3 mt-3">
 
           {byCategory.map(dataObj => (
-
-            <div class="card w-25 mx-auto fs-5" key={dataObj.itemId}>
+            <div class="card shadow w-25 mx-auto fs-5" key={dataObj.itemId}>
               <div class="card-body">
-                <h3 class="card-title">{dataObj.itemDescription}</h3>
+                <h3 class="card-header mb-2">{dataObj.itemDescription}</h3>
                 <p class="card-text5"  >
-                  Item Id: {dataObj.itemId} <br />
-                  Item Category: {dataObj.itemCategory}  <br />
-                  Item Make: {dataObj.itemMake}  <br />
-                  Issue Status: {dataObj.issueStatus}  <br />
+                  <strong>Item Id:</strong> {dataObj.itemId} <br />
+                  <strong>Category:</strong> {dataObj.itemCategory}  <br />
+                  <strong>Make:</strong> {dataObj.itemMake}  <br />
                 </p>
                 <div className="mt-3">
-                  <button className="btn btn-outline-dark btn-lg" onClick={()=>handleButtonClick(dataObj)}> Apply </button>
+                  <button className="btn btn-outline-dark btn-lg" onClick={()=>handleButtonClick(dataObj)} disabled = {disCard.includes(dataObj.itemId)}>Apply</button>
                 </div>
               </div>
             </div>

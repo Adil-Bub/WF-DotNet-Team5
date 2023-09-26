@@ -14,7 +14,8 @@ const imgObj = {
 const ViewLoansPage = () => {
 
     const storedUser = localStorage.getItem('user');
-    const { user, setUser } = storedUser ? JSON.parse(storedUser) : null;
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    
     const [loanCards, setLoanCards] = useState([]);
     const { selectedCategory, setSelectedCategory } = useAppContext();
 
@@ -41,12 +42,12 @@ const ViewLoansPage = () => {
         <>
             <NavBar />
             <div className="text-center">
-                <h1>
-                    Choose your Loan Card
-                </h1>
-                <div class="container text-center d-flex gap-3 mt-5">
+                <h4 className="mt-3">
+                    Choose Loan-Card for <code>{user.employeeName} ({user.employeeId})</code>
+                </h4>
+                <div class="container text-center d-flex gap-3 mt-3">
                     {loanCards.map(loanCard => (
-                        <div class="card w-25 mx-auto fs-5" key={loanCard.LoanId}>
+                        <div class="card mb-5 shadow w-25 mx-auto fs-5" key={loanCard.LoanId}>
                             <img src={imgObj[loanCard.loanType]} class="card-img-top" alt={loanCard.loanType} />
                             <div class="card-body">
                                 <h3 class="card-title">{loanCard.loanType}</h3>

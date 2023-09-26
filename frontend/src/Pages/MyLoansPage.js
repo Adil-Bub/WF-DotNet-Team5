@@ -36,9 +36,14 @@ const Card = ({ myLoan }) => {
       
     };
     
-    let cardClass = `card mb-5 ${isHovered && 'hovered-card'}`;
+    let cardClass = `card w-25 shadow mb-5 ${isHovered && 'hovered-card'}`;
+    
     if (myLoan.requestStatus == "Approved"){
-      cardClass += ' bg-dark text-white'
+      cardClass += ' text-dark bg-light' //white
+    } else if (myLoan.requestStatus == "Pending Approval"){
+      cardClass += ' text-white bg-secondary' //grey
+    } else if (myLoan.requestStatus == "Rejected") {
+      cardClass += ' text-white bg-dark' //black
     }
       
     
@@ -53,30 +58,30 @@ const Card = ({ myLoan }) => {
           <h3>{myLoan.itemDescription}</h3>
         </div>
         <div className="card-body">
-          <p>Item ID: {myLoan.itemId}</p>
-          <p>Make: {myLoan.itemMake}</p>
-          <p>Category: {myLoan.itemCategory}</p>
-          <p>Valuation: ₹ {myLoan.itemValuation}</p>
-          <p>Request ID: {myLoan.requestId}</p>
-          <p>Request Date: {myLoan.requestDate.substring(0,10)}</p>
-          <p>Request Status: {myLoan.requestStatus}</p>
+          <p><strong>Item ID:</strong> {myLoan.itemId}</p>
+          <p><strong>Make:</strong> {myLoan.itemMake}</p>
+          <p><strong>Category:</strong> {myLoan.itemCategory}</p>
+          <p><strong>Valuation:</strong> ₹ {myLoan.itemValuation}</p>
+          <p><strong>Request ID:</strong> {myLoan.requestId}</p>
+          <p><strong>Request Date:</strong> {myLoan.requestDate.substring(0,10)}</p>
+          <p><strong>Request Status:</strong> {myLoan.requestStatus}</p>
           {isHovered && approvalDetails && (
             <div className="approval-details">
-              <p>Approved Loan Card Details:</p>
+              <code>Approved Details</code>
               <ul className="list-unstyled">
-              <li>Card ID: {approvalDetails.cardId}</li>
-              <li>Card Issue Date: {approvalDetails.cardIssueDate.substring(0,10).substring(0,10)}</li>
+              <li><strong>Card ID:</strong> {approvalDetails.cardId}</li>
+              <li><strong>Card Issue Date:</strong> {approvalDetails.cardIssueDate.substring(0,10).substring(0,10)}</li>
               </ul>
             </div>
           )}
           <div className="card-footer">
             { (myLoan.returnDate!=null) ? (
-                <p>Return Date: {myLoan.returnDate} </p>
+                <p><code><strong>Return Date:</strong> {myLoan.returnDate.substring(0,10)}</code> </p>
             ) : (
-                <p>Return Date TBD by Admin</p>
+                <p>Return Date TBD</p>
             )}
-            <p>Loan ID: {myLoan.loanId}</p>
-            <p>Duration: {myLoan.durationInYears} Years</p>
+            <p><strong>Loan ID:</strong> {myLoan.loanId}</p>
+            <p><strong>Duration:</strong> {myLoan.durationInYears} Years</p>
           </div>
         </div>
       </div>
@@ -109,14 +114,11 @@ const MyLoansPage = () => {
     return (
         <>
         <NavBar/>
-        <div className="text-center">
-            <h1>
-                Loan Management Application  
-            </h1>
+        <div className="text-center p-2">
             <h4>
-                My Loans for {user.employeeId}
+                All Loan Cards Requested by <code>{user.employeeName} ({user.employeeId})</code>
             </h4>
-            <div class="container text-center d-flex gap-3 mt-5">
+            <div class="container text-center d-flex gap-3 mt-3">
                 {myLoanCards.map((myLoan, index) => (
                     <Card key={index} myLoan={myLoan} />
                     

@@ -20,11 +20,12 @@ const UserDashboard = () => {
     }
 
     const navigateToItemsPurchased = () => {
-        navigate('/dashboard/user/items=purchased');
+        navigate('/dashboard/user/items-purchased');
     }
     return (
         <>
             <NavBar />
+            <div className="text-center">
             <h2 style={{ marginTop: '20px' }}>
                     User Dashboard
                 </h2>
@@ -56,13 +57,14 @@ const UserDashboard = () => {
                             <Card.Body className="d-flex flex-column align-items-center">
                                 <BsFillFileEarmarkCheckFill size={100} color="darkcyan" />
                                 <Card.Text className="m-2">
-                                    Item Purchased
+                                    Orders
                                 </Card.Text>
                             </Card.Body>
                         </Card>
 
                     </div>
                 </div>
+            </div>
         </>
     );
 }
