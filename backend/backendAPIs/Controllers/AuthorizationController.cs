@@ -52,7 +52,6 @@ namespace backend.Controllers
             }catch(Exception ex)
             {
                 _logger.Error(ex.Message);
-
             }
             return StatusCode(500, "Something went wrong! Please try again later!");
         }
