@@ -1,12 +1,12 @@
-﻿using backend.Models;
-using backend.Repository.Interfaces;
-using backend.Models.Request;
-using backend.Models.Response;
-using backend.Services.Interfaces;
+﻿using backendAPIs.Models;
+using backendAPIs.Repository.Interfaces;
+using backendAPIs.Models.Request;
+using backendAPIs.Models.Response;
+using backendAPIs.Services.Interfaces;
 using Azure.Core;
-using backend.Util;
+using backendAPIs.Util;
 
-namespace backend.Services
+namespace backendAPIs.Services
 {
     public class EmployeeRequestService : IEmployeeRequestService
     {

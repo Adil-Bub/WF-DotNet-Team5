@@ -1,9 +1,9 @@
-﻿using backend.Services.Interfaces;
+﻿using backendAPIs.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Controllers
+namespace backendAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

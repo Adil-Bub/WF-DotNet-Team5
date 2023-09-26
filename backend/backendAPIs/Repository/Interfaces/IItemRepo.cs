@@ -1,7 +1,6 @@
-﻿using backend.Models.Request;
-using backend.Models.Response;
-using backend.Models;
+﻿using backendAPIs.Models.Request;
 using backendAPIs.Models.Response;
+using backendAPIs.Models;
 
 namespace backendAPIs.Repository.Interfaces
 {
@@ -9,8 +8,8 @@ namespace backendAPIs.Repository.Interfaces
     {
         public ItemMaster? GetItemById(string itemId);
         public bool AddItem(ItemMaster item);
-        public List<ItemResponse> GetAllItems();
-        public bool UpdateItem(ItemMaster item);
-        public ItemResponse DeleteItem(string itemId);
+        public List<ItemMaster> GetAllItems();
+        public bool UpdateItem(UpdateItemRequest item);
+        public ItemMaster? DeleteItem(string itemId);
     }
 }

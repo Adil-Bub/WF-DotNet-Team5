@@ -1,17 +1,17 @@
 ﻿using Azure.Core;
-using backend.Models;
-using backend.Models.Request;
-using backend.Models.Response;
-using backend.Repository.Interfaces;
-using backend.Services;
-using backend.Util;
+using backendAPIs.Models;
+using backendAPIs.Models.Request;
+using backendAPIs.Models.Response;
+using backendAPIs.Repository.Interfaces;
+using backendAPIs.Services;
+using backendAPIs.Util;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection.Emit;
 using System;
 
-namespace backend.Repository
+namespace backendAPIs.Repository
 {
     public class EmployeeRequestDetailRepo : IEmployeeRequestDetailRepo
     {
@@ -28,8 +28,8 @@ namespace backend.Repository
                 var employeeRequestExists = _db.EmployeeRequestDetails
                     .FirstOrDefault(employeeRequest => employeeRequest.EmployeeId == employeeRequestDetail.EmployeeId &&
                     employeeRequest.ItemId == employeeRequestDetail.ItemId);
-                    
-                if(employeeRequestExists !=null)
+
+                if (employeeRequestExists !=null)
                 {
                     return null;
                 }
@@ -76,10 +76,11 @@ namespace backend.Repository
             {
                 var duration = 0;
                 var issueDate = DateTime.Now.Date;
-                existingEmployeeRequest.RequestStatus = employeeRequestDetail.RequestStatus ?? existingEmployeeRequest.RequestStatus;
+                existingEmployeeRequest.RequestStatus = employeeRequestDetail.RequestStatus;
 
                 //Adding approveed loans to employee loan card details
-                if (existingEmployeeRequest.RequestStatus == "Approved")
+                //Return date gets updated only when status is approved
+                if (employeeRequestDetail.RequestStatus == "Approved")
                 {
                     var loanCategory = _db.ItemMasters
                         .Where(item => existingEmployeeRequest.ItemId == item.ItemId)
@@ -95,7 +96,8 @@ namespace backend.Repository
                         .Where(loan => loan.LoanId == loanId)
                         .Select(loan => loan.DurationInYears)
                         .FirstOrDefault();
-                    
+
+                    //adding a new approved loan card
                     var employeeLoanCardDetail = new EmployeeLoanCardDetail
                     {
                         CardId = UIDGenerator.GenerateUniqueVarcharId("LOAN_CARD"),
@@ -109,13 +111,20 @@ namespace backend.Repository
                         var loanCard = _db.EmployeeLoanCardDetails
                             .Where(lc => lc.RequestId ==  existingEmployeeRequest.RequestId)
                             .FirstOrDefault();
-                        if(loanCard == null)
+                        if (loanCard == null)
                         {
                             _db.EmployeeLoanCardDetails.Add(employeeLoanCardDetail);
                             _db.SaveChanges();
                         }
-                        
+
                         //return employeeLoanCardDetail.CardId;
+                        //updating return date after adding loan card
+                        existingEmployeeRequest.ReturnDate = issueDate.AddYears(duration);
+                        var entry = _db.Entry(existingEmployeeRequest);
+                        if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                            entry.State = EntityState.Detached;
+                        _db.Entry(existingEmployeeRequest).State = EntityState.Modified;
+
                     }
                     catch (Exception ex)
                     {
@@ -125,9 +134,6 @@ namespace backend.Repository
                 }
                 try
                 {
-                    //calculating return date as approved loan card issue date + duration of loancard
-                    existingEmployeeRequest.ReturnDate = issueDate.AddYears(duration);
-                    _db.Entry(existingEmployeeRequest).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     _db.SaveChangesAsync();
                     return true;
                 }

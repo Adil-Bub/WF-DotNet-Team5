@@ -1,13 +1,13 @@
-﻿using backend.Services;
-using backend.Models.Response;
-using backend.Models;
-using backend.Repository.Interfaces;
-using backend.Services.Interfaces;
+﻿using backendAPIs.Services;
+using backendAPIs.Models.Response;
+using backendAPIs.Models;
+using backendAPIs.Repository.Interfaces;
+using backendAPIs.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using backend.Models.Request;
-using backend.Controllers;
+using backendAPIs.Models.Request;
+using backendAPIs.Controllers;
 
 namespace TestbackendAPIs.Services
 {

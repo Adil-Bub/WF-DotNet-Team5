@@ -1,8 +1,8 @@
-﻿using backend.Models;
-using backend.Models.Request;
-using backend.Models.Response;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Request;
+using backendAPIs.Models.Response;
 
-namespace backend.Services.Interfaces
+namespace backendAPIs.Services.Interfaces
 {
     public interface IEmployeeRequestService
     {

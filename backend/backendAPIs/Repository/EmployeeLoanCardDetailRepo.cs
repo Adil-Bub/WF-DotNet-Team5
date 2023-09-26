@@ -1,7 +1,7 @@
-﻿using backend.Models;
-using backend.Repository.Interfaces;
+﻿using backendAPIs.Models;
+using backendAPIs.Repository.Interfaces;
 
-namespace backend.Repository
+namespace backendAPIs.Repository
 {
     public class EmployeeLoanCardDetailRepo : IEmployeeLoanCardDetailRepo
     {

@@ -1,9 +1,9 @@
-﻿using backend.Models;
-using backend.Models.Request;
-using backend.Models.Response;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Request;
+using backendAPIs.Models.Response;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
-namespace backend.Repository.Interfaces
+namespace backendAPIs.Repository.Interfaces
 {
     public interface IEmployeeRequestDetailRepo
     {

@@ -1,9 +1,10 @@
-﻿using backend.Models;
-using backend.Repository.Interfaces;
+﻿using backendAPIs.Models;
+using backendAPIs.Repository.Interfaces;
+using backendAPIs.Models.Request;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
-namespace backend.Repository
+namespace backendAPIs.Repository
 {
     public class LoanCardRepo : ILoanCardRepo
     {
@@ -39,19 +40,32 @@ namespace backend.Repository
             }
         }
 
-        public bool UpdateLoanCard(LoanCardMaster loanCard)
+        public bool UpdateLoanCard(UpdateLoanCardRequest loanCard)
         {
-            try
+            var existingLoanCard = _db.LoanCardMasters.FirstOrDefault(l => l.LoanId == loanCard.LoanId);
+
+            if(existingLoanCard!= null)
             {
-                _db.LoanCardMasters.Update(loanCard);
-                _db.SaveChanges();
-                return true;
+                existingLoanCard.LoanType = loanCard.LoanType;
+                existingLoanCard.DurationInYears = loanCard.DurationInYears;
+
+                var entry = _db.Entry(existingLoanCard);
+                if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                    entry.State = EntityState.Detached;
+                _db.Entry(existingLoanCard).State = EntityState.Modified;
+
+                try
+                {
+                    _db.SaveChanges();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
+            return false;
+
         }
 
         public bool DeleteLoanCard(string id)

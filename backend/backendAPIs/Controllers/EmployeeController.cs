@@ -1,11 +1,11 @@
-﻿using backend.Models;
-using backend.Models.Request;
-using backend.Models.Response;
-using backend.Services.Interfaces;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Request;
+using backendAPIs.Models.Response;
+using backendAPIs.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Controllers
+namespace backendAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

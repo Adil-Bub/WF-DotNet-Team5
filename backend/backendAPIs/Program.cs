@@ -1,14 +1,15 @@
-using backend.Repository;
-using backend.Models;
-using backend.Services;
+using backendAPIs.Repository;
+using backendAPIs.Models;
+using backendAPIs.Services;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using backend.Services.Interfaces;
-using backend.Repository.Interfaces;
+using backendAPIs.Services.Interfaces;
+using backendAPIs.Repository.Interfaces;
 using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,18 +49,20 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddDbContext<LoansContext>(options =>
-      options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+      options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
 
 builder.Services.AddScoped<IEmployeeRepo, EmployeeRepo>();
 builder.Services.AddScoped<ILoanCardRepo, LoanCardRepo>();
 builder.Services.AddScoped<IEmployeeRequestDetailRepo, EmployeeRequestDetailRepo>();
 builder.Services.AddScoped<IEmployeeLoanCardDetailRepo, EmployeeLoanCardDetailRepo>();
+builder.Services.AddScoped<IItemRepo, ItemRepo>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ILoanCardService, LoanCardService>();
 builder.Services.AddScoped<IEmployeeRequestService, EmployeeRequestService>();
 builder.Services.AddScoped<IEmployeeLoanCardDetailService, EmployeeLoanCardDetailService>();
+builder.Services.AddScoped<IItemService, ItemService>();
 
 builder.Services.AddDataProtection();
 

@@ -1,7 +1,7 @@
-﻿using backend.Models;
-using backend.Models.Response;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Response;
 
-namespace backend.Services.Interfaces
+namespace backendAPIs.Services.Interfaces
 {
     public interface IEmployeeLoanCardDetailService
     {

@@ -1,6 +1,11 @@
-﻿using backend.Models;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Response;
+using backendAPIs.Models.Request;
+using backendAPIs.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using backendAPIs.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -8,25 +13,32 @@ namespace backend.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private readonly LoansContext _db;
+        private readonly IItemService _itemService;
 
-        public ItemsController(LoansContext db)
+        public ItemsController(IItemService itemService)
         {
-            _db = db;
+            _itemService = itemService;
         }
 
 
-        [HttpGet]
-        public async Task<ActionResult> GetItems()
+        [HttpGet("all")]
+        [Authorize(Roles = "admin,employee")]
+        public async Task<ActionResult> GetAllItems()
         {
-            return Ok(_db.ItemMasters);
+            var result = _itemService.GetAllItems();
+
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
-        [HttpGet]
-        [Route("findById")]
+        [HttpGet("{id}")]
+        [Authorize(Roles = "admin,employee")]
         public async Task<ActionResult> GetItemById(string id)
         {
-            ItemMaster? item = await _db.ItemMasters.FindAsync(id);
+            ItemResponse? item = _itemService.GetItemById(id);
             if (item == null)
             {
                 return BadRequest("Item not found!");
@@ -37,47 +49,57 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddItem(ItemMaster item)
+        [HttpPost("add")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> AddItem(AddItemRequest item)
         {
-            if(item != null && item.ItemId != null && await _db.ItemMasters.FindAsync(item.ItemId) != null)
+            if(item == null)
             {
-                return BadRequest("Item with id already exists");
+                return BadRequest("Plese enter valid details");
             }
-            try
+            string itemId = _itemService.AddItem(item);
+            
+            if(itemId == null)
             {
-                _db.ItemMasters.Add(item);
-                await _db.SaveChangesAsync();
-                return Ok("Successfully added item!");
+                return StatusCode(500, "Failed to add item. Please try again!");
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var response = new { itemId = $"{itemId}" };
+            return Ok(response);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateItem(ItemMaster item)
+        [HttpPut("{item-id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> UpdateItem([FromRoute(Name = "item-id")] string itemId, UpdateItemRequest item)
         {
-            _db.ItemMasters.Update(item);
-            await _db.SaveChangesAsync();
-            return Ok("Updated item details successfully!");
+            if(item.ItemId != itemId)
+            {
+                return BadRequest("ID mismatch");
+            }
+            var isUpdated = _itemService.UpdateItem(item);
+            if(!isUpdated)
+            {
+                return StatusCode(500, "Failed to update item details. please try again");
+            }
+            return NoContent();
+
+           
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteItem(string id)
         {
-            ItemMaster? item = await _db.ItemMasters.FindAsync(id);
-            if (item == null)
+            if (id==null)
             {
-                return BadRequest("Item does not exist!");
+                return BadRequest("Please enter an Item id");
             }
-            else
+
+            var deletedItem = _itemService.DeleteItem(id);
+            if (deletedItem == null)
             {
-                _db.ItemMasters.Remove(item);
-                await _db.SaveChangesAsync();
-                return Ok("Item details removed!");
+                return NotFound();
             }
+            return Ok(deletedItem);
         }
     }
 }

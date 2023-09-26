@@ -1,12 +1,13 @@
-﻿using backend.Models;
-using backend.Models.Response;
-using backend.Models.Request;
-using backend.Repository.Interfaces;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Response;
+using backendAPIs.Models.Request;
+using backendAPIs.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using backend.Services;
+using backendAPIs.Services;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
 
-namespace backend.Repository
+namespace backendAPIs.Repository
 {
     public class EmployeeRepo : IEmployeeRepo
     {
@@ -62,7 +63,7 @@ namespace backend.Repository
             var existingEmployee = _db.EmployeeMasters.FirstOrDefault(empl => empl.EmployeeId == employee.EmployeeId);
             Console.WriteLine("employee is " + employee);
 
-            _db.Attach(existingEmployee);
+            
             if (existingEmployee != null) 
             {
                 existingEmployee.EmployeeName = employee.EmployeeName ?? existingEmployee.EmployeeName;
@@ -72,18 +73,17 @@ namespace backend.Repository
                 existingEmployee.DateOfBirth = employee.DateOfBirth ?? existingEmployee.DateOfBirth;
                 existingEmployee.DateOfJoining = employee.DateOfJoining ?? existingEmployee.DateOfJoining;
 
-                /*
-                 * Functionality for admin only
-                 * if (employee.Password!=null)
-                {
-                    (existingEmployee.PasswordHash, existingEmployee.Salt) = PasswordHelper.HashPassword(employee.Password);
-                }*/
+                var entry = _db.Entry(existingEmployee);
+                if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                    entry.State = EntityState.Detached;
+                _db.Entry(existingEmployee).State = EntityState.Modified;
+
                 try
                 {
-                    _db.SaveChangesAsync();
+                    _db.SaveChanges();
                     return true;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     return false;
                 }

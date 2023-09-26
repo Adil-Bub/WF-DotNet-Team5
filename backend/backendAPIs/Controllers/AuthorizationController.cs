@@ -1,10 +1,10 @@
-﻿using backend.Models;
-using backend.Models.Request;
-using backend.Services.Interfaces;
+﻿using backendAPIs.Models;
+using backendAPIs.Models.Request;
+using backendAPIs.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
-namespace backend.Controllers
+namespace backendAPIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
