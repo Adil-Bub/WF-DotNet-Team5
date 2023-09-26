@@ -5,12 +5,19 @@ export const showSuccessfulToast = (message) => {
     toast.success(message, {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 2000
-    })
+    });
 }
 
 export const showErrorToast = (message) => {
     toast.error(message, {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 2000
-    })
+    });
+}
+
+export const showInfoToast = (message) => {
+    toast.info(message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 2000
+    });
 }

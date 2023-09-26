@@ -78,7 +78,7 @@ const ItemsMasterDataPage = () => {
                                         <td>{item.itemCategory}</td>
                                         <td>{item.itemDescription}</td>
                                         <td>{item.itemMake}</td>
-                                        <td>{item.itemValuation}</td>
+                                        <td>₹ {item.itemValuation}</td>
                                         <td>
                                                     <FaEdit className="edit-icon" color="blue" onClick={() => {
                                                     setSelectedItem(item);

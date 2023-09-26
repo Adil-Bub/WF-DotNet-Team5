@@ -3,10 +3,12 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from 'react-router-dom';
+import { showInfoToast, showSuccessfulToast } from '../Util/toast';
 
 export function NavBar(){
   const navigate = useNavigate();
   const handleLogout = () => {
+    showInfoToast("Logged out!");
     localStorage.removeItem('user');
     navigate('/');
   }
@@ -21,7 +23,7 @@ export function NavBar(){
             <Nav.Link href='/dashboard/admin/all-items'>Items</Nav.Link>
             <Nav.Link href='/dashboard/admin/loan-requests'>Requests</Nav.Link>
           </Nav>
-          <button className="btn btn-dark" onClick={handleLogout}>Logout</button>
+          <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
         </Container>
       </Navbar>
         </>

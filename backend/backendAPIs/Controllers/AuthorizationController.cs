@@ -41,20 +41,16 @@ namespace backend.Controllers
         [HttpPost("register")]
         public IActionResult Register(RegisterRequest registerRequest)
         {
-            try
-            {
-                EmployeeMaster? user = _authService.RegisterUser(registerRequest);
-                if (user != null)
-                {
-                    var registerResponse = _authService.GenerateJSONWebToken(user);
-                    return Ok(registerResponse);
-                }
-            }catch(Exception ex)
-            {
-                _logger.Error(ex.Message);
+            IActionResult response = StatusCode(500, "Something went wrong! Please try again later!");
+            EmployeeMaster? user = _authService.RegisterUser(registerRequest);
 
+            if (user != null)
+            {
+                var registerResponse = _authService.GenerateJSONWebToken(user);
+                return Ok(registerResponse);
             }
-            return StatusCode(500, "Something went wrong! Please try again later!");
+
+            return response;
         }
     }
 }
