@@ -42,6 +42,7 @@ const LoanCardPage = () => {
                 console.log(response.data);
             })
             .catch((error) => {
+                showErrorToast("Session expired! Please login!");
                 console.error('Error fetching data: ', error);
             });
         }, [selectedLoanCard]);
@@ -88,7 +89,7 @@ const LoanCardPage = () => {
                                                         .delete(`https://localhost:7189/api/LoanCard/${item.loanId}`, {
                                                             headers: { 'Authorization': 'Bearer ' + user.token }
                                                         }).catch((error) => {
-                                                            showErrorToast("Unable to delete because of foreign key constraints!");
+                                                            showErrorToast("Cannot delete! Loan card in use");
                                                         })
                                                         //setLoanCards(loanCards.filter(loanCard => loanCard.loanId != item.loanId))
                                                         setSelectedLoanCard({});

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { showErrorToast, showSuccessfulToast } from '../Util/toast';
 
 //Todo validation errors
 const EditLoanCardModal = ({ showModal, handleCloseModal, selectedLoanCard, setShowModal }) => {
@@ -25,9 +26,9 @@ const EditLoanCardModal = ({ showModal, handleCloseModal, selectedLoanCard, setS
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
-                alert('Successfully edited loan-card details!');
+                showSuccessfulToast("Edited loan card details!");
             }).catch((error) => {
-                alert('Error editing loan-card details! ', error);
+                showErrorToast("Unable to edit. Please try again later!");
             });
     }
 

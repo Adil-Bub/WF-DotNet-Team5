@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { showErrorToast, showSuccessfulToast } from '../Util/toast';
 
 //Todo validation errors
 const AddItemModal = ({ showAdd, handleAdd, setShowAdd }) => {
@@ -31,9 +32,9 @@ const AddItemModal = ({ showAdd, handleAdd, setShowAdd }) => {
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
-                alert('Successfully added item details!');
+                showSuccessfulToast("Successfully added item!");
             }).catch((error) => {
-                alert('Error adding item details! ', error);
+                showErrorToast("Error adding item!")
             });
     }
 
