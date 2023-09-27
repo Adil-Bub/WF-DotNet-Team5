@@ -30,6 +30,8 @@ const ViewItemsPurchasedPage = () => {
             <h1>
             
             </h1>
+            {(itemsPur.length == 0) ? 
+            (<h4>NO ITEMS PURCHASED</h4>) : (
             <div class="container text-center d-flex gap-3 mt-5">
 
           {itemsPur.map(dataObj => (
@@ -49,9 +51,11 @@ const ViewItemsPurchasedPage = () => {
             </div>
 
           ))}
+            </div>
+         
+            )}
         </div>
-            
-        </div>
+       
         </>
     );
 }

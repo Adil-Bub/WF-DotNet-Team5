@@ -49,6 +49,7 @@ const Card = ({ myLoan }) => {
     
   
     return (
+      
       <div
         className={cardClass}
         onMouseEnter={handleMouseEnter}
@@ -115,7 +116,12 @@ const MyLoansPage = () => {
         <>
         <NavBar/>
         <div className="text-center p-2">
-            <h4>
+          {(myLoanCards.length == 0) ? (
+            <h4>No loans availed yet. </h4>
+          ) : (
+
+          <>           
+           <h4>
                 All Loan Cards Requested by <code>{user.employeeName} ({user.employeeId})</code>
             </h4>
             <div class="container text-center d-flex gap-3 mt-3">
@@ -123,7 +129,10 @@ const MyLoansPage = () => {
                     <Card key={index} myLoan={myLoan} />
                     
                 ))}
-            </div>           
+            </div>
+            </> 
+            )}          
+
         </div>
         </>
     );
