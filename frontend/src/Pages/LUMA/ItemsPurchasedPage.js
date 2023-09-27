@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { NavBar } from "../Component/LUMANav";
+import { NavBar } from "../../Component/LUMANav";
 
 const ViewItemsPurchasedPage = () => {
 

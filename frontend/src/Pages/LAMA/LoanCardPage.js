@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from "react";
 import axios from 'axios';
 import { FaEdit, FaTrash } from 'react-icons/fa'
-import { NavBar } from "../Component/LAMANav";
-import EditLoanCardModal  from "../Component/EditLoanCardModal";
-import AddLoanCardModal  from "../Component/AddLoanCardModal";
+import { NavBar } from "../../Component/LAMANav";
+import EditLoanCardModal  from "../../Component/EditLoanCardModal";
+import AddLoanCardModal  from "../../Component/AddLoanCardModal";
 import { Button } from "react-bootstrap";
 
 

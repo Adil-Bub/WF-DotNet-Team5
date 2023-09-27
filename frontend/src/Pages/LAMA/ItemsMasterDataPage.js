@@ -1,11 +1,11 @@
 import React, { useContext, useState,useEffect } from "react";
 import axios from 'axios';
-import { AppContext } from "../Context/App.context";
+import { AppContext } from "../../Context/App.context";
 import { useNavigate } from 'react-router-dom';
-import { NavBar } from "../Component/LAMANav";
+import { NavBar } from "../../Component/LAMANav";
 import { FaEdit, FaTrash } from 'react-icons/fa'
-import EditItemModal  from "../Component/EditItemModal";
-import AddItemModal from "../Component/AddItemModal";
+import EditItemModal  from "../../Component/EditItemModal";
+import AddItemModal from "../../Component/AddItemModal";
 import { Button } from "react-bootstrap";
 
 
@@ -54,7 +54,7 @@ const ItemsMasterDataPage = () => {
                         <h5>
                             All Available Items are Shown Below
                         </h5>
-                        <Button onClick={()=>{setSelectedItem({});setShowAdd(true)}}>Add Items</Button>
+                        <Button variant='outline-dark' onClick={()=>{setSelectedItem({});setShowAdd(true)}}>Add Items</Button>
                     </div>
                     <div className="container mt-5">
                         <div className="row justify-content-center">

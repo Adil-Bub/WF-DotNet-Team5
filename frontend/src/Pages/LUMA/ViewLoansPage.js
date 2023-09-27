@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { NavBar } from "../Component/LUMANav";
-import { useAppContext } from "../Context/App.context";
+import { NavBar } from "../../Component/LUMANav";
+import { useAppContext } from "../../Context/App.context";
 
 const imgObj = {
     "Furniture": "https://i.imgur.com/EryUuGM.jpg",

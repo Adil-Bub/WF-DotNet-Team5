@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect} from "react";
 import axios from 'axios';
-import { AppContext } from "../Context/App.context";
+import { AppContext } from "../../Context/App.context";
 import { useNavigate, Link } from 'react-router-dom';
-import { NavBar } from "../Component/LUMANav";
+import { NavBar } from "../../Component/LUMANav";
 
 const Card = ({ myLoan }) => {
     const storedUser = localStorage.getItem('user');

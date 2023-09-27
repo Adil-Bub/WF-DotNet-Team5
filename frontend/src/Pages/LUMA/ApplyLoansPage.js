@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { NavBar } from "../Component/LUMANav";
-import '../App.css';
-import { useAppContext } from "../Context/App.context";
+import { NavBar } from "../../Component/LUMANav";
+import { useAppContext } from "../../Context/App.context";
 
 
 const ApplyLoansPage = () => {

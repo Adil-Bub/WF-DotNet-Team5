@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { NavBar } from "../Component/LUMANav";
+import { NavBar } from "../../Component/LUMANav";
 import Card from 'react-bootstrap/Card';
 import { BsFillFileEarmarkCheckFill } from 'react-icons/bs';
 import { BsFillEyeFill } from 'react-icons/bs';

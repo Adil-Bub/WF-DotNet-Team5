@@ -1,22 +1,22 @@
 import React from 'react';
 import './App.css';
 import { AppProvider } from './Context/App.context';
-import LoginwithToken from './Pages/LoginWithToken';
+import LoginwithToken from './Pages/LoginPage';
 import RegistrationPage from './Pages/RegistrationPage';
-import UserDashboard from "./Pages/UserDashboard";
-import AdminDashboard from './Pages/AdminDashboard';
-import ItemsMasterDataPage from './Pages/ItemsMasterDataPage';
-import EmployeeDataPage from './Pages/EmployeeDataPage';
-import LoanCardPage from './Pages/LoanCardPage';
-import ViewLoansPage from './Pages/ViewLoansPage';
-import ApplyLoansPage from './Pages/ApplyLoansPage';
-import ViewItemsPurchasedPage from './Pages/ViewItemsPurchasedPage';
+import UserDashboard from "./Pages/LUMA/UserDashboard";
+import AdminDashboard from './Pages/LAMA/AdminDashboard';
+import ItemsMasterDataPage from './Pages/LAMA/ItemsMasterDataPage';
+import EmployeeDataPage from './Pages/LAMA/EmployeeDataPage';
+import LoanCardPage from './Pages/LAMA/LoanCardPage';
+import ViewLoansPage from './Pages/LUMA/ViewLoansPage';
+import ApplyLoansPage from './Pages/LUMA/ApplyLoansPage';
+import ViewItemsPurchasedPage from './Pages/LUMA/ItemsPurchasedPage';
 import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './Component/ProtectedRoute.js';
 import AdminRoute from './Component/AdminRoute';
-import MyLoansPage from './Pages/MyLoansPage';
-import LoanRequestsPage from './Pages/LoanRequestsPage';
+import MyLoansPage from './Pages/LUMA/MyLoansPage';
+import LoanRequestsPage from './Pages/LAMA/LoanRequestsPage';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import { NavBar } from "../Component/LAMANav";
+import { NavBar } from "../../Component/LAMANav";
 import Card from 'react-bootstrap/Card';
 import { FaUsersBetweenLines } from 'react-icons/fa6';
 import { LuShoppingBasket } from 'react-icons/lu';

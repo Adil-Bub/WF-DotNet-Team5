@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { NavBar } from "../Component/LAMANav";
-import EditEmployeeModal  from "../Component/EditEmployeeModal";
-import { showErrorToast, showInfoToast } from "../Util/toast";
+import { NavBar } from "../../Component/LAMANav";
+import EditEmployeeModal  from "../../Component/EditEmployeeModal";
+import { showErrorToast, showInfoToast } from "../../Util/toast";
 import { useNavigate } from 'react-router-dom';
 
 const EmployeeDataPage = () => {
