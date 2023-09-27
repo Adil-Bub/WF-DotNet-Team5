@@ -5,6 +5,8 @@ import { NavBar } from "../../Component/LAMANav";
 import EditLoanCardModal  from "../../Component/EditLoanCardModal";
 import AddLoanCardModal  from "../../Component/AddLoanCardModal";
 import { Button } from "react-bootstrap";
+import { showErrorToast } from "../../Util/toast";
+import { useNavigate } from "react-router-dom";
 
 
 const LoanCardPage = () => {
@@ -16,6 +18,8 @@ const LoanCardPage = () => {
     const [showAdd, setShowAdd] = useState(false);
     const [selectedLoanCard, setSelectedLoanCard] = useState({});
     const [loanCards, setLoanCards] = useState([]);
+
+    const navigate = useNavigate();
 
     const handleCloseModal = () => {
         setSelectedLoanCard(null);
@@ -38,6 +42,7 @@ const LoanCardPage = () => {
                 console.log(response.data);
             })
             .catch((error) => {
+                showErrorToast("Session expired! Please login!");
                 console.error('Error fetching data: ', error);
             });
         }, [selectedLoanCard]);
@@ -79,12 +84,15 @@ const LoanCardPage = () => {
                                                 </td>
                                                 <td>
                                                     <FaTrash className="delete-icon" color="red" onClick={() => {
+                                                        setSelectedLoanCard(item);
                                                         axios
                                                         .delete(`https://localhost:7189/api/LoanCard/${item.loanId}`, {
                                                             headers: { 'Authorization': 'Bearer ' + user.token }
+                                                        }).catch((error) => {
+                                                            showErrorToast("Cannot delete! Loan card in use");
                                                         })
-                                                        setLoanCards(loanCards.filter(loanCard => loanCard.loanId != item.loanId))
-                                                        
+                                                        //setLoanCards(loanCards.filter(loanCard => loanCard.loanId != item.loanId))
+                                                        setSelectedLoanCard({});
                                                     }}></FaTrash>
                                                 </td>
                                             </tr>

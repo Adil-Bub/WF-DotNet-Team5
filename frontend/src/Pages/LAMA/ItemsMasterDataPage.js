@@ -6,6 +6,7 @@ import { NavBar } from "../../Component/LAMANav";
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import EditItemModal  from "../../Component/EditItemModal";
 import AddItemModal from "../../Component/AddItemModal";
+import { showErrorToast, showSuccessfulToast } from "../../Util/toast";
 import { Button } from "react-bootstrap";
 
 
@@ -41,7 +42,8 @@ const ItemsMasterDataPage = () => {
                 console.log(response.data);
             })
             .catch((error) => {
-                console.error('Error fetching data: ', error);
+                showErrorToast("Session expired! Please login!");
+                navigate('/');
             });
         }, [selectedItem]);
    
@@ -87,10 +89,15 @@ const ItemsMasterDataPage = () => {
                                                 </td>
                                                 <td>
                                                     <FaTrash className="delete-icon" color="red" onClick={() => {
+                                                        setSelectedItem(item);
                                                         axios
                                                         .delete(`https://localhost:7189/api/Items/` + item.itemId, {
                                                                 headers: { 'Authorization': 'Bearer ' + user.token }
-                                                        }).then(setItems(items.filter(x => x.itemId != item.itemId)))
+                                                        }).catch((error) => {
+                                                            showErrorToast("Cannot delete! Item in use!");
+                                                        })
+                                                        //setLoanCards(loanCards.filter(loanCard => loanCard.loanId != item.loanId))
+                                                        setSelectedItem({});
                                                     }
                                                     }></FaTrash>
                                                 </td>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { showErrorToast, showSuccessfulToast } from '../Util/toast';
 
 //Todo validation errors
 const AddLoanCardModal = ({ showAdd, handleAdd, setShowAdd }) => {
@@ -24,9 +25,9 @@ const AddLoanCardModal = ({ showAdd, handleAdd, setShowAdd }) => {
                 headers: { 'Authorization': 'Bearer ' + user.token }
             })
             .then((response) => {
-                alert('Successfully added loan-card details!');
+                showSuccessfulToast("Added loan card!");
             }).catch((error) => {
-                alert('Error adding loan-card details! ', error);
+                showErrorToast("Something went wrong. Please try again later!");
             });
     }
 
