@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NavBar } from "../Component/LAMANav";
+import { NavBar } from "../../Component/LAMANav";
 import axios from 'axios';
 import { Card, Form, Row, Col, Container, Button } from 'react-bootstrap';
 

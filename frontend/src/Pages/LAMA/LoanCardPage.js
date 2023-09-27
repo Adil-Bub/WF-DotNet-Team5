@@ -5,7 +5,7 @@ import { NavBar } from "../../Component/LAMANav";
 import EditLoanCardModal  from "../../Component/EditLoanCardModal";
 import AddLoanCardModal  from "../../Component/AddLoanCardModal";
 import { Button } from "react-bootstrap";
-import { showErrorToast } from "../Util/toast";
+import { showErrorToast } from "../../Util/toast";
 import { useNavigate } from "react-router-dom";
 
 
